@@ -1,0 +1,273 @@
+/* ==========================================================
+   ANIMATION SYSTEM — Juri Dabiankov Studio
+   ========================================================== */
+
+/* ── CUSTOM CURSOR ── */
+.jd-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #0c0c0c;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: width 0.4s cubic-bezier(0.16,1,0.3,1),
+              height 0.4s cubic-bezier(0.16,1,0.3,1),
+              background 0.25s;
+}
+.jd-cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(12,12,12,0.35);
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: width 0.45s cubic-bezier(0.16,1,0.3,1),
+              height 0.45s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.25s,
+              opacity 0.3s;
+}
+/* light variant — set via JS on dark backgrounds */
+.jd-cursor.light { background: #ffffff; }
+.jd-cursor-ring.light { border-color: rgba(255,255,255,0.4); }
+
+body.jd-cursor-on { cursor: none; }
+body.jd-cursor-on a,
+body.jd-cursor-on button,
+body.jd-cursor-on input,
+body.jd-cursor-on textarea,
+body.jd-cursor-on select { cursor: none; }
+
+body.jd-cursor-hover .jd-cursor { width: 56px; height: 56px; }
+body.jd-cursor-hover .jd-cursor-ring { opacity: 0; }
+
+@media (hover: none) {
+  .jd-cursor, .jd-cursor-ring { display: none !important; }
+}
+
+/* ── PAGE TRANSITION ── */
+.jd-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  pointer-events: none;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+/* ── PAGE ENTER ── */
+@keyframes jd-pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.jd-page-enter {
+  animation: jd-pageEnter 0.6s cubic-bezier(0.16,1,0.3,1) 0.05s both;
+}
+
+/* ── NAV UNDERLINE ── */
+nav a {
+  position: relative;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+nav a:hover::after,
+nav a.active::after { width: 100%; }
+
+/* ── HAMBURGER BUTTON ── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 601;
+  position: relative;
+}
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+              opacity 0.3s;
+  transform-origin: center;
+}
+body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* ── MOBILE NAV OVERLAY ── */
+.nav-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: #0c0c0c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 36px 60px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+body.nav-open .nav-mobile {
+  opacity: 1;
+  pointer-events: all;
+}
+.nav-mobile a {
+  display: block;
+  font-size: clamp(40px, 12vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,0.6) !important;
+  line-height: 1.15;
+  transition: color 0.2s;
+  opacity: 1 !important;
+}
+.nav-mobile a:hover,
+.nav-mobile a.active { color: #ffffff !important; }
+
+.nav-mobile-footer {
+  position: absolute;
+  bottom: 40px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  gap: 24px;
+}
+.nav-mobile-footer a {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.2s;
+}
+.nav-mobile-footer a:hover { color: rgba(255,255,255,0.7); }
+
+@media (max-width: 600px) {
+  .nav-toggle { display: flex; }
+  header nav { display: none; }
+  body.nav-open { overflow: hidden; }
+}
+
+/* ── KEYFRAMES ── */
+@keyframes jd-fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes jd-lineUp {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+@keyframes jd-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── LINE REVEAL (for big headlines — above fold) ── */
+.line {
+  display: block;
+  overflow: hidden;
+  line-height: inherit;
+}
+.line > span {
+  display: block;
+  animation: jd-lineUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* Per-line stagger */
+.line:nth-child(1) > span { animation-delay: 0.15s; }
+.line:nth-child(2) > span { animation-delay: 0.30s; }
+.line:nth-child(3) > span { animation-delay: 0.45s; }
+.line:nth-child(4) > span { animation-delay: 0.60s; }
+
+/* ── ABOVE-FOLD FADE ELEMENTS ── */
+.hero-label,
+.project-eyebrow,
+.back-link {
+  animation: jd-fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+.hero-tagline {
+  animation: jd-fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+.hero-cats {
+  animation: jd-fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+}
+.hero-scroll {
+  animation: jd-fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
+}
+
+/* ── SCROLL-TRIGGERED: BASE ── */
+[data-anim] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image variant — subtle scale */
+[data-anim="img"] {
+  transform: scale(0.97) translateY(16px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Line reveal on scroll */
+[data-anim="line"] {
+  opacity: 1;
+  transform: none;
+  overflow: hidden;
+  display: block;
+}
+[data-anim="line"] > span {
+  display: block;
+  transform: translateY(108%);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── ACTIVE STATE ── */
+[data-anim].in {
+  opacity: 1;
+  transform: none;
+}
+[data-anim="line"].in > span {
+  transform: translateY(0);
+}
+
+/* ── STAGGER DELAYS ── */
+[data-delay="1"] { transition-delay: 0.07s; }
+[data-delay="2"] { transition-delay: 0.14s; }
+[data-delay="3"] { transition-delay: 0.21s; }
+[data-delay="4"] { transition-delay: 0.28s; }
+[data-delay="5"] { transition-delay: 0.35s; }
+[data-delay="6"] { transition-delay: 0.42s; }
+[data-delay="7"] { transition-delay: 0.49s; }
+[data-delay="8"] { transition-delay: 0.56s; }
+[data-delay="9"] { transition-delay: 0.63s; }
+
+/* ── REDUCE MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] { transition: none; }
+  .line > span { animation: none; }
+  .hero-label, .hero-tagline, .hero-cats, .hero-scroll,
+  .project-eyebrow, .back-link { animation: none; }
+  [data-anim] { opacity: 1; transform: none; }
+}

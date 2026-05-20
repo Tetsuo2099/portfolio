@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti — Juri Dabiankov Studio</title>
+  <meta name="description" content="Contattaci per il tuo prossimo progetto. Siamo disponibili per eventi, branding, packaging, web design e molto altro. Risposta entro 24 ore.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Contatti — Juri Dabiankov Studio">
+  <meta property="og:description" content="Raccontaci il tuo progetto. Risposta entro 24 ore.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f5f5f3;
+      --dark:         #0c0c0c;
+      --mid:          #6b6b6b;
+      --border:       rgba(12,12,12,0.1);
+      --sans:         'Inter', -apple-system, Helvetica, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: var(--sans);
+      font-size: 13px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-link { display: flex; align-items: center; text-decoration: none; }
+    .logo-link img { height: 40px; width: auto; }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+    nav a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--dark);
+      opacity: 0.45;
+      transition: opacity 0.25s;
+    }
+    nav a:hover, nav a.active { opacity: 1; }
+
+    /* ── LAYOUT ── */
+    .page {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── LEFT ── */
+    .left {
+      padding: 130px 72px 80px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .page-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 44px;
+    }
+
+    .page-headline {
+      font-size: clamp(52px, 5.8vw, 96px);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+    }
+    .page-headline .dim { color: rgba(12,12,12,0.2); }
+
+    .left-desc {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--mid);
+      max-width: 340px;
+      margin-top: 36px;
+    }
+
+    /* ── DIRECT LINKS ── */
+    .direct-links { display: flex; flex-direction: column; }
+    .direct-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--dark);
+      transition: opacity 0.25s;
+    }
+    .direct-link:last-child { border-bottom: 1px solid var(--border); }
+    .direct-link:hover { opacity: 0.35; }
+    .direct-link-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 2px; }
+    .direct-link-value { font-size: 12px; font-weight: 600; }
+    .direct-link-arrow { font-size: 14px; color: var(--mid); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .direct-link:hover .direct-link-arrow { transform: translate(4px, -4px); }
+
+    /* ── RIGHT ── */
+    .right {
+      background: #fff;
+      padding: 130px 72px 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 52px;
+    }
+
+    form { display: flex; flex-direction: column; gap: 36px; }
+
+    .field { display: flex; flex-direction: column; gap: 10px; position: relative; }
+
+    label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+    .field:focus-within label { color: var(--dark); }
+
+    input, select, textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--dark);
+      font-family: var(--sans);
+      font-size: 15px;
+      padding: 10px 0 12px;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    /* animated underline on focus */
+    .field::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--dark);
+      transition: width 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .field:focus-within::after { width: 100%; }
+    /* keep select arrow from overriding */
+    .field-select::after { display: none; }
+
+    input::placeholder, textarea::placeholder { color: rgba(12,12,12,0.22); }
+    select { cursor: pointer; color: rgba(12,12,12,0.25); }
+    select.filled { color: var(--dark); }
+    select option { color: var(--dark); }
+
+    .sel-arrow {
+      position: absolute;
+      right: 0; bottom: 13px;
+      font-size: 11px;
+      color: var(--mid);
+      pointer-events: none;
+      transition: transform 0.3s;
+    }
+    .field-select:focus-within .sel-arrow { transform: rotate(180deg); }
+
+    textarea { resize: none; line-height: 1.7; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+
+    /* ── FOOTER FORM ── */
+    .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+    }
+    .form-note { font-size: 10px; color: rgba(12,12,12,0.3); line-height: 1.7; }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 20px 40px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #2a2a2a;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .btn-submit:hover::before { transform: scaleX(1); }
+    .btn-submit span { position: relative; z-index: 1; }
+    .btn-submit:active { transform: scale(0.97); }
+
+    /* ── SUCCESS ── */
+    .form-success { display: none; flex-direction: column; gap: 24px; padding: 40px 0; }
+    .form-success.visible { display: flex; }
+    .success-check { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+    .success-title { font-size: clamp(36px, 4vw, 60px); font-weight: 800; letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.95; }
+    .success-sub { font-size: 14px; color: var(--mid); line-height: 1.8; }
+    .success-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; color: var(--dark); opacity: 0.35;
+      margin-top: 8px; transition: opacity 0.2s;
+    }
+    .success-back:hover { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      header { padding: 0 24px; }
+      .page { grid-template-columns: 1fr; }
+      .left { position: static; height: auto; padding: 110px 24px 60px; border-right: none; border-bottom: 1px solid var(--border); }
+      .right { padding: 60px 24px 80px; }
+    }
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+      .form-footer { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .btn-submit { width: 100%; justify-content: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="anim.css">
+</head>
+<body>
+
+  <header>
+    <a class="logo-link" href="index.html">
+      <img src="images/logo.svg" alt="Juri Dabiankov Studio">
+    </a>
+    <nav>
+      <a href="works.html">Works</a>
+      <a href="services.html">Servizi</a>
+      <a href="about.html">Studio</a>
+      <a href="contact.html" class="active">Contatti</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <!-- LEFT -->
+    <div class="left">
+      <div>
+        <p class="page-eyebrow hero-label">Lavoriamo insieme</p>
+
+        <h1 class="page-headline">
+          <span class="line"><span>SCRIVIAMO</span></span>
+          <span class="line"><span><span class="dim">UN</span></span></span>
+          <span class="line"><span>PROGETTO.</span></span>
+        </h1>
+
+        <p class="left-desc" data-anim data-delay="3">
+          Raccontaci il tuo progetto: brief, idee<br>
+          o anche solo un'intuizione.<br>
+          Ti rispondiamo entro 24 ore.
+        </p>
+      </div>
+
+      <div class="direct-links">
+        <a class="direct-link" href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="1">
+          <div><p class="direct-link-label">Instagram</p><p class="direct-link-value">@juridabiankov</p></div>
+          <span class="direct-link-arrow">↗</span>
+        </a>
+        <a class="direct-link" href="https://www.linkedin.com/in/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="2">
+          <div><p class="direct-link-label">LinkedIn</p><p class="direct-link-value">Juri Dabiankov</p></div>
+          <span class="direct-link-arrow">↗</span>
+        </a>
+        <a class="direct-link" href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="3">
+          <div><p class="direct-link-label">Behance</p><p class="direct-link-value">juridabiankov</p></div>
+          <span class="direct-link-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <p class="form-eyebrow" data-anim>Invia un messaggio</p>
+
+      <form id="contactForm" novalidate>
+        <div class="field-row">
+          <div class="field" data-anim data-delay="1">
+            <label for="fname">Nome</label>
+            <input type="text" id="fname" name="fname" placeholder="Mario" required>
+          </div>
+          <div class="field" data-anim data-delay="2">
+            <label for="lname">Cognome</label>
+            <input type="text" id="lname" name="lname" placeholder="Rossi" required>
+          </div>
+        </div>
+
+        <div class="field" data-anim data-delay="2">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="mario@studio.it" required>
+        </div>
+
+        <div class="field field-select" data-anim data-delay="3">
+          <label for="service">Servizio</label>
+          <select id="service" name="service">
+            <option value="" disabled selected>Seleziona un servizio</option>
+            <option value="eventi">Comunicazione eventi</option>
+            <option value="branding">Branding &amp; identità</option>
+            <option value="packaging">Packaging &amp; print</option>
+            <option value="web">Web design</option>
+            <option value="social">Social media</option>
+            <option value="altro">Altro</option>
+          </select>
+          <span class="sel-arrow">↓</span>
+        </div>
+
+        <div class="field" data-anim data-delay="4">
+          <label for="message">Messaggio</label>
+          <textarea id="message" name="message" placeholder="Descrivi il tuo progetto…" rows="4" required></textarea>
+        </div>
+
+        <div class="form-footer" data-anim data-delay="5">
+          <p class="form-note">Risposta entro 24 ore.<br>Nessuno spam, mai.</p>
+          <button type="submit" class="btn-submit">
+            <span>Invia</span> <span>→</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <span class="success-check">✓ Inviato</span>
+        <h2 class="success-title">Messaggio<br>ricevuto.</h2>
+        <p class="success-sub">Grazie per averci scritto.<br>Ti risponderemo entro 24 ore.</p>
+        <a href="index.html" class="success-back">← Torna alla home</a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    document.getElementById('service').addEventListener('change', function () {
+      this.classList.toggle('filled', this.value !== '');
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var valid = true;
+      this.querySelectorAll('[required]').forEach(function (el) {
+        if (!el.value.trim()) {
+          el.style.borderBottomColor = 'rgba(200,50,50,0.5)';
+          valid = false;
+          el.addEventListener('input', function () { el.style.borderBottomColor = ''; }, { once: true });
+        }
+      });
+      if (!valid) return;
+
+      var btn = this.querySelector('.btn-submit');
+      btn.querySelector('span').textContent = 'Invio…';
+      btn.disabled = true;
+
+      /* Per inviare davvero: aggiungi action="https://formspree.io/f/TUOID" method="POST" al tag form */
+      setTimeout(function () {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      }, 700);
+    });
+  </script>
+  <script src="anim.js" defer></script>
+</body>
+</html>

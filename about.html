@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — Juri Dabiankov</title>
+  <meta name="description" content="Siamo un collettivo creativo con base a Roma: art director, fotografi, videomaker, copywriter e marketer. Scopri il team dietro Juri Dabiankov Studio.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Studio — Juri Dabiankov">
+  <meta property="og:description" content="Un collettivo creativo con base a Roma: art director, fotografi, videomaker, copywriter e marketer.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --text: #0c0c0c;
+      --muted: #888880;
+      --border: rgba(12,12,12,0.10);
+      --sans: 'Inter', -apple-system, Helvetica, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 13px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      height: 58px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo span { font-weight: 300; }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+    nav a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    nav a.active, nav a:hover { opacity: 1; }
+
+    main {
+      padding-top: 58px;
+      min-height: 100vh;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 58px);
+    }
+
+    .about-image {
+      background: #dedad3;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-image-ph {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(12,12,12,0.25);
+    }
+
+    .about-content {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .about-headline {
+      font-family: var(--sans);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .about-headline em {
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    .about-text {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+      opacity: 0.7;
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+
+    .about-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 48px;
+    }
+
+    .skill-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .contact-link:hover { opacity: 0.5; }
+    .contact-link::after { content: '→'; }
+
+    /* ── TEAM ── */
+    .team-section {
+      border-top: 1px solid var(--border);
+      padding: 80px 48px;
+    }
+    .team-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px 48px;
+    }
+    .team-member {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .member-photo {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #e8e4dc;
+    }
+    .member-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .member-photo-ph {
+      width: 100%;
+      height: 100%;
+    }
+    .member-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-top: 4px;
+    }
+    .member-role {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .member-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .member-bio {
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    footer {
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover { opacity: 1; }
+    .footer-copy { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+
+    @media (max-width: 860px) {
+      header { padding: 0 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image-ph { min-height: 300px; }
+      .about-content { padding: 48px 24px; }
+      .team-section { padding: 60px 24px; }
+      .team-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+      footer { padding: 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+    @media (max-width: 540px) {
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="anim.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" style="display:flex;align-items:center;height:22px;">
+      <img src="images/logo.svg" alt="Juri Dabiankov" style="height:40px;width:auto;">
+    </a>
+    <nav>
+      <a href="works.html">Works</a><a href="services.html">Servizi</a><a href="about.html" class="active">Studio</a>
+      <a href="contact.html">Contatti</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="about-grid">
+      <div class="about-image">
+        <!-- Replace with: <img src="images/profile.jpg" alt="Juri Dabiankov"> -->
+        <div class="about-image-ph">Photo</div>
+      </div>
+      <div class="about-content">
+        <p class="about-label">Art Director</p>
+        <h1 class="about-headline">
+      <span class="line"><span>DESIGN CHE</span></span>
+      <span class="line"><span><em>RACCONTA</em></span></span>
+      <span class="line"><span>IL TUO BRAND.</span></span>
+    </h1>
+        <p class="about-text">
+          Sono Juri Dabiankov, Art Director con base a Roma. Mi occupo di identità visiva,
+          comunicazione per eventi e packaging — lavorando con brand che vogliono distinguersi
+          attraverso un design autentico e memorabile.
+        </p>
+        <div class="about-skills">
+          <span class="skill-tag">Branding</span>
+          <span class="skill-tag">Art Direction</span>
+          <span class="skill-tag">Packaging</span>
+          <span class="skill-tag">Print Design</span>
+          <span class="skill-tag">Visual Identity</span>
+          <span class="skill-tag">Event Communication</span>
+          <span class="skill-tag">Typography</span>
+          <span class="skill-tag">Illustration</span>
+        </div>
+        <a class="contact-link" href="mailto:juri.dabiankov@gmail.com">Parliamo del tuo progetto</a>
+      </div>
+    </div>
+  </main>
+
+  <section class="team-section">
+    <div class="team-header">
+      <span class="about-label" style="margin:0">Collaboratori</span>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-member" data-anim>
+        <div class="member-photo">
+          <!-- <img src="images/team/marco-ferretti.jpg" alt="Marco Ferretti"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Fotografo</span>
+          <h3 class="member-name">Marco Ferretti</h3>
+          <p class="member-bio">Fotografia di eventi, sport e reportage. Collabora con lo studio su shooting in esterna e copertura eventi.</p>
+        </div>
+      </div>
+
+      <div class="team-member" data-anim data-delay="1">
+        <div class="member-photo">
+          <!-- <img src="images/team/sofia-ricci.jpg" alt="Sofia Ricci"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Sviluppatrice Web</span>
+          <h3 class="member-name">Sofia Ricci</h3>
+          <p class="member-bio">Front-end development e CMS. Traduce i design in siti performanti, ottimizzati per mobile e SEO.</p>
+        </div>
+      </div>
+
+      <div class="team-member" data-anim data-delay="2">
+        <div class="member-photo">
+          <!-- <img src="images/team/andrea-conti.jpg" alt="Andrea Conti"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Videomaker</span>
+          <h3 class="member-name">Andrea Conti</h3>
+          <p class="member-bio">Regia, ripresa e post-produzione video. Specializzato in brand film, recap eventi e contenuti social.</p>
+        </div>
+      </div>
+
+      <div class="team-member" data-anim data-delay="3">
+        <div class="member-photo">
+          <!-- <img src="images/team/chiara-moretti.jpg" alt="Chiara Moretti"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Copywriter</span>
+          <h3 class="member-name">Chiara Moretti</h3>
+          <p class="member-bio">Testi per brand, campagne e web. Cura la voce del brand e la coerenza narrativa su tutti i canali.</p>
+        </div>
+      </div>
+
+      <div class="team-member" data-anim data-delay="4">
+        <div class="member-photo">
+          <!-- <img src="images/team/luca-esposito.jpg" alt="Luca Esposito"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Fotografo di Prodotto</span>
+          <h3 class="member-name">Luca Esposito</h3>
+          <p class="member-bio">Still life, packaging e food photography. Immagini curate nei minimi dettagli per e-commerce e cataloghi.</p>
+        </div>
+      </div>
+
+      <div class="team-member" data-anim data-delay="5">
+        <div class="member-photo">
+          <!-- <img src="images/team/elena-martini.jpg" alt="Elena Martini"> -->
+          <div class="member-photo-ph"></div>
+        </div>
+        <div class="member-info">
+          <span class="member-role">Social Media Manager</span>
+          <h3 class="member-name">Elena Martini</h3>
+          <p class="member-bio">Strategia e gestione dei canali social. Pianificazione contenuti, community management e advertising.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="mailto:juri.dabiankov@gmail.com">Email</a>
+      <a href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener">Behance</a>
+      <a href="https://www.linkedin.com/in/juridabiankov" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <span class="footer-copy">© 2024 Juri Dabiankov — Tutti i diritti riservati</span>
+  </footer>
+
+  <script src="anim.js" defer></script>
+</body>
+</html>

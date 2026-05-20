@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logotypes — Juri Dabiankov Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --dark: #0c0c0c; --light: #ffffff; --muted-light: rgba(255,255,255,0.45); --muted-dark: #888880; --border-light: rgba(255,255,255,0.12); --border-dark: rgba(12,12,12,0.10); --sans: 'Inter', -apple-system, Helvetica, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--light); font-family: var(--sans); font-size: 13px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    header { position: fixed; inset: 0 0 auto 0; z-index: 200; height: 64px; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; transition: background 0.4s, border-color 0.4s; }
+    header.scrolled { background: var(--light); border-bottom: 1px solid var(--border-dark); }
+    .logo-link { display: flex; align-items: center; text-decoration: none; height: 22px; }
+    .logo-link img { height: 40px; width: auto; display: block; transition: filter 0.4s; }
+    .logo-link img.dark-mode { filter: invert(1); }
+    header.scrolled .logo-link img { filter: none; }
+    nav { display: flex; align-items: center; gap: 36px; }
+    nav a { font-size: 11px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: color 0.3s, opacity 0.2s; color: var(--light); opacity: 0.6; }
+    nav a:hover { opacity: 1; }
+    header.scrolled nav a { color: var(--dark); }
+
+    /* ── PROJECT HERO ── */
+    .project-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .project-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .project-video.loaded { opacity: 1; }
+    .project-slides {
+      position: absolute;
+      inset: 0;
+    }
+    .project-slides .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      animation: kenBurns 18s infinite;
+    }
+    .project-slides .slide:nth-child(1) { animation-delay: 0s; }
+    .project-slides .slide:nth-child(2) { animation-delay: 6s; }
+    .project-slides .slide:nth-child(3) { animation-delay: 12s; }
+    .project-slides .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @keyframes kenBurns {
+      0%   { opacity: 0; transform: scale(1.0); }
+      6%   { opacity: 1; }
+      32%  { opacity: 1; }
+      40%  { opacity: 0; transform: scale(1.08); }
+      100% { opacity: 0; transform: scale(1.08); }
+    }
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(12,12,12,0.45) 0%, rgba(12,12,12,0.3) 40%, rgba(12,12,12,0.85) 100%);
+    }
+    .back-link, .project-eyebrow, .project-title, .project-tagline { position: relative; z-index: 2; }
+    .project-header { padding-top: 64px; min-height: 80vh; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 64px; padding-left: 48px; padding-right: 48px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.35); transition: color 0.2s; margin-bottom: 64px; }
+    .back-link::before { content: '←'; }
+    .back-link:hover { color: var(--light); }
+    .project-eyebrow { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); }
+    .project-title { font-size: clamp(56px, 10vw, 160px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 32px; }
+    .project-tagline { font-size: 16px; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.7; }
+    .meta-strip { background: var(--light); color: var(--dark); display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border-dark); }
+    .meta-item { padding: 32px 48px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid var(--border-dark); }
+    .meta-item:last-child { border-right: none; }
+    .meta-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); }
+    .meta-value { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.5; }
+    .main-image { background: #d4d4d4; overflow: hidden; }
+    .main-image .img-ph { width: 100%; aspect-ratio: 16 / 7; display: flex; align-items: center; justify-content: center; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(12,12,12,0.2); }
+    .description { background: var(--light); padding: 80px 48px; display: grid; grid-template-columns: 200px 1fr; gap: 80px; align-items: start; border-bottom: 1px solid var(--border-dark); }
+    .desc-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); padding-top: 4px; }
+    .desc-text { font-size: 17px; line-height: 1.85; color: var(--dark); max-width: 680px; }
+    .gallery { background: var(--light); padding: 0 48px 80px; }
+    .gallery-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); padding: 48px 0 36px; border-top: 1px solid var(--border-dark); border-bottom: 1px solid var(--border-dark); margin-bottom: 36px; display: block; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gallery-item { overflow: hidden; }
+    .gallery-item .img-ph { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(12,12,12,0.2); transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .gallery-item:hover .img-ph { transform: scale(1.04); }
+    .ph-a { background: #e8e8e8; } .ph-b { background: #dedede; } .ph-c { background: #d4d4d4; } .ph-d { background: #eeeeee; } .ph-e { background: #f4f4f4; } .ph-f { background: #f8f8f8; }
+    .next-project { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; background: var(--dark); color: var(--light); padding: 80px 48px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); transition: background 0.3s; }
+    .next-project:hover { background: #181818; }
+    .next-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); display: block; margin-bottom: 16px; }
+    .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; line-height: 0.95; }
+    .next-arrow { font-size: 48px; color: rgba(255,255,255,0.25); transition: transform 0.3s, color 0.3s; }
+    .next-project:hover .next-arrow { transform: translateX(12px); color: var(--light); }
+    footer { background: var(--dark); padding: 40px 48px 48px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--light); opacity: 0.35; transition: opacity 0.2s; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-copy { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.08em; }
+    @media (max-width: 900px) {
+      header { padding: 0 24px; } .project-header { padding: 80px 24px 48px; min-height: 60vh; }
+      .meta-strip { grid-template-columns: repeat(2, 1fr); } .meta-item { padding: 24px; } .meta-item:nth-child(2) { border-right: none; }
+      .description { padding: 60px 24px; grid-template-columns: 1fr; gap: 24px; }
+      .gallery { padding: 0 24px 60px; } .next-project { padding: 60px 24px; }
+      footer { padding: 32px 24px; } .footer-bottom { flex-direction: column; gap: 20px; align-items: flex-start; }
+    }
+    @media (max-width: 600px) { .project-title { font-size: clamp(48px, 14vw, 80px); } .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+  <link rel="stylesheet" href="../anim.css">
+</head>
+<body>
+  <header id="siteHeader">
+    <a class="logo-link" href="../index.html">
+      <img src="../images/logo.svg" alt="Juri Dabiankov Studio" class="dark-mode" id="logoImg">
+    </a>
+    <nav>
+      <a href="../works.html">Works</a><a href="../services.html">Servizi</a><a href="../about.html">Studio</a>
+      <a href="contact.html">Contatti</a>
+    </nav>
+  </header>
+
+  <section class="project-header" id="hero">
+    <div class="project-bg">
+      <video class="project-video" autoplay muted loop playsinline>
+        <source src="../projects/logo-identita/loghi-vari/header/video.mp4" type="video/mp4">
+      </video>
+      <div class="project-slides">
+        <div class="slide"><img src="../projects/logo-identita/loghi-vari/header/slide-01.png" alt=""></div>
+        <div class="slide"><img src="../projects/logo-identita/loghi-vari/header/slide-02.png" alt=""></div>
+        <div class="slide"><img src="../projects/logo-identita/loghi-vari/header/slide-03.png" alt=""></div>
+      </div>
+      <div class="project-overlay"></div>
+    </div>
+    <a class="back-link" href="../branding.html">Branding</a>
+    <div class="project-eyebrow"><span>Branding</span><span>·</span><span>2019 — 2023</span></div>
+    <h1 class="project-title">
+      <span class="line"><span>LOGOTYPES</span></span>
+    </h1>
+    <p class="project-tagline">Raccolta di loghi e sistemi di marchio realizzati per clienti in settori diversi.</p>
+  </section>
+
+  <div class="meta-strip">
+    <div class="meta-item" data-anim data-delay="1"><span class="meta-label">Cliente</span><span class="meta-value">Vari clienti</span></div>
+    <div class="meta-item" data-anim data-delay="2"><span class="meta-label">Categoria</span><span class="meta-value">Branding</span></div>
+    <div class="meta-item" data-anim data-delay="3"><span class="meta-label">Anno</span><span class="meta-value">2019 — 2023</span></div>
+    <div class="meta-item" data-anim data-delay="4"><span class="meta-label">Servizi</span><span class="meta-value">Logo Design · Brand Identity</span></div>
+  </div>
+
+  <div class="main-image" data-anim="img">
+    <img src="../projects/logo-identita/loghi-vari/images/01.png" alt="" loading="lazy">
+  </div>
+
+  <section class="description">
+    <span class="desc-label">Il Progetto</span>
+    <p class="desc-text" data-anim>
+      Selezione di logotipi e sistemi di marchio realizzati in quattro anni di attività,
+      per clienti operanti in settori differenti: dal food all'hospitality, dall'industria
+      creativa al retail. Ogni logo nasce da un processo di ricerca che parte dall'identità
+      del brand e si traduce in un segno riconoscibile e duraturo.
+    </p>
+  </section>
+
+  <section class="gallery">
+    <span class="gallery-label">Immagini</span>
+    <div class="gallery-grid">
+      <div class="gallery-item" data-anim="img" data-delay="1">
+        <img src="../projects/logo-identita/loghi-vari/images/02.png" alt="" loading="lazy">
+      </div>
+      <div class="gallery-item" data-anim="img" data-delay="2"><img src="../projects/logo-identita/loghi-vari/images/03.png" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="3"><img src="../projects/logo-identita/loghi-vari/images/04.jpg" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="4"><img src="../projects/logo-identita/loghi-vari/images/05.jpg" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="5"><img src="../projects/logo-identita/loghi-vari/images/06.jpg" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="6"><img src="../projects/logo-identita/loghi-vari/images/07.jpg" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="7"><img src="../projects/logo-identita/loghi-vari/images/08.jpg" alt="" loading="lazy"></div>
+      <div class="gallery-item" data-anim="img" data-delay="8">
+        <img src="../projects/logo-identita/loghi-vari/images/09.jpg" alt="" loading="lazy">
+      </div>
+      <div class="gallery-item" data-anim="img" data-delay="9"><img src="../projects/logo-identita/loghi-vari/images/10.jpg" alt="" loading="lazy"></div>
+    </div>
+    </section>
+
+  <a class="next-project" href="book-print.html">
+    <div>
+      <span class="next-label">Progetto successivo</span>
+      <span class="next-title">BOOK<br>&amp; PRINT</span>
+    </div>
+    <span class="next-arrow">→</span>
+  </a>
+
+  <footer>
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="mailto:juri.dabiankov@gmail.com">Email</a>
+        <a href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener">Behance</a>
+        <a href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <span class="footer-copy">© 2025 Juri Dabiankov Studio</span>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    const logoImg = document.getElementById('logoImg');
+    const hero = document.getElementById('hero');
+    new IntersectionObserver(([e]) => {
+      header.classList.toggle('scrolled', !e.isIntersecting);
+      logoImg.classList.toggle('dark-mode', e.isIntersecting);
+    }, { threshold: 0.05 }).observe(hero);
+  </script>
+  <script src="../anim.js" defer></script>
+</body>
+</html>

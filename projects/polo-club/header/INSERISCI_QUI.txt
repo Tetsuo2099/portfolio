@@ -1,0 +1,3 @@
+Metti qui:
+- video.mp4  → verrà usato come sfondo video
+- slide-01.jpg, slide-02.jpg, slide-03.jpg  → Ken Burns slideshow

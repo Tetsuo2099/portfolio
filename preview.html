@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Preview — Juri Dabiankov Studio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #111; font-family: -apple-system, Helvetica, sans-serif; padding: 28px 24px 48px; overflow-x: auto; }
+
+    h1 { color: rgba(255,255,255,0.35); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+
+    .nav-pages { display: flex; gap: 6px; margin-bottom: 28px; flex-wrap: wrap; }
+    .nav-pages button {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .nav-pages button:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    .nav-pages button.active { color: #fff; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); }
+
+    .frames { display: flex; gap: 32px; align-items: flex-start; min-width: 1100px; }
+
+    .frame-col { display: flex; flex-direction: column; gap: 10px; }
+    .frame-label { color: rgba(255,255,255,0.35); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .frame-label b { color: rgba(255,255,255,0.55); font-weight: 600; }
+
+    .device-shell {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+    }
+
+    .phone-shell {
+      background: #1a1a1a;
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+    }
+    .phone-notch {
+      width: 80px; height: 20px;
+      background: #1a1a1a;
+      border-radius: 0 0 14px 14px;
+      margin: 0 auto -20px;
+      position: relative;
+      z-index: 2;
+    }
+    .phone-screen {
+      border-radius: 32px;
+      overflow: hidden;
+    }
+
+    iframe { display: block; border: none; transform-origin: top left; }
+
+    /* Scale + clip to scaled size */
+    .desk-frame  { width: 1280px; height: 820px; transform: scale(0.48); }
+    .desk-clip   { width: calc(1280px * 0.48); height: calc(820px * 0.48); overflow: hidden; }
+
+    .tab-frame   { width: 768px; height: 1024px; transform: scale(0.55); }
+    .tab-clip    { width: calc(768px * 0.55); height: calc(1024px * 0.55); overflow: hidden; }
+
+    .mob-frame   { width: 390px; height: 844px; transform: scale(0.72); }
+    .mob-clip    { width: calc(390px * 0.72); height: calc(844px * 0.72); overflow: hidden; border-radius: 30px; }
+  </style>
+</head>
+<body>
+
+  <h1>Responsive Preview</h1>
+
+  <div class="nav-pages" id="navPages">
+    <button class="active" onclick="go(this,'index.html')">Home</button>
+    <button onclick="go(this,'works.html')">Works</button>
+    <button onclick="go(this,'services.html')">Servizi</button>
+    <button onclick="go(this,'about.html')">Studio</button>
+    <button onclick="go(this,'contact.html')">Contatti</button>
+  </div>
+
+  <div class="frames">
+
+    <!-- DESKTOP -->
+    <div class="frame-col">
+      <div class="frame-label"><b>Desktop</b> — 1280px</div>
+      <div class="device-shell">
+        <div class="desk-clip">
+          <iframe class="desk-frame" id="desk" src="index.html"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLET -->
+    <div class="frame-col">
+      <div class="frame-label"><b>Tablet</b> — 768px</div>
+      <div class="device-shell">
+        <div class="tab-clip">
+          <iframe class="tab-frame" id="tab" src="index.html"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="frame-col">
+      <div class="frame-label"><b>Mobile</b> — 390px</div>
+      <div class="phone-shell">
+        <div class="phone-notch"></div>
+        <div class="mob-clip">
+          <iframe class="mob-frame" id="mob" src="index.html"></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function go(btn, page) {
+      document.getElementById('desk').src = page;
+      document.getElementById('tab').src  = page;
+      document.getElementById('mob').src  = page;
+      document.querySelectorAll('#navPages button').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
