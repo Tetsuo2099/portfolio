@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juri Dabiankov Studio — Intro</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:#F4F2EE}
+    #root{position:fixed;inset:0}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js" crossorigin></script>
+  <script type="text/babel">
+// animations.jsx
+// Reusable animation starter: Stage, Timeline, Sprite, easing helpers.
+// Usage (in an HTML file that loads React + Babel):
+//
+//   <Stage width={1280} height={720} duration={10} background="#f6f4ef">
+//     <MyScene />
+//   </Stage>
+//
+// Inside <Stage>, any child can call useTime() to read the current
+// playhead (seconds). Or wrap content in <Sprite start={1} end={4}>...</Sprite>
+// to only render during that window -- children receive a `localTime` and
+// `progress` via the useSprite() hook.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Easing functions (hand-rolled, Popmotion-style) ─────────────────────────
+// All easings take t ∈ [0,1] and return eased t ∈ [0,1] (may overshoot for back/elastic).
+const Easing = {
+  linear: (t) => t,
+
+  // Quad
+  easeInQuad:    (t) => t * t,
+  easeOutQuad:   (t) => t * (2 - t),
+  easeInOutQuad: (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
+
+  // Cubic
+  easeInCubic:    (t) => t * t * t,
+  easeOutCubic:   (t) => (--t) * t * t + 1,
+  easeInOutCubic: (t) => (t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1),
+
+  // Quart
+  easeInQuart:    (t) => t * t * t * t,
+  easeOutQuart:   (t) => 1 - (--t) * t * t * t,
+  easeInOutQuart: (t) => (t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t),
+
+  // Expo
+  easeInExpo:  (t) => (t === 0 ? 0 : Math.pow(2, 10 * (t - 1))),
+  easeOutExpo: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+  easeInOutExpo: (t) => {
+    if (t === 0) return 0;
+    if (t === 1) return 1;
+    if (t < 0.5) return 0.5 * Math.pow(2, 20 * t - 10);
+    return 1 - 0.5 * Math.pow(2, -20 * t + 10);
+  },
+
+  // Sine
+  easeInSine:    (t) => 1 - Math.cos((t * Math.PI) / 2),
+  easeOutSine:   (t) => Math.sin((t * Math.PI) / 2),
+  easeInOutSine: (t) => -(Math.cos(Math.PI * t) - 1) / 2,
+
+  // Back (overshoot)
+  easeOutBack: (t) => {
+    const c1 = 1.70158, c3 = c1 + 1;
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+  },
+  easeInBack: (t) => {
+    const c1 = 1.70158, c3 = c1 + 1;
+    return c3 * t * t * t - c1 * t * t;
+  },
+  easeInOutBack: (t) => {
+    const c1 = 1.70158, c2 = c1 * 1.525;
+    return t < 0.5
+      ? (Math.pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
+      : (Math.pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
+  },
+
+  // Elastic
+  easeOutElastic: (t) => {
+    const c4 = (2 * Math.PI) / 3;
+    if (t === 0) return 0;
+    if (t === 1) return 1;
+    return Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+  },
+};
+
+// ── Core interpolation helpers ──────────────────────────────────────────────
+
+// Clamp a value to [min, max]
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+// interpolate([0, 0.5, 1], [0, 100, 50], ease?) -> fn(t)
+// Popmotion-style: linearly maps t across input keyframes to output values,
+// with optional easing per segment (single fn or array of fns).
+function interpolate(input, output, ease = Easing.linear) {
+  return (t) => {
+    if (t <= input[0]) return output[0];
+    if (t >= input[input.length - 1]) return output[output.length - 1];
+    for (let i = 0; i < input.length - 1; i++) {
+      if (t >= input[i] && t <= input[i + 1]) {
+        const span = input[i + 1] - input[i];
+        const local = span === 0 ? 0 : (t - input[i]) / span;
+        const easeFn = Array.isArray(ease) ? (ease[i] || Easing.linear) : ease;
+        const eased = easeFn(local);
+        return output[i] + (output[i + 1] - output[i]) * eased;
+      }
+    }
+    return output[output.length - 1];
+  };
+}
+
+// animate({from, to, start, end, ease})(t) — simpler single-segment tween.
+// Returns `from` before `start`, `to` after `end`.
+function animate({ from = 0, to = 1, start = 0, end = 1, ease = Easing.easeInOutCubic }) {
+  return (t) => {
+    if (t <= start) return from;
+    if (t >= end) return to;
+    const local = (t - start) / (end - start);
+    return from + (to - from) * ease(local);
+  };
+}
+
+// ── Timeline context ────────────────────────────────────────────────────────
+
+const TimelineContext = React.createContext({ time: 0, duration: 10, playing: false });
+
+const useTime = () => React.useContext(TimelineContext).time;
+const useTimeline = () => React.useContext(TimelineContext);
+
+// ── Sprite ──────────────────────────────────────────────────────────────────
+// Renders children only when the playhead is inside [start, end]. Provides
+// a sub-context with `localTime` (seconds since start) and `progress` (0..1).
+//
+//   <Sprite start={2} end={5}>
+//     {({ localTime, progress }) => <Thing x={progress * 100} />}
+//   </Sprite>
+//
+// Or as a plain wrapper — children can call useSprite() themselves.
+
+const SpriteContext = React.createContext({ localTime: 0, progress: 0, duration: 0 });
+const useSprite = () => React.useContext(SpriteContext);
+
+function Sprite({ start = 0, end = Infinity, children, keepMounted = false }) {
+  const { time } = useTimeline();
+  const visible = time >= start && time <= end;
+  if (!visible && !keepMounted) return null;
+
+  const duration = end - start;
+  const localTime = Math.max(0, time - start);
+  const progress = duration > 0 && isFinite(duration)
+    ? clamp(localTime / duration, 0, 1)
+    : 0;
+
+  const value = { localTime, progress, duration, visible };
+
+  return (
+    <SpriteContext.Provider value={value}>
+      {typeof children === 'function' ? children(value) : children}
+    </SpriteContext.Provider>
+  );
+}
+
+// ── Sample sprite components ────────────────────────────────────────────────
+
+// TextSprite: fades/slides text in on entry, holds, then fades out on exit.
+// Props: text, x, y, size, color, font, entryDur, exitDur, align
+function TextSprite({
+  text,
+  x = 0, y = 0,
+  size = 48,
+  color = '#111',
+  font = 'Inter, system-ui, sans-serif',
+  weight = 600,
+  entryDur = 0.45,
+  exitDur = 0.35,
+  entryEase = Easing.easeOutBack,
+  exitEase = Easing.easeInCubic,
+  align = 'left',
+  letterSpacing = '-0.01em',
+}) {
+  const { localTime, duration } = useSprite();
+  const exitStart = Math.max(0, duration - exitDur);
+
+  let opacity = 1;
+  let ty = 0;
+
+  if (localTime < entryDur) {
+    const t = entryEase(clamp(localTime / entryDur, 0, 1));
+    opacity = t;
+    ty = (1 - t) * 16;
+  } else if (localTime > exitStart) {
+    const t = exitEase(clamp((localTime - exitStart) / exitDur, 0, 1));
+    opacity = 1 - t;
+    ty = -t * 8;
+  }
+
+  const translateX = align === 'center' ? '-50%' : align === 'right' ? '-100%' : '0';
+
+  return (
+    <div style={{
+      position: 'absolute',
+      left: x, top: y,
+      transform: `translate(${translateX}, ${ty}px)`,
+      opacity,
+      fontFamily: font,
+      fontSize: size,
+      fontWeight: weight,
+      color,
+      letterSpacing,
+      whiteSpace: 'pre',
+      lineHeight: 1.1,
+      willChange: 'transform, opacity',
+    }}>
+      {text}
+    </div>
+  );
+}
+
+// ImageSprite: scales + fades in; optional Ken Burns drift during hold.
+function ImageSprite({
+  src,
+  x = 0, y = 0,
+  width = 400, height = 300,
+  entryDur = 0.6,
+  exitDur = 0.4,
+  kenBurns = false,
+  kenBurnsScale = 1.08,
+  radius = 12,
+  fit = 'cover',
+  placeholder = null, // {label: string} for striped placeholder
+}) {
+  const { localTime, duration } = useSprite();
+  const exitStart = Math.max(0, duration - exitDur);
+
+  let opacity = 1;
+  let scale = 1;
+
+  if (localTime < entryDur) {
+    const t = Easing.easeOutCubic(clamp(localTime / entryDur, 0, 1));
+    opacity = t;
+    scale = 0.96 + 0.04 * t;
+  } else if (localTime > exitStart) {
+    const t = Easing.easeInCubic(clamp((localTime - exitStart) / exitDur, 0, 1));
+    opacity = 1 - t;
+    scale = (kenBurns ? kenBurnsScale : 1) + 0.02 * t;
+  } else if (kenBurns) {
+    const holdSpan = exitStart - entryDur;
+    const holdT = holdSpan > 0 ? (localTime - entryDur) / holdSpan : 0;
+    scale = 1 + (kenBurnsScale - 1) * holdT;
+  }
+
+  const content = placeholder ? (
+    <div style={{
+      width: '100%', height: '100%',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'repeating-linear-gradient(135deg, #e9e6df 0 10px, #dcd8cf 10px 20px)',
+      color: '#6b6458',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      fontSize: 13,
+      letterSpacing: '0.04em',
+      textTransform: 'uppercase',
+    }}>
+      {placeholder.label || 'image'}
+    </div>
+  ) : (
+    <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: fit, display: 'block' }} />
+  );
+
+  return (
+    <div style={{
+      position: 'absolute',
+      left: x, top: y,
+      width, height,
+      opacity,
+      transform: `scale(${scale})`,
+      transformOrigin: 'center',
+      borderRadius: radius,
+      overflow: 'hidden',
+      willChange: 'transform, opacity',
+    }}>
+      {content}
+    </div>
+  );
+}
+
+// RectSprite: simple rectangle that animates position/size/color via props.
+// Useful demo primitive — takes a `render` fn for per-frame customization.
+function RectSprite({
+  x = 0, y = 0,
+  width = 100, height = 100,
+  color = '#111',
+  radius = 8,
+  entryDur = 0.4,
+  exitDur = 0.3,
+  render, // optional: (ctx) => style overrides
+}) {
+  const spriteCtx = useSprite();
+  const { localTime, duration } = spriteCtx;
+  const exitStart = Math.max(0, duration - exitDur);
+
+  let opacity = 1;
+  let scale = 1;
+
+  if (localTime < entryDur) {
+    const t = Easing.easeOutBack(clamp(localTime / entryDur, 0, 1));
+    opacity = clamp(localTime / entryDur, 0, 1);
+    scale = 0.4 + 0.6 * t;
+  } else if (localTime > exitStart) {
+    const t = Easing.easeInQuad(clamp((localTime - exitStart) / exitDur, 0, 1));
+    opacity = 1 - t;
+    scale = 1 - 0.15 * t;
+  }
+
+  const overrides = render ? render(spriteCtx) : {};
+
+  return (
+    <div style={{
+      position: 'absolute',
+      left: x, top: y,
+      width, height,
+      background: color,
+      borderRadius: radius,
+      opacity,
+      transform: `scale(${scale})`,
+      transformOrigin: 'center',
+      willChange: 'transform, opacity',
+      ...overrides,
+    }} />
+  );
+}
+
+
+function Stage({
+  width = 1280,
+  height = 720,
+  duration = 10,
+  background = '#f6f4ef',
+  fps = 60,
+  loop = true,
+  autoplay = true,
+  persistKey = 'animstage',
+  children,
+}) {
+  const [time, setTime] = React.useState(0);
+  const [playing, setPlaying] = React.useState(autoplay);
+  const [hoverTime, setHoverTime] = React.useState(null);
+  const [scale, setScale] = React.useState(1);
+
+  const stageRef = React.useRef(null);
+  const canvasRef = React.useRef(null);
+  const rafRef = React.useRef(null);
+  const lastTsRef = React.useRef(null);
+
+  // no localStorage — sempre ricomincia da 0
+
+  // Auto-scale to fit viewport
+  React.useEffect(() => {
+    if (!stageRef.current) return;
+    const el = stageRef.current;
+    const measure = () => {
+      const s = Math.min(window.innerWidth / width, window.innerHeight / height);
+      setScale(Math.max(0.05, s));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [width, height]);
+
+  // Animation loop
+  React.useEffect(() => {
+    if (!playing) {
+      lastTsRef.current = null;
+      return;
+    }
+    const step = (ts) => {
+      if (lastTsRef.current == null) lastTsRef.current = ts;
+      const dt = (ts - lastTsRef.current) / 1000;
+      lastTsRef.current = ts;
+      setTime((t) => {
+        let next = t + dt;
+        if (next >= duration) {
+          if (loop) next = next % duration;
+          else { next = duration; setPlaying(false); }
+        }
+        return next;
+      });
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      lastTsRef.current = null;
+    };
+  }, [playing, duration, loop]);
+
+  // Keyboard: space = play/pause, ← → = seek
+  React.useEffect(() => {
+    const onKey = (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setPlaying(p => !p);
+      } else if (e.code === 'ArrowLeft') {
+        setTime(t => clamp(t - (e.shiftKey ? 1 : 0.1), 0, duration));
+      } else if (e.code === 'ArrowRight') {
+        setTime(t => clamp(t + (e.shiftKey ? 1 : 0.1), 0, duration));
+      } else if (e.key === '0' || e.code === 'Home') {
+        setTime(0);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [duration]);
+
+  const displayTime = hoverTime != null ? hoverTime : time;
+
+  const ctxValue = React.useMemo(
+    () => ({ time: displayTime, duration, playing, setTime, setPlaying }),
+    [displayTime, duration, playing]
+  );
+
+  return (
+    <div ref={stageRef} style={{
+      position:'fixed', inset:0,
+      display:'flex', alignItems:'center', justifyContent:'center',
+      overflow:'hidden', background,
+    }}>
+      <div ref={canvasRef} style={{
+        width, height, background,
+        position:'relative',
+        transform:`scale(${scale})`,
+        transformOrigin:'center',
+        flexShrink:0, overflow:'visible',
+      }}>
+        <TimelineContext.Provider value={ctxValue}>
+          {children}
+        </TimelineContext.Provider>
+      </div>
+    </div>
+  );
+}
+
+// ── Playback bar ────────────────────────────────────────────────────────────
+// Play/pause, return-to-begin, scrub track, time display.
+// Uses fixed-width time fields so layout doesn't thrash.
+
+function PlaybackBar({ time, duration, playing, onPlayPause, onReset, onSeek, onHover }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+
+  const timeFromEvent = React.useCallback((e) => {
+    const rect = trackRef.current.getBoundingClientRect();
+    const x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+    return x * duration;
+  }, [duration]);
+
+  const onTrackMove = (e) => {
+    if (!trackRef.current) return;
+    const t = timeFromEvent(e);
+    if (dragging) {
+      onSeek(t);
+    } else {
+      onHover(t);
+    }
+  };
+
+  const onTrackLeave = () => {
+    if (!dragging) onHover(null);
+  };
+
+  const onTrackDown = (e) => {
+    setDragging(true);
+    const t = timeFromEvent(e);
+    onSeek(t);
+    onHover(null);
+  };
+
+  React.useEffect(() => {
+    if (!dragging) return;
+    const onUp = () => setDragging(false);
+    const onMove = (e) => {
+      if (!trackRef.current) return;
+      const t = timeFromEvent(e);
+      onSeek(t);
+    };
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('mousemove', onMove);
+    return () => {
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('mousemove', onMove);
+    };
+  }, [dragging, timeFromEvent, onSeek]);
+
+  const pct = duration > 0 ? (time / duration) * 100 : 0;
+  const fmt = (t) => {
+    const total = Math.max(0, t);
+    const m = Math.floor(total / 60);
+    const s = Math.floor(total % 60);
+    const cs = Math.floor((total * 100) % 100);
+    return `${String(m).padStart(1, '0')}:${String(s).padStart(2, '0')}.${String(cs).padStart(2, '0')}`;
+  };
+
+  const mono = 'JetBrains Mono, ui-monospace, SFMono-Regular, monospace';
+
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 12,
+      padding: '8px 16px',
+      background: 'rgba(20,20,20,0.92)',
+      borderTop: '1px solid rgba(255,255,255,0.08)',
+      width: '100%',
+      maxWidth: 680,
+      alignSelf: 'center',
+
+      borderRadius: 8,
+      color: '#f6f4ef',
+      fontFamily: 'Inter, system-ui, sans-serif',
+      userSelect: 'none',
+      flexShrink: 0,
+    }}>
+      <IconButton onClick={onReset} title="Return to start (0)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 2v10M12 2L5 7l7 5V2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"/>
+        </svg>
+      </IconButton>
+      <IconButton onClick={onPlayPause} title="Play/pause (space)">
+        {playing ? (
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="3" y="2" width="3" height="10" fill="currentColor"/>
+            <rect x="8" y="2" width="3" height="10" fill="currentColor"/>
+          </svg>
+        ) : (
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 2l9 5-9 5V2z" fill="currentColor"/>
+          </svg>
+        )}
+      </IconButton>
+
+      {/* Current time: fixed width so it doesn't thrash */}
+      <div style={{
+        fontFamily: mono,
+        fontSize: 12,
+        fontVariantNumeric: 'tabular-nums',
+        width: 64, textAlign: 'right',
+        color: '#f6f4ef',
+      }}>
+        {fmt(time)}
+      </div>
+
+      {/* Scrub track */}
+      <div
+        ref={trackRef}
+        onMouseMove={onTrackMove}
+        onMouseLeave={onTrackLeave}
+        onMouseDown={onTrackDown}
+        style={{
+          flex: 1,
+          height: 22,
+          position: 'relative',
+          cursor: 'pointer',
+          display: 'flex', alignItems: 'center',
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          left: 0, right: 0, height: 4,
+          background: 'rgba(255,255,255,0.12)',
+          borderRadius: 2,
+        }}/>
+        <div style={{
+          position: 'absolute',
+          left: 0, width: `${pct}%`, height: 4,
+          background: 'oklch(72% 0.12 250)',
+          borderRadius: 2,
+        }}/>
+        <div style={{
+          position: 'absolute',
+          left: `${pct}%`, top: '50%',
+          width: 12, height: 12,
+          marginLeft: -6, marginTop: -6,
+          background: '#fff',
+          borderRadius: 6,
+          boxShadow: '0 2px 4px rgba(0,0,0,0.4)',
+        }}/>
+      </div>
+
+      {/* Duration: fixed width */}
+      <div style={{
+        fontFamily: mono,
+        fontSize: 12,
+        fontVariantNumeric: 'tabular-nums',
+        width: 64, textAlign: 'left',
+        color: 'rgba(246,244,239,0.55)',
+      }}>
+        {fmt(duration)}
+      </div>
+    </div>
+  );
+}
+
+function IconButton({ children, onClick, title }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        width: 28, height: 28,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: hover ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        borderRadius: 6,
+        color: '#f6f4ef',
+        cursor: 'pointer',
+        padding: 0,
+        transition: 'background 120ms',
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+
+Object.assign(window, {
+  Easing, interpolate, animate, clamp,
+  TimelineContext, useTime, useTimeline,
+  Sprite, SpriteContext, useSprite,
+  TextSprite, ImageSprite, RectSprite,
+  Stage, PlaybackBar,
+});
+
+</script>
+  <script type="text/babel">// intro-shared.jsx
+// Shared building blocks for all 3 intro variations.
+
+const FONT_DISPLAY = "'Archivo Black', 'Anton', Impact, system-ui, sans-serif";
+const FONT_BODY    = "'Inter', system-ui, sans-serif";
+const FONT_MONO    = "'JetBrains Mono', ui-monospace, monospace";
+
+// Brand palette inferred from portfolio + chosen Palette 5 (red base + black + cream).
+const COLOR = {
+  red:   '#FF3B00',
+  black: '#0A0A0A',
+  cream: '#F5F1E8',
+};
+
+// Black & White palette — used by the unified site-opening intros.
+// `dim` replaces the brand red as an accent (mid-gray). `line` is for rules/separators.
+// `paper` is a near-white off-paper tone; `ink` a near-black.
+const BW = {
+  paper: '#F4F2EE',   // slightly warm off-white, paper feel
+  ink:   '#0A0A0A',   // near-black
+  dim:   '#6E6E6E',   // mid gray (accent — was red)
+  line:  '#D4D4D4',   // light gray (separators)
+  soft:  '#9A9A9A',   // soft gray
+};
+
+// Timing contract shared across all variations.
+const OPENER_DUR  = 2.40;   // logo build runs 0 → OPENER_DUR
+const REVEAL_DUR  = 2.80;   // logo rebuild → D rotates → camera entra nella D → sito
+
+// Pre-render an "Inter" weight ladder so the site reveal placeholder feels
+// editorial without inventing new fonts.
+const SITE_NAV_ITEMS = ['LAVORI', 'STUDIO', 'SERVIZI', 'CONTATTI'];
+
+// Clamp helper bound to a time window: returns 0..1
+const winT = (t, s, e) => Math.max(0, Math.min(1, (t - s) / (e - s)));
+
+// ── Tweaks context ─────────────────────────────────────────────────────────
+
+const IntroTweaksCtx = React.createContext(null);
+const useIntroTweaks = () => React.useContext(IntroTweaksCtx) || DEFAULT_INTRO_TWEAKS;
+
+const DEFAULT_INTRO_TWEAKS = {
+  studio_first: 'JURI',
+  studio_last:  'DABIANKOV',
+  studio_suffix: 'STUDIO',
+  headline:  'DESIGN / CHE PARLA.',
+  closing:   'FACCIAMO / BRILLARE / IL TUO BRAND.',
+  glitch:    55,
+};
+
+// Split a tweaked string on "/" — used to give the user a way to encode line breaks.
+const splitLines = (s, fallback = []) => {
+  if (!s) return fallback;
+  return s.split('/').map(x => x.trim()).filter(Boolean);
+};
+
+// ── MaskLine: Swiss vertical-clip reveal ──────────────────────────────────
+
+function MaskLine({ children, p = 1, exit = 0, ease, exitEase }) {
+  const eP = (ease || Easing.easeOutQuart)(p);
+  const eE = (exitEase || Easing.easeInQuart)(exit);
+  const ty = (1 - eP) * 110 - eE * 110;
+  return (
+    <span style={{
+      overflow: 'hidden',
+      lineHeight: 1,
+      display: 'inline-block',
+      paddingTop: '0.18em',
+      paddingBottom: '0.18em',
+      marginTop: '-0.18em',
+      marginBottom: '-0.18em',
+      verticalAlign: 'top',
+    }}>
+      <span style={{
+        transform: `translateY(${ty}%)`,
+        display: 'inline-block',
+        willChange: 'transform',
+      }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
+// ── Centered display headline shell ────────────────────────────────────────
+
+function Headline({
+  children,
+  color,
+  size = 360,
+  align = 'center',
+  justify = 'center',
+  padX = 96,
+  padY = 96,
+  rotate = 0,
+}) {
+  return (
+    <div style={{
+      position: 'absolute', inset: 0,
+      display: 'flex',
+      alignItems: justify === 'top' ? 'flex-start' : justify === 'bottom' ? 'flex-end' : 'center',
+      justifyContent: align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center',
+      padding: `${padY}px ${padX}px`,
+      pointerEvents: 'none',
+      zIndex: 5,
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        color,
+        fontFamily: FONT_DISPLAY,
+        fontSize: size,
+        letterSpacing: '-0.045em',
+        lineHeight: 0.82,
+        textTransform: 'uppercase',
+        textAlign: align,
+        transform: rotate ? `rotate(${rotate}deg)` : undefined,
+      }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// ── ChromaSplit: RGB-style aberration with brand colors ────────────────────
+
+function ChromaSplit({ children, offset = 0, color, accentA = COLOR.red, accentB = COLOR.cream, opacity = 1 }) {
+  const showGhosts = Math.abs(offset) > 0.5;
+  return (
+    <span style={{ position: 'relative', display: 'inline-block', color }}>
+      {showGhosts && (
+        <>
+          <span aria-hidden style={{
+            position: 'absolute', inset: 0,
+            color: accentA,
+            transform: `translate(${offset}px, ${offset * 0.25}px)`,
+            opacity: 0.95 * opacity,
+            pointerEvents: 'none',
+          }}>{children}</span>
+          <span aria-hidden style={{
+            position: 'absolute', inset: 0,
+            color: accentB,
+            transform: `translate(${-offset}px, ${-offset * 0.2}px)`,
+            opacity: 0.75 * opacity,
+            pointerEvents: 'none',
+          }}>{children}</span>
+        </>
+      )}
+      <span style={{ position: 'relative' }}>{children}</span>
+    </span>
+  );
+}
+
+// ── Scanlines / Noise / Slice glitch overlays ──────────────────────────────
+
+function Scanlines({ opacity = 0.18, color = '#000' }) {
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 60,
+      background: `repeating-linear-gradient(to bottom, ${color} 0 1px, transparent 1px 4px)`,
+      opacity,
+    }} />
+  );
+}
+
+function Noise({ opacity = 0.08, seed = 7 }) {
+  const id = `noise-${seed}`;
+  return (
+    <svg style={{
+      position: 'absolute', inset: 0,
+      width: '100%', height: '100%',
+      pointerEvents: 'none', zIndex: 55,
+      opacity,
+      mixBlendMode: 'overlay',
+    }}>
+      <filter id={id}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={seed} stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+      <rect width="100%" height="100%" filter={`url(#${id})`} />
+    </svg>
+  );
+}
+
+// Slice glitch — horizontal bands of bg shifted left/right, used as transition flash.
+function SliceGlitch({ intensity = 0, bg = '#0A0A0A', bands = 14, seed = 1 }) {
+  if (intensity <= 0.02) return null;
+  const rand = (n) => {
+    const x = Math.sin((n + 1) * seed * 12.9898) * 43758.5453;
+    return x - Math.floor(x);
+  };
+  return (
+    <div style={{
+      position: 'absolute', inset: 0,
+      pointerEvents: 'none', zIndex: 70,
+      overflow: 'hidden',
+    }}>
+      {[...Array(bands)].map((_, i) => {
+        const dx = (rand(i) - 0.5) * 380 * intensity;
+        const top = (i / bands) * 100;
+        const h = 100 / bands + 0.5;
+        const alpha = 0.5 + rand(i + 100) * 0.5;
+        return (
+          <div key={i} style={{
+            position: 'absolute',
+            top: `${top}%`, left: 0, right: 0, height: `${h}%`,
+            background: bg,
+            transform: `translateX(${dx}px)`,
+            opacity: alpha * intensity,
+          }} />
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Frame chrome (corner brackets + counter) ───────────────────────────────
+
+function FrameChrome({ fg, label = 'JD STUDIO', tagBottomLeft = 'Roma — MMXXV', tagBottomRight = 'Intro / 16:9', topRight = null, totalDur = 6 }) {
+  const t = useTime();
+  const totalFrames = Math.round(totalDur * 24);
+  const frame = String(Math.min(totalFrames, Math.floor(t * 24))).padStart(4, '0');
+  const tot   = String(totalFrames).padStart(4, '0');
+  const tr = topRight ?? `REC ${frame} / ${tot}`;
+
+  const corner = {
+    position: 'absolute',
+    fontFamily: FONT_MONO,
+    fontSize: 16,
+    color: fg,
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    opacity: 0.7,
+  };
+  const tickStyle = { position: 'absolute', background: fg, opacity: 0.5 };
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 110 }}>
+      {[
+        { top: 36, left: 36 },
+        { top: 36, right: 36 },
+        { bottom: 36, left: 36 },
+        { bottom: 36, right: 36 },
+      ].map((pos, i) => (
+        <React.Fragment key={i}>
+          <div style={{ ...tickStyle, ...pos, width: 28, height: 2 }} />
+          <div style={{ ...tickStyle, ...pos, width: 2, height: 28 }} />
+        </React.Fragment>
+      ))}
+
+      <div style={{ ...corner, top: 60, left: 80, display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span style={{ display: 'inline-block', width: 10, height: 10, background: fg }} />
+        {label}
+      </div>
+      <div style={{ ...corner, top: 60, right: 80, fontVariantNumeric: 'tabular-nums' }}>
+        {tr}
+      </div>
+      <div style={{ ...corner, bottom: 60, left: 80 }}>
+        {tagBottomLeft}
+      </div>
+      <div style={{ ...corner, bottom: 60, right: 80 }}>
+        {tagBottomRight}
+      </div>
+    </div>
+  );
+}
+
+// ── Live screen-label updater (for comment context) ────────────────────────
+
+function ScreenLabelTimer({ baseLabel }) {
+  const t = useTime();
+  const sec = Math.floor(t * 10) / 10;
+  React.useEffect(() => {
+    const el = document.querySelector(`[data-stage-label="${baseLabel}"]`);
+    if (el) el.setAttribute('data-screen-label', `${baseLabel} · ${sec.toFixed(1)}s`);
+  }, [sec, baseLabel]);
+  return null;
+}
+
+// ── LogoBuild: the JD logotype constructs itself ──────────────────────────
+// Reusable opener. Phase A 0.00–0.40: establishing mono mark. Phase B 0.40–OPENER_DUR:
+// J-stem rises bottom-up, D-curve stroke-draws then fills, STUDIO letters pop.
+// Renders into the host's full bounds; the host owns the background.
+
+const LOGO_VB = "0 0 60.62 77.28";
+const P_JSTEM_BW  = "M3.87,43.94c8.81,0,13.22-5.13,13.22-15.38V0H0v43.5c1.17.28,2.45.44,3.87.44Z";
+const P_DCURVE_BW = "M51.94,8.4c-2.49-2.4-5.47-4.29-8.94-5.66v25.54c0,12.23-3.37,21.61-10.12,28.13-6.75,6.52-16.42,9.78-29.01,9.78-1.33,0-2.61-.04-3.87-.12v1.34h25.5c11.27,0,19.94-2.97,26.02-8.92,6.07-5.95,9.11-14.46,9.11-25.54s-2.9-18.95-8.69-24.55Z";
+
+const STUDIO_LETTERS_BW = [
+  ["S","M1.68,75.49c-.49-.1-.86-.25-1.09-.46s-.35-.5-.35-.86c0-.45.16-.79.48-1.04.32-.25.77-.37,1.36-.37.55,0,.98.12,1.29.35.31.23.49.56.53.99l-1.33.12c-.04-.15-.09-.26-.17-.32-.08-.06-.2-.09-.36-.09s-.27.02-.35.07c-.08.05-.12.12-.12.21,0,.07.03.13.09.17.06.04.16.08.3.11l.58.12c.51.11.88.27,1.1.47s.34.49.34.86c0,.47-.16.84-.49,1.09-.33.25-.8.38-1.42.38s-1.06-.13-1.38-.39c-.32-.26-.5-.64-.54-1.15h1.35c.02.17.09.29.2.37s.26.12.46.12c.33,0,.49-.11.49-.32,0-.08-.03-.15-.09-.2-.06-.05-.16-.09-.3-.11l-.58-.11Z"],
+  ["T","M11.54,77.17v-3.13h-1.2v-1.18h3.77v1.18h-1.2v3.13h-1.37Z"],
+  ["U","M23.04,72.87h1.37v2.5c0,.63-.16,1.1-.48,1.43-.32.32-.8.49-1.43.49-1.25,0-1.87-.64-1.87-1.91v-2.5h1.37v2.56c0,.24.04.41.12.52.08.11.22.16.4.16s.32-.05.4-.16.12-.28.12-.52v-2.56Z"],
+  ["D","M31.13,77.17v-4.3h1.77c.74,0,1.3.18,1.68.54.38.36.57.89.57,1.58,0,.71-.2,1.25-.58,1.62s-.94.56-1.66.56h-1.77ZM32.94,76.03c.27,0,.48-.08.61-.25.13-.17.2-.42.2-.77s-.07-.58-.2-.74c-.13-.16-.33-.25-.61-.25h-.48v2.01h.48Z"],
+  ["I","M41.77,77.17v-4.3h1.37v4.3h-1.37Z"],
+  ["O","M51.92,77.28c-.68,0-1.21-.19-1.59-.58-.38-.39-.56-.94-.56-1.66,0-.47.08-.88.25-1.22s.42-.6.74-.79c.33-.18.72-.27,1.19-.27.68,0,1.21.19,1.59.58.38.39.56.94.56,1.65s-.19,1.29-.58,1.68c-.38.4-.92.6-1.61.6ZM51.93,76.1c.5,0,.75-.36.75-1.08s-.25-1.08-.75-1.08-.75.36-.75,1.08.25,1.08.75,1.08Z"],
+];
+
+function _DCurveBW({ fillColor, strokeColor, strokeProgress, fillProgress }) {
+  const ref = React.useRef(null);
+  const [len, setLen] = React.useState(280);
+  React.useEffect(() => {
+    if (ref.current && ref.current.getTotalLength) {
+      try {
+        const L = ref.current.getTotalLength();
+        if (L && L > 0) setLen(L);
+      } catch {}
+    }
+  }, []);
+  return (
+    <path
+      ref={ref}
+      d={P_DCURVE_BW}
+      fill={fillColor}
+      fillOpacity={fillProgress}
+      stroke={strokeColor}
+      strokeWidth="0.45"
+      strokeOpacity={strokeProgress > 0.005 ? (1 - fillProgress) : 0}
+      strokeDasharray={len}
+      strokeDashoffset={(1 - strokeProgress) * len}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  );
+}
+
+// LogoMark — pure SVG (no positioning).
+function LogoMark({ t, fillColor, strokeColor, showStudio = true, buildStart = 0.40, buildDur = OPENER_DUR - 0.40 }) {
+  const jProgress = winT(t, buildStart,                       buildStart + buildDur * 0.36);
+  const dStroke   = winT(t, buildStart + buildDur * 0.30,     buildStart + buildDur * 0.85);
+  const dFill     = winT(t, buildStart + buildDur * 0.65,     buildStart + buildDur * 1.00);
+  const sBase     = winT(t, buildStart + buildDur * 0.82,     buildStart + buildDur + 0.40);
+
+  const eJ = Easing.easeOutQuart(jProgress);
+  const clipY = 44 - eJ * 44;
+  const clipH = eJ * 44 + 1;
+  const clipId = React.useId ? React.useId() : 'jdc';
+
+  return (
+    <svg
+      viewBox={LOGO_VB}
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: '100%', height: '100%', overflow: 'visible', display: 'block' }}
+    >
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="-1" y={clipY} width="20" height={clipH} />
+        </clipPath>
+      </defs>
+      <path d={P_JSTEM_BW} fill={fillColor} clipPath={`url(#${clipId})`} />
+      <_DCurveBW
+        fillColor={fillColor}
+        strokeColor={strokeColor}
+        strokeProgress={dStroke}
+        fillProgress={Easing.easeOutQuart(dFill)}
+      />
+      {showStudio && STUDIO_LETTERS_BW.map(([ch, d], i) => {
+        const delay = i * 0.06;
+        const letterP = winT(sBase, delay, delay + 0.35);
+        const eL = Easing.easeOutBack(letterP);
+        const ty = (1 - eL) * 5;
+        return (
+          <path
+            key={ch}
+            d={d}
+            fill={fillColor}
+            opacity={Math.min(1, letterP * 1.4)}
+            transform={`translate(0, ${ty})`}
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+// LogoBuild — opener block: establishing mark (0–0.4) + the logo build,
+// positioned dead-center, height ≈ sizePct% of canvas. Host owns the background.
+function LogoBuild({ t, fg, sub, sizePct = 64, end = OPENER_DUR, exit = 0 }) {
+  // `exit` is a 0..1 host-driven fade — used when the variation wants to wipe
+  // the opener off-screen before its own scene comes in.
+  const markOp = winT(t, 0.04, 0.16) - winT(t, 0.34, 0.44);
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 6,
+      pointerEvents: 'none',
+      opacity: 1 - exit,
+      transform: `scale(${1 - exit * 0.04})`,
+      transformOrigin: 'center',
+    }}>
+      {t < 0.48 && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: Math.max(0, markOp),
+        }}>
+          <span style={{
+            fontFamily: FONT_MONO,
+            color: fg,
+            fontSize: 20,
+            letterSpacing: '0.42em',
+            textTransform: 'uppercase',
+            display: 'inline-flex', gap: 18, alignItems: 'center',
+          }}>
+            <span style={{ display: 'inline-block', width: 48, height: 1.5, background: fg, opacity: 0.55 }} />
+            JD · ROMA · MMXXV
+            <span style={{ display: 'inline-block', width: 48, height: 1.5, background: fg, opacity: 0.55 }} />
+          </span>
+        </div>
+      )}
+
+      {t >= 0.36 && (
+        <div style={{
+          position: 'absolute',
+          left: '50%', top: '50%',
+          height: `${sizePct}%`,
+          aspectRatio: '60.62 / 77.28',
+          transform: 'translate(-50%, -50%)',
+        }}>
+          <LogoMark
+            t={t}
+            fillColor={fg}
+            strokeColor={sub}
+            showStudio={true}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── SiteReveal: camera entra nell'apertura della D → sito emerge ────────────
+//
+//  0.00–0.90  logo si ricostruisce (su paper)
+//  0.90–2.40  la D ruota piano (effetto giradischi) + la camera entra
+//             dal lato destro della D: maschera circolare che parte
+//             dall'apertura destra della D e si espande rivelando il sito
+//  ~2.34s     navigazione a index.html (maschera copre tutto)
+//
+// Geometria: apertura destra della D ≈ (1205, 490) in canvas 1920×1080
+
+function SiteReveal({ t, start, dur = REVEAL_DUR }) {
+  const navigated = React.useRef(false);
+
+  const active = t >= start - 0.02;
+  const local  = active ? Math.max(0, t - start) : 0;
+
+  // Logo rebuild
+  const buildP   = winT(local, 0.00, 0.90);
+  const logoTime = 0.40 + buildP * 2.40;
+
+  // Rotazione cinematica — massimo 35°
+  const rotP     = Easing.easeInOutSine(winT(local, 0.65, 2.70));
+  const rotation = rotP * 35;
+
+  // Zoom — easeInQuart
+  const zoomP     = winT(local, 0.90, 2.68);
+  const logoScale = 1 + Easing.easeInQuart(zoomP) * 22;
+
+  // Logo sfuma solo all'ultimissimo
+  const logoOp = 1 - winT(local, 2.48, 2.66);
+
+  // Geometria canvas 1920×1080
+  const logoBaseH = 1080 * 0.58;
+  const svgS      = logoBaseH / 77.28;
+  const logoCX    = 960;
+  const logoCY    = 490;
+
+  // Clip = buco della D:
+  // bounding-box + sagoma D + sagoma J con clip-rule evenodd
+  // → risultato = solo lo spazio vuoto interno alla lettera D
+  const counterPath = `M0,0h60.62v77.28H0Z ${P_DCURVE_BW} ${P_JSTEM_BW}`;
+
+  // Stessa matrice del logo div: viewBox → canvas pixels con zoom e rotazione
+  const clipTransform = `translate(${logoCX},${logoCY}) rotate(${rotation.toFixed(3)}) scale(${(logoScale * svgS).toFixed(4)}) translate(${-30.31},${-38.64})`;
+
+  // Glitch cinematico — due impulsi ravvicinati
+  const g1P      = winT(local, 2.22, 2.40);
+  const glitchI1 = Math.sin(g1P * Math.PI) * 0.55;
+
+  const g2P      = winT(local, 2.38, 2.50);
+  const glitchI2 = Math.sin(g2P * Math.PI) * 0.40;
+
+  // Flash bianco da cinema
+  const flashP  = winT(local, 2.50, 2.64);
+  const flashOp = flashP < 0.35 ? flashP / 0.35 : 1 - (flashP - 0.35) / 0.65;
+
+  React.useEffect(() => {
+    // Naviga quando il buco ha coperto tutto lo schermo (scala ~22×)
+    if (active && local >= 2.73 && !navigated.current) {
+      navigated.current = true;
+      window.location.href = 'index.html?intro=1';
+    }
+  });
+
+  if (!active) return null;
+
+  return (
+    <div style={{ position:'absolute', inset:0, zIndex:90, pointerEvents:'none', overflow:'hidden' }}>
+
+      {/* Sfondo paper */}
+      <div style={{ position:'absolute', inset:0, background: BW.paper }} />
+
+      {/* SVG defs — clip path = buco della D, stesso transform del logo */}
+      <svg style={{ position:'absolute', width:0, height:0, overflow:'visible' }}>
+        <defs>
+          <clipPath id="dHoleClip" clipPathUnits="userSpaceOnUse">
+            <path d={counterPath} transform={clipTransform} clipRule="evenodd" />
+          </clipPath>
+        </defs>
+      </svg>
+
+      {/* Sito — visibile SOLO attraverso il buco della D */}
+      <div style={{ position:'absolute', inset:0, clipPath:'url(#dHoleClip)' }}>
+        <iframe
+          src="index.html?intro=1"
+          style={{ position:'absolute', inset:0, width:'100%', height:'100%', border:'none' }}
+          scrolling="no"
+          tabIndex="-1"
+          title="Portfolio"
+        />
+      </div>
+
+      {/* Logo JD — ruota max 35° e zooma oltre lo schermo */}
+      <div style={{
+        position: 'absolute',
+        left:   `${logoCX / 1920 * 100}%`,
+        top:    `${logoCY / 1080 * 100}%`,
+        height: `${logoBaseH / 1080 * 100}%`,
+        aspectRatio: '60.62 / 77.28',
+        transform: `translate(-50%, -50%) rotate(${rotation.toFixed(2)}deg) scale(${logoScale.toFixed(3)})`,
+        transformOrigin: 'center',
+        opacity: Math.max(0, logoOp),
+        willChange: 'transform, opacity',
+      }}>
+        <LogoMark t={logoTime} fillColor={BW.ink} strokeColor={BW.dim} showStudio={false} />
+      </div>
+
+      {/* Glitch impulso 1 */}
+      {glitchI1 > 0.02 && <SliceGlitch intensity={glitchI1} bg={BW.ink} bands={22} seed={7} />}
+
+      {/* Glitch impulso 2 */}
+      {glitchI2 > 0.02 && <SliceGlitch intensity={glitchI2} bg={BW.paper} bands={18} seed={13} />}
+
+      {/* Flash da cinema */}
+      {flashOp > 0.01 && (
+        <div style={{
+          position:'absolute', inset:0, background:'#ffffff',
+          opacity: flashOp * 0.92, zIndex:95, pointerEvents:'none',
+        }} />
+      )}
+
+    </div>
+  );
+}
+
+Object.assign(window, {
+  FONT_DISPLAY, FONT_BODY, FONT_MONO, COLOR, BW,
+  OPENER_DUR, REVEAL_DUR,
+  winT, splitLines,
+  IntroTweaksCtx, useIntroTweaks, DEFAULT_INTRO_TWEAKS,
+  MaskLine, Headline, ChromaSplit,
+  Scanlines, Noise, SliceGlitch,
+  FrameChrome, ScreenLabelTimer,
+  LogoMark, LogoBuild, SiteReveal,
+});
+</script>
+  <script type="text/babel">// intro-v1.jsx — SLAM (B&W)
+// Unified site-opening intro:
+//   0.00–2.40  Opener — JD logo builds (paper bg, ink mark)
+//   2.40–2.70  Beat hold — logo settles, ink wipe overtakes the frame
+//   2.70–3.80  Headline slam (ink bg, paper type)
+//   3.80–5.20  Categories rapid-fire (paper bg, ink type, huge gray index)
+//   5.20–6.30  Manifesto / closing (ink bg, paper type)
+//   6.37–8.07  Logo rebuild → camera zoom into the JD mark → site reveal (end)
+
+const V1_DUR        = 9.17;
+const V1_OPENER_END = 2.40;
+const V1_REVEAL_AT  = V1_DUR - REVEAL_DUR;  // 6.37
+
+function IntroV1() {
+  return (
+    <Stage
+      width={1920} height={1080}
+      duration={V1_DUR}
+      background={BW.paper}
+      persistKey="jd-intro-v1-bw"
+      loop={false}
+    >
+      <V1Inner />
+    </Stage>
+  );
+}
+
+// ─── Background driver — palette flips on hard cuts ───────────────────────
+function v1Theme(t) {
+  if (t < V1_OPENER_END)  return { bg: BW.paper, fg: BW.ink,   sub: BW.dim, label: 'OPENER'    };
+  if (t < 2.70)            return { bg: BW.paper, fg: BW.ink,   sub: BW.dim, label: 'HOLD'      };
+  if (t < 3.80)            return { bg: BW.ink,   fg: BW.paper, sub: BW.dim, label: 'HEADLINE'  };
+  if (t < 5.20)            return { bg: BW.paper, fg: BW.ink,   sub: BW.dim, label: 'CATEGORIES'};
+  if (t < V1_REVEAL_AT)    return { bg: BW.ink,   fg: BW.paper, sub: BW.dim, label: 'CLOSING'   };
+  return                          { bg: BW.ink,   fg: BW.paper, sub: BW.dim, label: 'REVEAL'    };
+}
+
+function V1Inner() {
+  const tweaks = useIntroTweaks();
+  const t = useTime();
+  const theme = v1Theme(t);
+
+  const headlineLines = splitLines(tweaks.headline, ['DESIGN', 'CHE PARLA.']);
+  const closingLines  = splitLines(tweaks.closing,  ['FACCIAMO', 'BRILLARE', 'IL TUO BRAND.']);
+
+  // Opener exits during the HOLD phase
+  const openerExit = winT(t, 2.55, 2.70);
+
+  return (
+    <div data-stage-label="V1" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: theme.bg, zIndex: 0, transition: 'none' }} />
+
+      {/* Opener */}
+      {t < 2.85 && (
+        <LogoBuild t={t} fg={BW.ink} sub={BW.dim} sizePct={64} exit={openerExit} end={V1_OPENER_END} />
+      )}
+
+      {/* Ink wipe — covers the frame as we move into HEADLINE */}
+      <V1InkWipe t={t} />
+
+      {/* Headline */}
+      {t >= 2.70 && t < 3.85 && (
+        <V1Headline t={t} lines={headlineLines} fg={BW.paper} />
+      )}
+
+      {/* Categories */}
+      {t >= 3.78 && t < 5.25 && (
+        <V1Categories t={t} fg={BW.ink} dim={BW.dim} />
+      )}
+
+      {/* Closing */}
+      {t >= 5.18 && t < V1_REVEAL_AT + 0.10 && (
+        <V1Closing t={t} lines={closingLines} fg={BW.paper} />
+      )}
+
+      {/* Site reveal */}
+      <SiteReveal t={t} start={V1_REVEAL_AT} dur={REVEAL_DUR} />
+    </div>
+  );
+}
+
+// ─── Ink wipe transition (2.40 → 2.70) ─────────────────────────────────────
+function V1InkWipe({ t }) {
+  // A solid INK panel sweeps in from the right between 2.40 and 2.70 to cover
+  // the paper opener, then stays as the headline's background.
+  if (t < V1_OPENER_END || t > 3.90) return null;
+  const sweep = winT(t, V1_OPENER_END, 2.70);
+  const exit  = winT(t, 3.78, 3.88);
+  const w = sweep * (1 - exit) * 100;
+  return (
+    <div style={{
+      position: 'absolute', top: 0, bottom: 0, left: 0,
+      width: `${w}%`,
+      background: BW.ink,
+      zIndex: 4,
+      pointerEvents: 'none',
+    }} />
+  );
+}
+
+// ─── Headline (2.70–3.80) — INK bg ─────────────────────────────────────────
+function V1Headline({ t, lines, fg }) {
+  const exit = winT(t, 3.65, 3.80);
+  return (
+    <Headline color={fg} size={280}>
+      <div>
+        {lines.map((line, i) => {
+          const isLast = i === lines.length - 1;
+          let content = line;
+          if (isLast) {
+            const tokens = line.split(' ');
+            const dim = tokens.pop();
+            const rest = tokens.join(' ');
+            content = (
+              <>
+                {rest ? <>{rest}&nbsp;</> : null}
+                <span style={{ color: BW.soft }}>{dim}</span>
+              </>
+            );
+          }
+          const p = winT(t, 2.78 + i * 0.16, 2.98 + i * 0.16);
+          return (
+            <div key={i} style={{ marginTop: i ? 6 : 0 }}>
+              <MaskLine p={p} exit={exit}>{content}</MaskLine>
+            </div>
+          );
+        })}
+      </div>
+    </Headline>
+  );
+}
+
+// ─── Categories (3.80–5.20) — PAPER bg ─────────────────────────────────────
+const V1_CATS = ['EVENTI', 'BRANDING', 'PACKAGING'];
+
+function V1Categories({ t, fg, dim }) {
+  const start = 3.86;
+  const each  = 0.42;
+
+  return (
+    <>
+      {V1_CATS.map((word, i) => {
+        const s = start + i * each;
+        const e = s + each;
+        if (t < s - 0.02 || t > e + 0.04) return null;
+        const enter = winT(t, s, s + 0.16);
+        const exit  = winT(t, e - 0.10, e);
+        const idx = String(i + 1).padStart(2, '0');
+
+        return (
+          <React.Fragment key={word}>
+            {/* huge gray index behind */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+              padding: '0 80px',
+              fontFamily: FONT_DISPLAY,
+              fontSize: 900,
+              lineHeight: 0.85,
+              color: BW.line,
+              transform: `translateY(${(1 - enter) * 40}px)`,
+              zIndex: 1,
+              pointerEvents: 'none',
+              letterSpacing: '-0.05em',
+            }}>{idx}</div>
+
+            {/* word */}
+            <Headline color={fg} size={240} align="left" padX={80}>
+              <MaskLine p={enter} exit={exit}>{word}</MaskLine>
+            </Headline>
+
+            {/* mono label */}
+            <div style={{
+              position: 'absolute',
+              left: 122,
+              top: '50%',
+              transform: `translateY(180px)`,
+              fontFamily: FONT_MONO,
+              fontSize: 22,
+              color: fg,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase',
+              opacity: enter * (1 - exit) * 0.7,
+              zIndex: 6,
+            }}>
+              {idx} / 03  ——  Servizio
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+}
+
+// ─── Closing manifesto (5.20–6.30) — INK bg ────────────────────────────────
+function V1Closing({ t, lines, fg }) {
+  const exit = winT(t, V1_REVEAL_AT - 0.08, V1_REVEAL_AT + 0.04);
+  const lineStartT = 5.26;
+  const lineStep   = 0.22;
+
+  return (
+    <Headline color={fg} size={220} align="left" padX={120}>
+      <div style={{ textAlign: 'left' }}>
+        {lines.map((line, i) => {
+          const isLast = i === lines.length - 1;
+          let content = line;
+          if (isLast) {
+            const tokens = line.split(' ');
+            const dim = tokens.pop();
+            const rest = tokens.join(' ');
+            content = (
+              <>
+                {rest ? <>{rest}&nbsp;</> : null}
+                <span style={{ color: BW.soft }}>{dim}</span>
+              </>
+            );
+          }
+          return (
+            <div key={i} style={{ marginTop: i ? 8 : 0 }}>
+              <MaskLine
+                p={winT(t, lineStartT + i * lineStep, lineStartT + i * lineStep + 0.22)}
+                exit={exit}
+              >
+                {content}
+              </MaskLine>
+            </div>
+          );
+        })}
+      </div>
+    </Headline>
+  );
+}
+
+Object.assign(window, { IntroV1 });
+</script>
+  <script type="text/babel">// intro-v2.jsx — TICKER (B&W)
+// Paper-base intro with persistent kinetic ticker bands top + bottom. The
+// opener and core scenes live between the tickers; the ticker separator
+// glyph uses BW.dim (was brand red).
+//
+//   0.00–2.40  Opener — logo build (paper bg, ink mark, tickers hidden)
+//   2.40–onward  Tickers run continuously
+//   2.70–3.80  Headline stamp
+//   3.80–5.20  Categories overflow
+//   5.20–6.30  Closing manifesto
+//   6.37–8.07  Logo rebuild → camera zoom → site reveal (end)
+
+const V2_DUR        = 9.17;
+const V2_OPENER_END = 2.40;
+const V2_REVEAL_AT  = V2_DUR - REVEAL_DUR; // 6.37
+
+function IntroV2() {
+  return (
+    <Stage
+      width={1920} height={1080}
+      duration={V2_DUR}
+      background={BW.paper}
+      persistKey="jd-intro-v2-bw"
+      loop={false}
+    >
+      <V2Inner />
+    </Stage>
+  );
+}
+
+function V2Inner() {
+  const tweaks = useIntroTweaks();
+  const t = useTime();
+
+  const openerExit = winT(t, 2.55, 2.70);
+  const tickerOn   = winT(t, 2.30, 2.65);
+
+  return (
+    <div data-stage-label="V2" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: BW.paper, zIndex: 0 }} />
+
+      {/* Tickers (top + bottom) */}
+      {t >= 2.20 && t < V2_REVEAL_AT + 0.05 && (
+        <V2Tickers opacity={tickerOn * (1 - winT(t, V2_REVEAL_AT - 0.10, V2_REVEAL_AT))} />
+      )}
+
+      {/* Opener */}
+      {t < 2.85 && (
+        <LogoBuild t={t} fg={BW.ink} sub={BW.dim} sizePct={64} exit={openerExit} end={V2_OPENER_END} />
+      )}
+
+      {/* Headline */}
+      {t >= 2.70 && t < 3.85 && (
+        <V2Headline t={t} lines={splitLines(tweaks.headline, ['DESIGN', 'CHE PARLA.'])} />
+      )}
+
+      {/* Categories */}
+      {t >= 3.80 && t < 5.25 && (
+        <V2Categories t={t} />
+      )}
+
+      {/* Closing */}
+      {t >= 5.18 && t < V2_REVEAL_AT + 0.10 && (
+        <V2Closing t={t} lines={splitLines(tweaks.closing, ['FACCIAMO', 'BRILLARE', 'IL TUO BRAND.'])} />
+      )}
+
+      {/* Site reveal */}
+      <SiteReveal t={t} start={V2_REVEAL_AT} dur={REVEAL_DUR} />
+    </div>
+  );
+}
+
+// ─── Tickers ───────────────────────────────────────────────────────────────
+function Ticker({ y, items, speed, color, accent, fontSize = 44, sep = '◢', reverse = false, opacity = 1 }) {
+  const t = useTime();
+  const parts = [];
+  for (let i = 0; i < 8; i++) {
+    items.forEach((it) => {
+      parts.push(<span key={parts.length} style={{ color }}>{it}</span>);
+      parts.push(
+        <span key={parts.length} style={{ color: accent, margin: '0 0.55em', display: 'inline-block' }}>{sep}</span>
+      );
+    });
+  }
+  const dx = reverse ? (-1600 + t * speed) : (-(t * speed));
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, top: y,
+      height: fontSize * 1.5,
+      overflow: 'hidden',
+      pointerEvents: 'none', zIndex: 3,
+      opacity,
+    }}>
+      <div style={{
+        whiteSpace: 'nowrap',
+        transform: `translateX(${dx}px)`,
+        willChange: 'transform',
+        fontFamily: FONT_DISPLAY,
+        fontSize, letterSpacing: '-0.02em', textTransform: 'uppercase',
+        lineHeight: 1.4,
+      }}>
+        {parts}
+      </div>
+    </div>
+  );
+}
+
+function V2Tickers({ opacity }) {
+  return (
+    <>
+      <Ticker
+        y={184}
+        items={['JURI DABIANKOV STUDIO', 'BRANDING', 'EVENTI', 'PACKAGING', 'WEB', 'VISUAL IDENTITY', 'ROMA']}
+        speed={210}
+        color={BW.ink}
+        accent={BW.dim}
+        fontSize={48}
+        sep="◢"
+        opacity={opacity}
+      />
+      <Ticker
+        y={1080 - 184 - 72}
+        items={['MMXXV', 'STUDIO CREATIVO', 'DESIGN CHE PARLA', 'ROMA — ITALIA', 'SINCE 2015']}
+        speed={150}
+        color={BW.ink}
+        accent={BW.dim}
+        fontSize={48}
+        sep="◣"
+        reverse
+        opacity={opacity}
+      />
+      <div style={{ position: 'absolute', left: 80, right: 80, top: 254, height: 1.5, background: BW.ink, opacity: 0.85 * opacity, zIndex: 4 }} />
+      <div style={{ position: 'absolute', left: 80, right: 80, bottom: 254, height: 1.5, background: BW.ink, opacity: 0.85 * opacity, zIndex: 4 }} />
+    </>
+  );
+}
+
+// ─── Headline (2.70–3.80) — ink stamp filling the middle band ─────────────
+function V2Headline({ t, lines }) {
+  const exit = winT(t, 3.65, 3.80);
+  // Stamp panel — full-bleed black between the two ticker bands
+  const stampP = winT(t, 2.65, 2.85);
+  const stampExit = winT(t, 3.72, 3.85);
+  const stampVisible = stampP * (1 - stampExit);
+  const size = lines.length >= 3 ? 220 : 280;
+
+  return (
+    <>
+      {/* Stamp panel */}
+      <div style={{
+        position: 'absolute',
+        top: 270, bottom: 270,
+        left: 80, right: 80,
+        background: BW.ink,
+        opacity: stampVisible,
+        clipPath: `inset(${(1 - stampP) * 50}% 0 ${(1 - stampP) * 50}% 0)`,
+        zIndex: 6,
+      }} />
+
+      {/* Type */}
+      <div style={{
+        position: 'absolute',
+        top: 270, bottom: 270,
+        left: 80, right: 80,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 7,
+        pointerEvents: 'none',
+      }}>
+        <div style={{
+          fontFamily: FONT_DISPLAY,
+          fontSize: size,
+          color: BW.paper,
+          letterSpacing: '-0.045em',
+          lineHeight: 0.82,
+          textTransform: 'uppercase',
+          textAlign: 'center',
+        }}>
+          {lines.map((line, i) => {
+            const isLast = i === lines.length - 1;
+            let content = line;
+            if (isLast) {
+              const tokens = line.split(' ');
+              const dim = tokens.pop();
+              const rest = tokens.join(' ');
+              content = (
+                <>
+                  {rest ? <>{rest}&nbsp;</> : null}
+                  <span style={{ color: BW.soft }}>{dim}</span>
+                </>
+              );
+            }
+            const p = winT(t, 2.84 + i * 0.13, 3.04 + i * 0.13);
+            return (
+              <div key={i} style={{ marginTop: i ? 8 : 0 }}>
+                <MaskLine p={p} exit={exit}>{content}</MaskLine>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Small mono index */}
+      <div style={{
+        position: 'absolute',
+        top: 296, left: 110,
+        fontFamily: FONT_MONO,
+        fontSize: 18,
+        color: BW.paper,
+        letterSpacing: '0.3em',
+        textTransform: 'uppercase',
+        opacity: stampVisible * 0.85,
+        zIndex: 8,
+      }}>
+        ▌ Manifesto · 01
+      </div>
+    </>
+  );
+}
+
+// ─── Categories (3.80–5.20) ────────────────────────────────────────────────
+const V2_CATS = ['EVENTI', 'BRANDING', 'PACKAGING'];
+
+function V2Categories({ t }) {
+  const start = 3.86;
+  const each  = 0.42;
+
+  return (
+    <>
+      {V2_CATS.map((w, i) => {
+        const s = start + i * each;
+        const e = s + each;
+        if (t < s - 0.02 || t > e + 0.04) return null;
+        const enter = winT(t, s, s + 0.18);
+        const exitP = winT(t, e - 0.12, e);
+        const eP = Easing.easeOutQuart(enter);
+        const eE = Easing.easeInQuart(exitP);
+        const tx = (1 - eP) * 120 - eE * 120;
+
+        return (
+          <div key={w} style={{
+            position: 'absolute',
+            top: 270, bottom: 270,
+            left: 80, right: 80,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 6, pointerEvents: 'none', overflow: 'hidden',
+          }}>
+            <div style={{
+              fontFamily: FONT_DISPLAY,
+              fontSize: 240,
+              color: BW.ink,
+              letterSpacing: '-0.05em',
+              textTransform: 'uppercase',
+              lineHeight: 0.85,
+              transform: `translateX(${tx}%)`,
+              display: 'inline-flex',
+              alignItems: 'baseline',
+              gap: '0.18em',
+              whiteSpace: 'nowrap',
+            }}>
+              <span style={{ color: BW.dim, fontSize: '0.55em', letterSpacing: '-0.03em' }}>0{i + 1}</span>
+              <span>{w}</span>
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+// ─── Closing (5.20–6.30) — ink stamp again ────────────────────────────────
+function V2Closing({ t, lines }) {
+  const exit = winT(t, V2_REVEAL_AT - 0.08, V2_REVEAL_AT + 0.04);
+  const stampP = winT(t, 5.18, 5.36);
+  const stampExit = winT(t, V2_REVEAL_AT - 0.05, V2_REVEAL_AT + 0.04);
+  const stampVisible = stampP * (1 - stampExit);
+  const size = lines.length >= 3 ? 200 : 260;
+
+  return (
+    <>
+      <div style={{
+        position: 'absolute',
+        top: 270, bottom: 270,
+        left: 80, right: 80,
+        background: BW.ink,
+        opacity: stampVisible,
+        clipPath: `inset(${(1 - stampP) * 50}% 0 ${(1 - stampP) * 50}% 0)`,
+        zIndex: 6,
+      }} />
+
+      <div style={{
+        position: 'absolute',
+        top: 270, bottom: 270,
+        left: 80, right: 80,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 7, pointerEvents: 'none',
+      }}>
+        <div style={{
+          fontFamily: FONT_DISPLAY,
+          fontSize: size,
+          color: BW.paper,
+          letterSpacing: '-0.045em',
+          lineHeight: 0.82,
+          textTransform: 'uppercase',
+          textAlign: 'center',
+        }}>
+          {lines.map((line, i) => {
+            let content = line;
+            if (i === lines.length - 1) {
+              const tokens = line.split(' ');
+              const dim = tokens.pop();
+              const rest = tokens.join(' ');
+              content = (
+                <>
+                  {rest ? <>{rest}&nbsp;</> : null}
+                  <span style={{ color: BW.soft }}>{dim}</span>
+                </>
+              );
+            }
+            const p = winT(t, 5.30 + i * 0.13, 5.50 + i * 0.13);
+            return (
+              <div key={i} style={{ marginTop: i ? 8 : 0 }}>
+                <MaskLine p={p} exit={exit}>{content}</MaskLine>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div style={{
+        position: 'absolute',
+        top: 296, left: 110,
+        fontFamily: FONT_MONO,
+        fontSize: 18,
+        color: BW.paper,
+        letterSpacing: '0.3em',
+        textTransform: 'uppercase',
+        opacity: stampVisible * 0.85,
+        zIndex: 8,
+      }}>
+        ▌ Manifesto · 02
+      </div>
+    </>
+  );
+}
+
+Object.assign(window, { IntroV2 });
+</script>
+  <script type="text/babel">// intro-v3.jsx — VOID (B&W)
+// Pure ink canvas, type oversized & overflowing, persistent scanlines + grain.
+// Chromatic-split replaced with a soft-gray ghost (no color), so the brutalist
+// energy survives in pure B&W.
+//
+//   0.00–2.40  Opener — logo build (ink bg, paper mark)
+//   2.40–2.70  Hold
+//   2.70–3.80  Headline overflow
+//   3.80–5.20  Categories with giant index
+//   5.20–6.30  Closing manifesto
+//   6.37–8.07  Logo rebuild → camera zoom → site reveal (end)
+
+const V3_DUR        = 9.17;
+const V3_OPENER_END = 2.40;
+const V3_REVEAL_AT  = V3_DUR - REVEAL_DUR; // 6.37
+
+function IntroV3() {
+  return (
+    <Stage
+      width={1920} height={1080}
+      duration={V3_DUR}
+      background={BW.ink}
+      persistKey="jd-intro-v3-bw"
+      loop={false}
+    >
+      <V3Inner />
+    </Stage>
+  );
+}
+
+function V3Inner() {
+  const tweaks = useIntroTweaks();
+  const t = useTime();
+  const gI = (tweaks.glitch || 0) / 100;
+  const fg = BW.paper;
+
+  const openerExit = winT(t, 2.55, 2.70);
+
+  return (
+    <div data-stage-label="V3" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: BW.ink, zIndex: 0 }} />
+
+      {/* Opener */}
+      {t < 2.85 && (
+        <LogoBuild t={t} fg={fg} sub={BW.soft} sizePct={64} exit={openerExit} end={V3_OPENER_END} />
+      )}
+
+      {/* Headline */}
+      {t >= 2.70 && t < 3.85 && (
+        <V3Headline t={t} fg={fg} gI={gI} lines={splitLines(tweaks.headline, ['DESIGN', 'CHE PARLA.'])} />
+      )}
+
+      {/* Categories */}
+      {t >= 3.80 && t < 5.25 && (
+        <V3Categories t={t} fg={fg} gI={gI} />
+      )}
+
+      {/* Closing */}
+      {t >= 5.18 && t < V3_REVEAL_AT + 0.10 && (
+        <V3Closing t={t} fg={fg} gI={gI} lines={splitLines(tweaks.closing, ['FACCIAMO', 'BRILLARE', 'IL TUO BRAND.'])} />
+      )}
+
+      {/* Atmosphere — persistent across the whole intro */}
+      {t < V3_REVEAL_AT + 0.05 && (
+        <>
+          <Scanlines opacity={0.16} color={BW.paper} />
+          <Noise opacity={0.04 + 0.04 * gI} seed={9} />
+        </>
+      )}
+
+      {/* Slice glitch at scene cuts */}
+      <V3Transitions t={t} gI={gI} />
+
+      {/* Site reveal */}
+      <SiteReveal t={t} start={V3_REVEAL_AT} dur={REVEAL_DUR} />
+    </div>
+  );
+}
+
+// ─── GrayGhost: ChromaSplit replacement (no color, just offset gray ghosts) ─
+function GrayGhost({ offset = 0, color, children }) {
+  if (Math.abs(offset) < 0.5) {
+    return <span style={{ color }}>{children}</span>;
+  }
+  return (
+    <span style={{ position: 'relative', display: 'inline-block', color }}>
+      <span aria-hidden style={{
+        position: 'absolute', inset: 0,
+        color: BW.soft,
+        transform: `translate(${offset}px, ${offset * 0.2}px)`,
+        opacity: 0.65,
+        pointerEvents: 'none',
+        mixBlendMode: 'screen',
+      }}>{children}</span>
+      <span aria-hidden style={{
+        position: 'absolute', inset: 0,
+        color: BW.dim,
+        transform: `translate(${-offset}px, ${-offset * 0.15}px)`,
+        opacity: 0.5,
+        pointerEvents: 'none',
+        mixBlendMode: 'screen',
+      }}>{children}</span>
+      <span style={{ position: 'relative' }}>{children}</span>
+    </span>
+  );
+}
+
+// ─── Headline (2.70–3.80) ─────────────────────────────────────────────────
+function V3Headline({ t, fg, gI, lines }) {
+  const exit = winT(t, 3.65, 3.80);
+  const lineStartT = 2.76;
+  const lineStep = 0.18;
+
+  return (
+    <Headline color={fg} size={lines.length >= 3 ? 240 : 300} align="center">
+      <div>
+        {lines.map((line, i) => {
+          const isLast = i === lines.length - 1;
+          let content;
+          if (isLast) {
+            const tokens = line.split(' ');
+            const dim = tokens.pop();
+            const rest = tokens.join(' ');
+            content = <>{rest && <>{rest}&nbsp;</>}<span style={{ color: BW.soft }}>{dim}</span></>;
+          } else {
+            content = line;
+          }
+          const p = winT(t, lineStartT + i * lineStep, lineStartT + i * lineStep + 0.2);
+          const ghost = (1 - Easing.easeOutQuart(p)) * 22 * gI;
+          return (
+            <div key={i} style={{ marginTop: i ? 6 : 0 }}>
+              <MaskLine p={p} exit={exit}>
+                <GrayGhost offset={ghost} color={fg}>{content}</GrayGhost>
+              </MaskLine>
+            </div>
+          );
+        })}
+      </div>
+    </Headline>
+  );
+}
+
+// ─── Categories (3.80–5.20) — giant overflowing index ─────────────────────
+const V3_CATS = ['EVENTI', 'BRANDING', 'PACKAGING'];
+
+function V3Categories({ t, fg, gI }) {
+  const start = 3.86;
+  const each  = 0.42;
+
+  return (
+    <>
+      {V3_CATS.map((w, i) => {
+        const s = start + i * each;
+        const e = s + each;
+        if (t < s - 0.02 || t > e + 0.04) return null;
+        const enter = winT(t, s, s + 0.15);
+        const exitP = winT(t, e - 0.08, e);
+        const ghost = (1 - Easing.easeOutQuart(enter)) * 22 * gI;
+        const idx = String(i + 1).padStart(2, '0');
+
+        return (
+          <React.Fragment key={w}>
+            {/* giant gray index, overflowing right */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+              zIndex: 1,
+              pointerEvents: 'none',
+              overflow: 'hidden',
+            }}>
+              <div style={{
+                fontFamily: FONT_DISPLAY,
+                fontSize: 1100,
+                color: BW.dim,
+                opacity: 0.35,
+                lineHeight: 0.8,
+                letterSpacing: '-0.06em',
+                transform: `translate(${(1 - enter) * 200}px, 100px) scale(${0.95 + enter * 0.05})`,
+              }}>
+                {idx}
+              </div>
+            </div>
+
+            {/* the category word */}
+            <Headline color={fg} size={240} align="left" padX={80}>
+              <MaskLine p={enter} exit={exitP}>
+                <GrayGhost offset={ghost} color={fg}>{w}</GrayGhost>
+              </MaskLine>
+            </Headline>
+
+            <div style={{
+              position: 'absolute',
+              left: 122,
+              top: '50%',
+              transform: `translateY(200px)`,
+              fontFamily: FONT_MONO,
+              fontSize: 22,
+              color: fg,
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              opacity: enter * (1 - exitP) * 0.65,
+              zIndex: 6,
+            }}>
+              SERVIZIO {idx} / 03
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+}
+
+// ─── Closing (5.20–6.30) ──────────────────────────────────────────────────
+function V3Closing({ t, fg, gI, lines }) {
+  const exit = winT(t, V3_REVEAL_AT - 0.08, V3_REVEAL_AT + 0.04);
+  const lineStartT = 5.26;
+  const lineStep = 0.22;
+
+  return (
+    <Headline color={fg} size={lines.length >= 3 ? 200 : 260} align="left" padX={140}>
+      <div style={{ textAlign: 'left' }}>
+        {lines.map((line, i) => {
+          let content = line;
+          if (i === lines.length - 1) {
+            const tokens = line.split(' ');
+            const dim = tokens.pop();
+            const rest = tokens.join(' ');
+            content = <>{rest && <>{rest}&nbsp;</>}<span style={{ color: BW.soft }}>{dim}</span></>;
+          }
+          const p = winT(t, lineStartT + i * lineStep, lineStartT + i * lineStep + 0.24);
+          const ghost = (1 - Easing.easeOutQuart(p)) * 18 * gI;
+          return (
+            <div key={i} style={{ marginTop: i ? 8 : 0 }}>
+              <MaskLine p={p} exit={exit}>
+                <GrayGhost offset={ghost} color={fg}>{content}</GrayGhost>
+              </MaskLine>
+            </div>
+          );
+        })}
+      </div>
+    </Headline>
+  );
+}
+
+// ─── Slice-glitch flashes at scene cuts ───────────────────────────────────
+function V3Transitions({ t, gI }) {
+  const cuts = [V3_OPENER_END, 2.70, 3.80, 5.20];
+  const cut = cuts.find(c => t >= c && t < c + 0.13);
+  if (!cut || gI < 0.05) return null;
+  const intensity = gI * (1 - winT(t, cut, cut + 0.13));
+  return <SliceGlitch intensity={intensity} bg={BW.paper} bands={16} seed={Math.floor(cut * 10)} />;
+}
+
+Object.assign(window, { IntroV3 });
+</script>
+  <script type="text/babel">
+function App() {
+  return (
+    <IntroTweaksCtx.Provider value={DEFAULT_INTRO_TWEAKS}>
+      <IntroV1 />
+    </IntroTweaksCtx.Provider>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

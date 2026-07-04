@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Italia Polo Challenge — Sito Web | Juri Dabiankov Studio</title>
+  <meta name="description" content="Sito web ufficiale per Italia Polo Challenge, torneo internazionale di polo. Design bold, identità visiva forte, presenza digitale di livello.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="IPC Website — Juri Dabiankov Studio">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../images/og-cover.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;}
+    body{background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;width:100%;height:auto;}
+    header{position:fixed;inset:0 0 auto;z-index:200;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,17,17,.88);backdrop-filter:blur(16px);}
+    .logo-link img{height:32px;filter:invert(1);}
+    nav{display:flex;align-items:center;gap:32px;}
+    nav a{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.38);transition:color .2s;}
+    nav a:hover{color:var(--ink);}
+    .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
+    .back::before{content:'←';font-size:12px;}
+    /* ── HERO ── */
+    .hero-bleed{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;padding:0 80px 64px;}
+    .hero-bg{position:absolute;inset:0;}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+    .hero-bleed::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.05) 0%,rgba(17,17,17,.1) 30%,rgba(17,17,17,.8) 68%,#111111 100%);pointer-events:none;}
+    .hero-info{position:relative;z-index:2;}
+    .hero-eyebrow{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+    .hero-h{font-size:clamp(60px,10vw,140px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
+    .hero-h em{font-style:normal;color:var(--accent);}
+    /* ── META STRIP ── */
+    .meta-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--hairline);}
+    .meta-item{padding:28px 40px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;gap:8px;}
+    .meta-item:last-child{border-right:none;}
+    .mk{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+    .mv{font-size:12px;font-weight:500;line-height:1.5;}
+    a.meta-item{text-decoration:none;color:var(--ink);transition:background .2s;cursor:pointer;}
+    a.meta-item:hover{background:rgba(196,180,156,.06);}
+    a.meta-item .mv{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
+    .meta-arr{font-size:16px;color:var(--accent);margin-top:auto;}
+    /* ── CASE SECTIONS ── */
+    .case-intro{padding:80px;border-bottom:1px solid var(--hairline);}
+    .case-intro p{font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.65;color:rgba(255,255,255,.5);max-width:860px;}
+    .case-img{border-bottom:1px solid var(--hairline);}
+    .case-img img{display:block;width:100%;height:auto;}
+    .case-split{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--hairline);}
+    .case-split-text{padding:80px;display:flex;flex-direction:column;justify-content:center;gap:20px;border-right:1px solid var(--hairline);}
+    .case-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+    .case-split-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.45);}
+    .case-split-text p+p{margin-top:12px;}
+    .case-split-img{overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--surface);padding:60px 80px;}
+    .case-split-img img{width:auto;max-width:240px;height:auto;display:block;box-shadow:0 24px 80px rgba(0,0,0,.7);}
+    /* ── BROWSER MOCKUP ── */
+    .browser-scene{background:var(--surface);padding:80px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .browser{width:100%;max-width:1040px;border-radius:12px 12px 4px 4px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.85);}
+    .browser-bar{background:#2a2a2c;padding:14px 18px;display:flex;align-items:center;gap:14px;}
+    .browser-dots{display:flex;gap:7px;}
+    .browser-dots span{width:11px;height:11px;border-radius:50%;background:#3c3c3e;}
+    .browser-url{flex:1;background:#3a3a3c;border-radius:6px;padding:6px 14px;font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.22);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .browser-screen img{display:block;width:100%;height:auto;}
+    /* ── DEVICE SCENE (MacBook + iPhone) ── */
+    .device-scene{background:var(--surface);padding:80px 80px 100px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .device-stage{position:relative;width:100%;max-width:960px;}
+    .mac{position:relative;filter:drop-shadow(0 40px 100px rgba(0,0,0,.9));}
+    .mac-lid{background:#1c1c1e;border-radius:14px 14px 0 0;padding:18px 18px 0;position:relative;}
+    .mac-lid::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#3a3a3c;border-radius:50%;}
+    .mac-screen{background:#000;border-radius:8px 8px 0 0;overflow:hidden;aspect-ratio:1440/900;}
+    .mac-screen img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+    .mac-hinge{height:10px;background:linear-gradient(180deg,#2c2c2e,#1a1a1c);}
+    .mac-base{height:14px;background:linear-gradient(180deg,#252527,#1c1c1e);border-radius:0 0 3px 3px;margin:0 -4%;}
+    .mac-foot{height:4px;background:#2a2a2c;border-radius:0 0 6px 6px;margin:0 6%;}
+    .iphone{position:absolute;bottom:-24px;right:-48px;width:180px;background:#1c1c1e;border-radius:44px;padding:12px 7px 9px;box-shadow:0 20px 80px rgba(0,0,0,.95),inset 0 0 0 1px rgba(255,255,255,.08);z-index:10;}
+    .ip-notch{height:20px;display:flex;align-items:center;justify-content:center;margin-bottom:3px;}
+    .ip-island{width:64px;height:17px;background:#000;border-radius:10px;}
+    .ip-screen{overflow:hidden;border-radius:3px;}
+    .ip-screen img{width:100%;display:block;}
+    .ip-bar-wrap{height:20px;display:flex;align-items:center;justify-content:center;}
+    .ip-bar{width:68px;height:4px;background:rgba(255,255,255,.18);border-radius:4px;}
+    /* ── PHONE SCENE (large, centered) ── */
+    .phone-scene{background:var(--surface);padding:80px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .phone-large{width:280px;background:#1c1c1e;border-radius:54px;padding:18px 12px 14px;box-shadow:0 40px 120px rgba(0,0,0,.95),inset 0 0 0 1.5px rgba(255,255,255,.1);}
+    .pl-notch{height:26px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
+    .pl-island{width:82px;height:22px;background:#000;border-radius:12px;}
+    .pl-screen{overflow:hidden;border-radius:6px;}
+    .pl-screen img{width:100%;display:block;}
+    .pl-bar-wrap{height:26px;display:flex;align-items:center;justify-content:center;}
+    .pl-bar{width:80px;height:4px;background:rgba(255,255,255,.18);border-radius:4px;}
+    /* ── NEXT ── */
+    .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
+    .next:hover{background:var(--hairline);}
+    .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
+    .next-t{font-size:clamp(28px,4vw,60px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;line-height:.88;}
+    .next-t em{font-style:normal;color:var(--accent);}
+    .arr{font-size:28px;color:var(--muted);transition:transform .3s,color .3s;}
+    .next:hover .arr{transform:translateX(10px);color:var(--accent);}
+    footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
+    footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
+    footer a:hover{color:var(--ink);}
+    .fc{font-size:9px;color:var(--muted);}
+    @media(max-width:900px){
+      .hero-bleed{padding:0 36px 48px;}
+      .meta-strip{grid-template-columns:1fr 1fr;}
+      .meta-item{padding:22px 28px;}
+      .case-intro{padding:60px 36px;}
+      .browser-scene,.device-scene,.phone-scene{padding:48px 36px;}
+      .device-scene{padding-bottom:72px;}
+      .case-split{grid-template-columns:1fr;}
+      .case-split-text{border-right:none;border-bottom:1px solid var(--hairline);padding:60px 36px;}
+      .case-split-img{padding:48px 36px;}
+      .iphone{width:140px;border-radius:34px;right:-20px;}
+    }
+    @media(max-width:600px){
+      header{padding:0 24px;}
+      .hero-bleed{padding:0 24px 36px;}
+      .meta-strip{grid-template-columns:1fr 1fr;}
+      .meta-item{padding:18px 20px;}
+      .case-intro{padding:40px 24px;}
+      .browser-scene,.device-scene,.phone-scene{padding:36px 24px;}
+      .device-scene{padding-bottom:60px;}
+      .case-split-text{padding:40px 24px;}
+      .case-split-img{padding:40px 24px;}
+      .next,footer{padding-left:24px;padding-right:24px;}
+    }
+  </style>
+  <link rel="stylesheet" href="../anim.css">
+</head>
+<body>
+
+<header>
+  <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+  <nav>
+    <a href="../works.html" class="back">Works</a>
+    <a href="../services.html">Services</a>
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero-bleed">
+  <div class="hero-bg">
+    <img src="../projects/web-design/ipc/desktop.png" alt="Italia Polo Challenge — hero">
+  </div>
+  <div class="hero-info">
+    <span class="hero-eyebrow">Web Design · Sport & Events</span>
+    <h1 class="hero-h">Italia Polo<br><em>Challenge</em></h1>
+  </div>
+</section>
+
+<div class="meta-strip">
+  <div class="meta-item">
+    <span class="mk">Anno</span>
+    <span class="mv">—</span>
+  </div>
+  <div class="meta-item">
+    <span class="mk">Cliente</span>
+    <span class="mv">Italia Polo Challenge</span>
+  </div>
+  <div class="meta-item">
+    <span class="mk">Deliverable</span>
+    <span class="mv">Sito web ufficiale</span>
+  </div>
+  <a class="meta-item" href="https://www.italiapolochallenge.it" target="_blank" rel="noopener">
+    <span class="mk">Sito live</span>
+    <span class="mv">italiapolochallenge.it</span>
+    <span class="meta-arr">↗</span>
+  </a>
+</div>
+
+<div class="case-intro" data-anim>
+  <p>Un torneo internazionale di polo meritava una presenza digitale costruita sullo stesso livello del brand. Tipografia monumentale, identità cromatica forte, gerarchia visiva immediata: il sito traduce in digitale l'energia e il prestigio dell'evento.</p>
+</div>
+
+<div class="case-img" data-anim="img">
+  <img src="../projects/web-design/ipc/desktop.png" alt="Italia Polo — homepage">
+</div>
+
+<div class="browser-scene" data-anim="img">
+  <div class="browser">
+    <div class="browser-bar">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="browser-url">italiapolochallenge.it</div>
+    </div>
+    <div class="browser-screen">
+      <img src="../projects/web-design/ipc/desktop.png" alt="browser view">
+    </div>
+  </div>
+</div>
+<div class="case-split">
+  <div class="case-split-text" data-anim>
+    <span class="case-label">Il Progetto</span>
+    <p>Italia Polo Challenge è uno degli eventi equestri più importanti d'Italia. Il sito doveva comunicare autorevolezza e dinamismo in un colpo d'occhio: titolo che occupa l'intera viewport, navigazione essenziale, fotografia protagonista.</p><p>L'identità digitale è coerente con i materiali dell'evento — locandine, programmi, comunicazione social — già sviluppati dallo studio. Un sistema, non un sito.</p>
+  </div>
+  <div class="case-split-img" data-anim="img">
+    <img src="../projects/web-design/ipc/mobile.png" alt="Italia Polo — mobile">
+  </div>
+</div>
+
+<a class="next" href="cip.html">
+  <div>
+    <span class="next-lbl">Progetto successivo</span>
+    <p class="next-t">Centro Ippico<br><em>Punta Ala</em></p>
+  </div>
+  <span class="arr">→</span>
+</a>
+
+<footer>
+  <div><a href="../index.html">Home</a><a href="../works.html">Works</a><a href="../contact.html">Contact</a></div>
+  <p class="fc">© 2025 Juri Dabiankov Studio</p>
+</footer>
+<script src="../anim.js?v=5"></script>
+</body>
+</html>

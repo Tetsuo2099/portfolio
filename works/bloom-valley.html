@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Valley — Brand Identity & Packaging | Juri Dabiankov Studio</title>
+  <meta name="description" content="Brand identity e packaging design per Bloom Valley 2024: logo, palette, tipografia e packaging per un brand lifestyle.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Bloom Valley — Brand Identity & Packaging | Juri Dabiankov Studio">
+  <meta property="og:description" content="Brand identity e packaging per Bloom Valley: sistema visivo completo con logo, palette e packaging per un brand lifestyle.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../images/og-cover.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;--sidebar:300px;}
+    body{background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;width:100%;height:auto;}
+    header{position:fixed;inset:0 0 auto;z-index:200;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,17,17,.88);backdrop-filter:blur(16px);}
+    .logo-link img{height:32px;filter:invert(1);}
+    nav{display:flex;align-items:center;gap:32px;}
+    nav a{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.38);transition:color .2s;}
+    nav a:hover{color:var(--ink);}
+    .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
+    .back::before{content:'←';font-size:12px;}
+    .hero{height:100vh;position:relative;overflow:hidden;}
+    .hero img{width:100%;height:100%;object-fit:cover;}
+    .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,1) 0%,rgba(17,17,17,.55) 45%,transparent 72%);}
+    .hero-text{position:absolute;inset:auto 48px 64px;}
+    .hero-eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+    .hero-h{font-size:clamp(72px,12vw,180px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
+    .hero-h em{font-style:normal;color:var(--accent);}
+    .magazine{display:grid;grid-template-columns:var(--sidebar) 1fr;border-top:1px solid var(--hairline);}
+    .sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;scrollbar-width:none;padding:48px 36px 48px 48px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;}
+    .sidebar::-webkit-scrollbar{display:none;}
+    .sb-tag{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .sb-title{font-size:20px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.88;}
+    .sb-title em{font-style:normal;color:var(--accent);}
+    .sb-rule{height:1px;background:var(--hairline);margin:24px 0;}
+    .sb-meta{display:flex;flex-direction:column;gap:14px;}
+    .sb-meta .k{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+    .sb-meta .v{font-size:12px;font-weight:500;line-height:1.6;}
+    .sb-brief{margin-top:20px;font-size:12px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.42);}
+    .sb-brief em{font-style:normal;color:rgba(255,255,255,.72);}
+    .sb-nav{margin-top:auto;padding-top:20px;}
+    .sb-nav-lbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+    .sb-nav a{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--hairline);text-decoration:none;color:rgba(255,255,255,.28);transition:color .25s;}
+    .sb-nav a:hover{color:rgba(255,255,255,.65);}
+    .sb-nav a.active{color:var(--ink);}
+    .dot{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex-shrink:0;transition:background .25s;}
+    .sb-nav a.active .dot{background:var(--accent);border-color:var(--accent);}
+    .nl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+    .scroll-col{min-height:100vh;}
+    .ch+.ch{border-top:1px solid var(--hairline);}
+    .ch-hd{padding:24px 48px;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--hairline);}
+    .ch-n{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+    .ch-r{flex:1;height:1px;background:var(--hairline);}
+    .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+    .if img{display:block;width:100%;height:auto;}
+    .ig{height:1px;background:var(--hairline);}
+    .id{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
+    .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+    .ial{display:grid;grid-template-columns:2fr 1fr;gap:1px;}
+    .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
+    .next:hover{background:var(--hairline);}
+    .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
+    .next-t{font-size:clamp(28px,4vw,60px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;line-height:.88;}
+    .next-t em{font-style:normal;color:var(--accent);}
+    .arr{font-size:28px;color:var(--muted);transition:transform .3s,color .3s;}
+    .next:hover .arr{transform:translateX(10px);color:var(--accent);}
+    footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
+    footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
+    footer a:hover{color:var(--ink);}
+    .fc{font-size:9px;color:var(--muted);}
+    @media(max-width:700px){.magazine{grid-template-columns:1fr;}.sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}.sb-nav{margin-top:32px;}.hero-text,.next,footer{padding-left:24px;padding-right:24px;}.ch-hd{padding:20px 24px;}.id,.ial{grid-template-columns:1fr;}.it{grid-template-columns:1fr 1fr;}header{padding:0 24px;}}
+  </style>
+  <link rel="stylesheet" href="../anim.css">
+</head>
+<body>
+  <header>
+    <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+    <nav><a class="back" href="../works.html">Works</a><a href="../services.html">Servizi</a><a href="../about.html">Studio</a><a href="../contact.html">Contatti</a></nav>
+  </header>
+
+  <section class="hero">
+    <img src="../projects/brand-identity/bloom-valley/header/slide-01.png" alt="Bloom Valley">
+    <div class="hero-grad"></div>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Brand Identity · Packaging · 2024</p>
+      <h1 class="hero-h">BLOOM<br><em>VALLEY</em></h1>
+    </div>
+  </section>
+
+  <div class="magazine">
+    <aside class="sidebar">
+      <span class="sb-tag">Progetto</span>
+      <h2 class="sb-title">BLOOM<br><em>VALLEY</em></h2>
+      <div class="sb-rule"></div>
+      <div class="sb-meta">
+        <div><div class="k">Cliente</div><div class="v">BloomValley</div></div>
+        <div><div class="k">Categoria</div><div class="v">Brand Identity</div></div>
+        <div><div class="k">Anno</div><div class="v">2024</div></div>
+        <div><div class="k">Servizi</div><div class="v">Identity · Packaging · Visual Design</div></div>
+      </div>
+      <p class="sb-brief">Brand identity e packaging per BloomValley, integratori naturali a base di erbe officinali. Un'estetica che bilancia <em>rigore scientifico e naturalezza.</em></p>
+      <div class="sb-nav">
+        <div class="sb-nav-lbl">Capitoli</div>
+        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Identità</span></a>
+        <a href="#ch02"><div class="dot"></div><span class="nl">Packaging</span></a>
+        <a href="#ch03"><div class="dot"></div><span class="nl">Applicazioni</span></a>
+      </div>
+    </aside>
+    <div class="scroll-col">
+      <div id="ch01" class="ch">
+        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Identità</span></div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/bloom-valley/images/01.jpg" alt="" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_B.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div id="ch02" class="ch">
+        <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Packaging</span></div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_01.jpg" alt="" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_02.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_03.jpg" alt="" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_04.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_05.jpg" alt="" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="ial" data-anim="img">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_06.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/bloom-valley/images/A+_BloomValley_CardoMariano_NEW_A_07.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div id="ch03" class="ch">
+        <div class="ch-hd"><span class="ch-n">03</span><div class="ch-r"></div><span class="ch-t">Applicazioni</span></div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/bloom-valley/images/BloomValley_Probiotics-&-Prebiotics_Mockup_8.jpg" alt="" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/bloom-valley/images/BloomValley_Probiotics-&-Prebiotics_Mockup_9.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/bloom-valley/images/BloomValley_Probiotics-&-Prebiotics_Mockup_10.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="next" href="packstyle.html"><div><span class="next-lbl">Progetto successivo</span><div class="next-t">PACKSTYLE<br><em>LAYOUT STUDIO</em></div></div><span class="arr">→</span></a>
+  <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
+  <script>
+    const ids=['ch01','ch02','ch03'],ls={};
+    ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
+    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
+    ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+  </script>
+  <script src="../anim.js?v=5" defer></script>
+</body>
+</html>

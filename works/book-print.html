@@ -3,223 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book &amp; Print — Juri Dabiankov Studio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <title>Book Print — Editorial & Print Design | Juri Dabiankov Studio</title>
+  <meta name="description" content="Progettazione editoriale e print design: layout tipografici, libri e materiali editoriali. Portfolio progetti editorial 2014–2024 da Roma.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Book Print — Editorial Design | Juri Dabiankov Studio">
+  <meta property="og:description" content="Print e editorial design: layout tipografici e libri curati nei dettagli. Portfolio 2014–2024.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../images/og-cover.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --dark: #0c0c0c; --light: #ffffff; --muted-light: rgba(255,255,255,0.45); --muted-dark: #888880; --border-light: rgba(255,255,255,0.12); --border-dark: rgba(12,12,12,0.10); --sans: 'Inter', -apple-system, Helvetica, sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--dark); color: var(--light); font-family: var(--sans); font-size: 13px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    header { position: fixed; inset: 0 0 auto 0; z-index: 200; height: 64px; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; transition: background 0.4s, border-color 0.4s; }
-    header.scrolled { background: var(--light); border-bottom: 1px solid var(--border-dark); }
-    .logo-link { display: flex; align-items: center; text-decoration: none; height: 22px; }
-    .logo-link img { height: 40px; width: auto; display: block; transition: filter 0.4s; }
-    .logo-link img.dark-mode { filter: invert(1); }
-    header.scrolled .logo-link img { filter: none; }
-    nav { display: flex; align-items: center; gap: 36px; }
-    nav a { font-size: 11px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: color 0.3s, opacity 0.2s; color: var(--light); opacity: 0.6; }
-    nav a:hover { opacity: 1; }
-    header.scrolled nav a { color: var(--dark); }
-
-    /* ── PROJECT HERO ── */
-    .project-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .project-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-    .project-video.loaded { opacity: 1; }
-    .project-slides {
-      position: absolute;
-      inset: 0;
-    }
-    .project-slides .slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      animation: kenBurns 18s infinite;
-    }
-    .project-slides .slide:nth-child(1) { animation-delay: 0s; }
-    .project-slides .slide:nth-child(2) { animation-delay: 6s; }
-    .project-slides .slide:nth-child(3) { animation-delay: 12s; }
-    .project-slides .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    @keyframes kenBurns {
-      0%   { opacity: 0; transform: scale(1.0); }
-      6%   { opacity: 1; }
-      32%  { opacity: 1; }
-      40%  { opacity: 0; transform: scale(1.08); }
-      100% { opacity: 0; transform: scale(1.08); }
-    }
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(12,12,12,0.45) 0%, rgba(12,12,12,0.3) 40%, rgba(12,12,12,0.85) 100%);
-    }
-    .back-link, .project-eyebrow, .project-title, .project-tagline { position: relative; z-index: 2; }
-    .project-header { padding-top: 64px; min-height: 80vh; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 64px; padding-left: 48px; padding-right: 48px; }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.35); transition: color 0.2s; margin-bottom: 64px; }
-    .back-link::before { content: '←'; }
-    .back-link:hover { color: var(--light); }
-    .project-eyebrow { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); }
-    .project-title { font-size: clamp(56px, 10vw, 160px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 32px; }
-    .project-tagline { font-size: 16px; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.7; }
-    .meta-strip { background: var(--light); color: var(--dark); display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border-dark); }
-    .meta-item { padding: 32px 48px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid var(--border-dark); }
-    .meta-item:last-child { border-right: none; }
-    .meta-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); }
-    .meta-value { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.5; }
-    .main-image { background: #f0f0f0; overflow: hidden; }
-    .main-image img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; display: block; }
-    .description { background: var(--light); padding: 80px 48px; display: grid; grid-template-columns: 200px 1fr; gap: 80px; align-items: start; border-bottom: 1px solid var(--border-dark); }
-    .desc-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); padding-top: 4px; }
-    .desc-text { font-size: 17px; line-height: 1.85; color: var(--dark); max-width: 680px; }
-    .gallery { background: var(--light); padding: 0 48px 80px; }
-    .gallery-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-dark); padding: 48px 0 36px; border-top: 1px solid var(--border-dark); border-bottom: 1px solid var(--border-dark); margin-bottom: 36px; display: block; }
-    .gallery-grid {
-      columns: 2;
-      column-gap: 12px;
-    }
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
-    }
-    .gallery-item:hover img { transform: scale(1.02); }
-    .img-ph { display: flex; align-items: center; justify-content: center; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(12,12,12,0.2); }
-    .ph-a { background: #e8e8e8; } .ph-b { background: #dedede; } .ph-c { background: #d4d4d4; } .ph-d { background: #eeeeee; } .ph-e { background: #f4f4f4; }
-    .next-project { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; background: var(--dark); color: var(--light); padding: 80px 48px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); transition: background 0.3s; }
-    .next-project:hover { background: #181818; }
-    .next-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); display: block; margin-bottom: 16px; }
-    .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; line-height: 0.95; }
-    .next-arrow { font-size: 48px; color: rgba(255,255,255,0.25); transition: transform 0.3s, color 0.3s; }
-    .next-project:hover .next-arrow { transform: translateX(12px); color: var(--light); }
-    footer { background: var(--dark); padding: 40px 48px 48px; border-top: 1px solid rgba(255,255,255,0.06); }
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--light); opacity: 0.35; transition: opacity 0.2s; }
-    .footer-links a:hover { opacity: 1; }
-    .footer-copy { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.08em; }
-    @media (max-width: 900px) {
-      header { padding: 0 24px; } .project-header { padding: 80px 24px 48px; min-height: 60vh; }
-      .meta-strip { grid-template-columns: repeat(2, 1fr); } .meta-item { padding: 24px; } .meta-item:nth-child(2) { border-right: none; }
-      .description { padding: 60px 24px; grid-template-columns: 1fr; gap: 24px; }
-      .gallery { padding: 0 24px 60px; } .next-project { padding: 60px 24px; }
-      footer { padding: 32px 24px; } .footer-bottom { flex-direction: column; gap: 20px; align-items: flex-start; }
-    }
-    @media (max-width: 600px) { .project-title { font-size: clamp(48px, 14vw, 80px); } .gallery-grid { columns: 1; }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;--sidebar:300px;}
+    body{background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;width:100%;height:auto;}
+    header{position:fixed;inset:0 0 auto;z-index:200;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,17,17,.88);backdrop-filter:blur(16px);}
+    .logo-link img{height:32px;filter:invert(1);}
+    nav{display:flex;align-items:center;gap:32px;}
+    nav a{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.38);transition:color .2s;}
+    nav a:hover{color:var(--ink);}
+    .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
+    .back::before{content:'←';font-size:12px;}
+    .hero{height:100vh;position:relative;overflow:hidden;}
+    .hero img{width:100%;height:100%;object-fit:cover;}
+    .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,1) 0%,rgba(17,17,17,.55) 45%,transparent 72%);}
+    .hero-text{position:absolute;inset:auto 48px 64px;}
+    .hero-eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+    .hero-h{font-size:clamp(72px,12vw,180px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
+    .hero-h em{font-style:normal;color:var(--accent);}
+    .magazine{display:grid;grid-template-columns:var(--sidebar) 1fr;border-top:1px solid var(--hairline);}
+    .sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;scrollbar-width:none;padding:48px 36px 48px 48px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;}
+    .sidebar::-webkit-scrollbar{display:none;}
+    .sb-tag{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .sb-title{font-size:20px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.88;}
+    .sb-title em{font-style:normal;color:var(--accent);}
+    .sb-rule{height:1px;background:var(--hairline);margin:24px 0;}
+    .sb-meta{display:flex;flex-direction:column;gap:14px;}
+    .sb-meta .k{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+    .sb-meta .v{font-size:12px;font-weight:500;line-height:1.6;}
+    .sb-brief{margin-top:20px;font-size:12px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.42);}
+    .sb-brief em{font-style:normal;color:rgba(255,255,255,.72);}
+    .sb-nav{margin-top:auto;padding-top:20px;}
+    .sb-nav-lbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+    .sb-nav a{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--hairline);text-decoration:none;color:rgba(255,255,255,.28);transition:color .25s;}
+    .sb-nav a:hover{color:rgba(255,255,255,.65);}
+    .sb-nav a.active{color:var(--ink);}
+    .dot{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex-shrink:0;transition:background .25s;}
+    .sb-nav a.active .dot{background:var(--accent);border-color:var(--accent);}
+    .nl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+    .scroll-col{min-height:100vh;}
+    .ch+.ch{border-top:1px solid var(--hairline);}
+    .ch-hd{padding:24px 48px;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--hairline);}
+    .ch-n{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+    .ch-r{flex:1;height:1px;background:var(--hairline);}
+    .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+    .if img{display:block;width:100%;height:auto;}
+    .ig{height:1px;background:var(--hairline);}
+    .id{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
+    .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+    .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
+    .next:hover{background:var(--hairline);}
+    .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
+    .next-t{font-size:clamp(28px,4vw,60px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;line-height:.88;}
+    .next-t em{font-style:normal;color:var(--accent);}
+    .arr{font-size:28px;color:var(--muted);transition:transform .3s,color .3s;}
+    .next:hover .arr{transform:translateX(10px);color:var(--accent);}
+    footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
+    footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
+    footer a:hover{color:var(--ink);}
+    .fc{font-size:9px;color:var(--muted);}
+    @media(max-width:700px){.magazine{grid-template-columns:1fr;}.sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}.sb-nav{margin-top:32px;}.hero-text,.next,footer{padding-left:24px;padding-right:24px;}.ch-hd{padding:20px 24px;}.id{grid-template-columns:1fr;}.it{grid-template-columns:1fr 1fr;}header{padding:0 24px;}}
   </style>
   <link rel="stylesheet" href="../anim.css">
 </head>
 <body>
-  <header id="siteHeader">
-    <a class="logo-link" href="../index.html">
-      <img src="../images/logo.svg" alt="Juri Dabiankov Studio" class="dark-mode" id="logoImg">
-    </a>
-    <nav>
-      <a href="../works.html">Works</a><a href="../services.html">Servizi</a><a href="../about.html">Studio</a>
-      <a href="contact.html">Contatti</a>
-    </nav>
+  <header>
+    <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+    <nav><a class="back" href="../works.html">Works</a><a href="../services.html">Servizi</a><a href="../about.html">Studio</a><a href="../contact.html">Contatti</a></nav>
   </header>
 
-  <section class="project-header" id="hero">
-    <div class="project-bg">
-      <video class="project-video" autoplay muted loop playsinline>
-        <source src="../projects/book-print/header/video.mp4" type="video/mp4">
-      </video>
-      <div class="project-slides">
-        <div class="slide"><img src="../projects/book-print/header/slide-01.jpg" alt=""></div>
-        <div class="slide"><img src="../projects/book-print/header/slide-02.jpg" alt=""></div>
-        <div class="slide"><img src="../projects/book-print/header/slide-03.jpg" alt=""></div>
-      </div>
-      <div class="project-overlay"></div>
+  <section class="hero">
+    <img src="../projects/book-print/header/slide-01.jpg" alt="Book Print">
+    <div class="hero-grad"></div>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Editorial · Print · 2020</p>
+      <h1 class="hero-h">BOOK<br><em>PRINT</em></h1>
     </div>
-    <a class="back-link" href="../packaging.html">Packaging</a>
-    <div class="project-eyebrow"><span>Packaging</span><span>·</span><span>2020 — 2022</span></div>
-    <h1 class="project-title">
-      <span class="line"><span>BOOK</span></span>
-      <span class="line"><span>&amp; PRINT</span></span>
-    </h1>
-    <p class="project-tagline">Design editoriale e materiali print — libri, cataloghi e pubblicazioni.</p>
   </section>
 
-  <div class="meta-strip">
-    <div class="meta-item" data-anim data-delay="1"><span class="meta-label">Cliente</span><span class="meta-value">Vari clienti</span></div>
-    <div class="meta-item" data-anim data-delay="2"><span class="meta-label">Categoria</span><span class="meta-value">Packaging</span></div>
-    <div class="meta-item" data-anim data-delay="3"><span class="meta-label">Anno</span><span class="meta-value">2020 — 2022</span></div>
-    <div class="meta-item" data-anim data-delay="4"><span class="meta-label">Servizi</span><span class="meta-value">Editoriale · Print · Pre-press</span></div>
+  <div class="magazine">
+    <aside class="sidebar">
+      <span class="sb-tag">Progetto</span>
+      <h2 class="sb-title">BOOK<br><em>PRINT</em></h2>
+      <div class="sb-rule"></div>
+      <div class="sb-meta">
+        <div><div class="k">Categoria</div><div class="v">Editorial</div></div>
+        <div><div class="k">Anno</div><div class="v">2020</div></div>
+        <div><div class="k">Servizi</div><div class="v">Book Design · Print · Editorial</div></div>
+      </div>
+      <p class="sb-brief">Progettazione editoriale e layout per libri e pubblicazioni print. Ogni pagina è costruita per <em>guidare la lettura</em> senza mai interromperla.</p>
+      <div class="sb-nav">
+        <div class="sb-nav-lbl">Capitoli</div>
+        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Layout</span></a>
+        <a href="#ch02"><div class="dot"></div><span class="nl">Dettagli</span></a>
+      </div>
+    </aside>
+    <div class="scroll-col">
+      <div id="ch01" class="ch">
+        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Layout editoriale</span></div>
+        <div class="if" data-anim="img"><img src="../projects/book-print/images/01.jpg" alt="" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/book-print/images/02.jpg" alt="" loading="lazy">
+          <img src="../projects/book-print/images/03.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div id="ch02" class="ch">
+        <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Dettagli</span></div>
+        <div class="if" data-anim="img"><img src="../projects/book-print/images/04.jpg" alt="" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="if" data-anim="img"><img src="../projects/book-print/images/05.jpg" alt="" loading="lazy"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="main-image" data-anim="img">
-    <img src="../projects/book-print/images/01.jpg" alt="" loading="lazy">
-  </div>
-
-  <section class="description">
-    <span class="desc-label">Il Progetto</span>
-    <p class="desc-text" data-anim>
-      Selezione di progetti editoriali realizzati tra il 2020 e il 2022: libri d'arte,
-      cataloghi di prodotto, brochure istituzionali e pubblicazioni di settore. Ogni
-      progetto è seguito dall'impaginazione fino alla supervisione della stampa,
-      garantendo qualità e coerenza tra il digitale e il prodotto finito.
-    </p>
-  </section>
-
-  <section class="gallery">
-    <span class="gallery-label">Immagini</span>
-    <div class="gallery-grid">
-      <div class="gallery-item" data-anim="img" data-delay="1">
-        <img src="../projects/book-print/images/02.jpg" alt="" loading="lazy">
-      </div>
-      <div class="gallery-item" data-anim="img" data-delay="2"><img src="../projects/book-print/images/03.jpg" alt="" loading="lazy"></div>
-      <div class="gallery-item" data-anim="img" data-delay="3"><img src="../projects/book-print/images/04.jpg" alt="" loading="lazy"></div>
-      <div class="gallery-item" data-anim="img" data-delay="4"><img src="../projects/book-print/images/05.jpg" alt="" loading="lazy"></div>
-    </div>
-    </section>
-
-  <a class="next-project" href="posters.html">
-    <div>
-      <span class="next-label">Progetto successivo</span>
-      <span class="next-title">POSTERS</span>
-    </div>
-    <span class="next-arrow">→</span>
-  </a>
-
-  <footer>
-    <div class="footer-bottom">
-      <div class="footer-links">
-        <a href="mailto:juri.dabiankov@gmail.com">Email</a>
-        <a href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener">Behance</a>
-        <a href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener">Instagram</a>
-      </div>
-      <span class="footer-copy">© 2025 Juri Dabiankov Studio</span>
-    </div>
-  </footer>
-
+  <a class="next" href="../works.html"><div><span class="next-lbl">Torna ai lavori</span><div class="next-t">ALL<br><em>WORKS</em></div></div><span class="arr">→</span></a>
+  <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
   <script>
-    const header = document.getElementById('siteHeader');
-    const logoImg = document.getElementById('logoImg');
-    const hero = document.getElementById('hero');
-    new IntersectionObserver(([e]) => {
-      header.classList.toggle('scrolled', !e.isIntersecting);
-      logoImg.classList.toggle('dark-mode', e.isIntersecting);
-    }, { threshold: 0.05 }).observe(hero);
+    const ids=['ch01','ch02'],ls={};
+    ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
+    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
+    ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
   </script>
-  <script src="../anim.js" defer></script>
+  <script src="../anim.js?v=5" defer></script>
 </body>
 </html>

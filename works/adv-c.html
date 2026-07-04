@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADV Campagne Pubblicitarie — Juri Dabiankov Studio Roma</title>
+  <meta name="description" content="Campagne pubblicitarie per Bepanthen, Schweppes, Pigeon, MiraLAX, Spontex e Coca-Cola. Art direction e visual per brand farmaceutici e consumer goods.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="ADV Campagne Pubblicitarie — Juri Dabiankov Studio Roma">
+  <meta property="og:description" content="Campagne pubblicitarie per Bepanthen, Schweppes, Pigeon, MiraLAX, Spontex e Coca-Cola. Art direction per brand consumer internazionali.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../images/og-cover.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --canvas: #111111;
+      --surface: #1b1b1b;
+      --hairline: #2a2a2a;
+      --ink: #ffffff;
+      --muted: #78786e;
+      --accent: #c4b49c;
+      --g: 64px;
+      --sidebar: 300px;
+    }
+    body { background: var(--canvas); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { display: block; width: 100%; height: auto; }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; inset: 0 0 auto; z-index: 200; height: 64px;
+      padding: 0 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(17,17,17,.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .logo-link img { height: 32px; filter: invert(1); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,.38); transition: color .2s; }
+    nav a:hover { color: var(--ink); }
+    .back { color: rgba(255,255,255,.5) !important; display: flex; align-items: center; gap: 7px; }
+    .back::before { content: '←'; font-size: 12px; }
+
+    /* ── HERO ── */
+    .hero { height: 100vh; position: relative; overflow: hidden; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,1) 0%, rgba(17,17,17,.6) 45%, transparent 72%);
+    }
+    .hero-text { position: absolute; inset: auto 48px 64px; }
+    .hero-eyebrow { font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero-h {
+      font-size: clamp(80px, 14vw, 200px);
+      font-weight: 800; line-height: .82; letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+    .hero-h em { font-style: normal; color: var(--accent); }
+
+    /* ── MAGAZINE LAYOUT ── */
+    .magazine {
+      display: grid;
+      grid-template-columns: var(--sidebar) 1fr;
+      border-top: 1px solid var(--hairline);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky; top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding: 48px 36px 48px 48px;
+      border-right: 1px solid var(--hairline);
+      display: flex; flex-direction: column;
+    }
+    .sidebar::-webkit-scrollbar { display: none; }
+
+    .sb-tag { font-size: 8px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .sb-title { font-size: 20px; font-weight: 800; letter-spacing: -.03em; text-transform: uppercase; line-height: .88; }
+    .sb-title em { font-style: normal; color: var(--accent); }
+
+    .sb-rule { height: 1px; background: var(--hairline); margin: 24px 0; }
+
+    .sb-meta { display: flex; flex-direction: column; gap: 14px; }
+    .sb-meta-item .k { font-size: 8px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .sb-meta-item .v { font-size: 12px; font-weight: 500; line-height: 1.6; }
+
+    .sb-brief {
+      margin-top: 20px;
+      font-size: 12px; font-weight: 300; line-height: 1.85;
+      color: rgba(255,255,255,.42);
+    }
+    .sb-brief em { font-style: normal; color: rgba(255,255,255,.72); }
+
+    /* NAV CLIENTI */
+    .sb-clients { margin-top: auto; padding-top: 20px; }
+    .sb-clients-label { font-size: 8px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .sb-client-link {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 0;
+      border-top: 1px solid var(--hairline);
+      text-decoration: none; color: rgba(255,255,255,.28);
+      transition: color .25s;
+    }
+    .sb-client-link:hover { color: rgba(255,255,255,.65); }
+    .sb-client-link.active { color: var(--ink); }
+    .cl-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      border: 1px solid currentColor; flex-shrink: 0;
+      transition: background .25s;
+    }
+    .sb-client-link.active .cl-dot { background: var(--accent); border-color: var(--accent); }
+    .cl-name { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .cl-type { font-size: 9px; color: var(--muted); margin-top: 1px; line-height: 1.3; }
+
+    /* ── SCROLL COLUMN ── */
+    .scroll-col { min-height: 100vh; }
+
+    /* ── CLIENT BLOCK ── */
+    .client-block + .client-block { border-top: 1px solid var(--hairline); }
+
+    /* Header del blocco client */
+    .client-header {
+      padding: 44px 48px 36px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .client-name {
+      font-size: clamp(36px, 5.5vw, 80px);
+      font-weight: 800; line-height: .85; letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+    .client-name em { font-style: normal; color: var(--accent); }
+    .client-info { text-align: right; flex-shrink: 0; margin-left: 24px; }
+    .client-info .ci-type { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .client-info .ci-year { font-size: 12px; font-weight: 500; }
+
+    /* Immagini */
+    .img-full img { display: block; width: 100%; height: auto; }
+    .img-gap { height: 1px; background: var(--hairline); }
+    .img-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+    .img-trio { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; }
+    .img-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+    .img-asym-l { display: grid; grid-template-columns: 2fr 1fr; gap: 1px; }
+    .img-asym-r { display: grid; grid-template-columns: 1fr 2fr; gap: 1px; }
+
+    /* Video */
+    .video-block video { display: block; width: 100%; background: #000; }
+
+    /* Caption sotto blocco */
+    .img-caption {
+      padding: 14px 48px;
+      font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    /* ── NEXT / FOOTER ── */
+    .next {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 80px 48px; text-decoration: none; color: var(--ink);
+      background: var(--surface); border-top: 1px solid var(--hairline);
+      transition: background .3s;
+    }
+    .next:hover { background: var(--hairline); }
+    .next-lbl { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 14px; }
+    .next-t { font-size: clamp(28px,4vw,60px); font-weight: 800; letter-spacing: -.04em; text-transform: uppercase; line-height: .88; }
+    .next-t em { font-style: normal; color: var(--accent); }
+    .arr { font-size: 28px; color: var(--muted); transition: transform .3s, color .3s; }
+    .next:hover .arr { transform: translateX(10px); color: var(--accent); }
+
+    footer {
+      padding: 32px 48px; border-top: 1px solid var(--hairline);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer a { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: var(--muted); margin-right: 24px; transition: color .2s; }
+    footer a:hover { color: var(--ink); }
+    .fc { font-size: 9px; color: var(--muted); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 860px) { :root { --sidebar: 240px; } }
+    @media (max-width: 700px) {
+      .magazine { grid-template-columns: 1fr; }
+      .sidebar { position: relative; top: 0; height: auto; padding: 36px 24px; border-right: none; border-bottom: 1px solid var(--hairline); }
+      .sb-clients { margin-top: 32px; }
+      .hero-text { left: 24px; right: 24px; }
+      .client-header { padding: 32px 24px 28px; flex-direction: column; align-items: flex-start; gap: 10px; }
+      .client-info { text-align: left; margin-left: 0; }
+      .img-caption { padding: 12px 24px; }
+      .img-duo, .img-asym-l, .img-asym-r { grid-template-columns: 1fr; }
+      .img-trio, .img-quad { grid-template-columns: 1fr 1fr; }
+      .next, footer { padding-left: 24px; padding-right: 24px; }
+      header { padding: 0 24px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../anim.css">
+</head>
+<body>
+
+  <header>
+    <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+    <nav>
+      <a class="back" href="../works.html">Works</a>
+      <a href="../services.html">Servizi</a>
+      <a href="../about.html">Studio</a>
+      <a href="../contact.html">Contatti</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="../projects/brand-identity/ADV/header/slide-01.jpg" alt="ADV Campagne">
+    <div class="hero-grad"></div>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Advertising · Art Direction · Product Visual</p>
+      <h1 class="hero-h">ADV<br><em>CAMPAGNE</em></h1>
+    </div>
+  </section>
+
+  <!-- MAGAZINE -->
+  <div class="magazine">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <span class="sb-tag">Progetto</span>
+      <h2 class="sb-title">ADV<br><em>CAMPAGNE</em></h2>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-meta">
+        <div class="sb-meta-item">
+          <div class="k">Clienti</div>
+          <div class="v">Bepanthen · Nasal Spray<br>Pigeon · MiraLAX<br>Schweppes · Spontex · Coca&#8209;Cola</div>
+        </div>
+        <div class="sb-meta-item">
+          <div class="k">Servizi</div>
+          <div class="v">Art Direction<br>Product Visualization<br>Retouching</div>
+        </div>
+      </div>
+
+      <p class="sb-brief">
+        Sette brand internazionali, sette linguaggi visivi. Un solo obiettivo: fare in modo che il prodotto <em>non si possa ignorare.</em>
+      </p>
+
+      <div class="sb-clients">
+        <div class="sb-clients-label">Clienti</div>
+        <a class="sb-client-link active" href="#bepanthen">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Bepanthen</div><div class="cl-type">Product Visual</div></div>
+        </a>
+        <a class="sb-client-link" href="#nasalspray">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Nasal Spray</div><div class="cl-type">Art Direction · Key Visual</div></div>
+        </a>
+        <a class="sb-client-link" href="#pigeon">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Pigeon</div><div class="cl-type">Campagna Digitale</div></div>
+        </a>
+        <a class="sb-client-link" href="#miralax">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">MiraLAX</div><div class="cl-type">Visual System</div></div>
+        </a>
+        <a class="sb-client-link" href="#schweppes">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Schweppes</div><div class="cl-type">Product Visual</div></div>
+        </a>
+        <a class="sb-client-link" href="#spontex">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Spontex</div><div class="cl-type">Campagna Prodotto</div></div>
+        </a>
+        <a class="sb-client-link" href="#cocacola">
+          <div class="cl-dot"></div>
+          <div><div class="cl-name">Coca&#8209;Cola</div><div class="cl-type">Key Visual · Hero</div></div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- SCROLL IMMAGINI -->
+    <div class="scroll-col">
+
+      <!-- ── BEPANTHEN ── -->
+      <div id="bepanthen" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">BEPAN&shy;<em>THEN</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Product Visual</div>
+            <div class="ci-year">2021</div>
+          </div>
+        </div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/02_Bepanthen.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── NASAL SPRAY ── -->
+      <div id="nasalspray" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">NASAL<br><em>SPRAY</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Art Direction · Key Visual</div>
+            <div class="ci-year">2021–2022</div>
+          </div>
+        </div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/Nasal_Spray_.jpg" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-duo" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/03Nasal_Spray_.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/12Nasal_Spray_.jpg" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-quad" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/04Nasal_Spray_.png" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/05Nasal_Spray_.png" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/06Nasal_Spray_.png" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/07Nasal_Spray_.png" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/13Nasal_Spray_.jpg" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/23Nasal_Spray_.png" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── PIGEON ── -->
+      <div id="pigeon" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">PI&shy;<em>GEON</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Campagna Digitale</div>
+            <div class="ci-year">2022</div>
+          </div>
+        </div>
+        <div class="img-duo" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/14_pigeon.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/15_pigeon.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── MIRALAX ── -->
+      <div id="miralax" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">MIRA&shy;<em>LAX</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Visual System</div>
+            <div class="ci-year">2022–2023</div>
+          </div>
+        </div>
+        <div class="img-duo" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/16_MiraLAX.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/17_MiraLAX.jpg" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-asym-l" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/18_MiraLAX.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/19_MiraLAX.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── SCHWEPPES ── -->
+      <div id="schweppes" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">SCHWEP&shy;<em>PES</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Product Visual</div>
+            <div class="ci-year">2023</div>
+          </div>
+        </div>
+        <div class="img-duo" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/20_Schweppes.png" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/21_Schweppes.png" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/22_Schweppes%C2%AE.png" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── SPONTEX ── -->
+      <div id="spontex" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">SPON&shy;<em>TEX</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Campagna Prodotto</div>
+            <div class="ci-year">2023–2024</div>
+          </div>
+        </div>
+        <div class="img-duo" data-anim="img">
+          <img src="../projects/brand-identity/ADV/images/25_Spontex.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/26_Spontex.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <!-- ── COCA-COLA ── -->
+      <div id="cocacola" class="client-block">
+        <div class="client-header">
+          <h3 class="client-name">COCA&#8209;<em>COLA</em></h3>
+          <div class="client-info">
+            <div class="ci-type">Key Visual</div>
+            <div class="ci-year">2024</div>
+          </div>
+        </div>
+        <div class="img-full" data-anim="img">
+          <img src="../projects/brand-identity/ADV/header/slide-01.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+    </div><!-- /scroll-col -->
+  </div><!-- /magazine -->
+
+  <a class="next" href="scrubols.html">
+    <div>
+      <span class="next-lbl">Progetto successivo</span>
+      <div class="next-t">SCRUBOLS<br><em>BRAND IDENTITY</em></div>
+    </div>
+    <span class="arr">→</span>
+  </a>
+  <footer>
+    <div>
+      <a href="mailto:juri.dabiankov@gmail.com">Email</a>
+      <a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a>
+      <a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a>
+    </div>
+    <span class="fc">© 2025 Juri Dabiankov Studio</span>
+  </footer>
+
+  <script>
+    const sections = ['bepanthen','nasalspray','pigeon','miralax','schweppes','spontex','cocacola'];
+    const links = Object.fromEntries(sections.map(id => [id, document.querySelector(`a[href="#${id}"]`)]));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sections.forEach(id => links[id]?.classList.remove('active'));
+          links[e.target.id]?.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+  </script>
+  <script src="../anim.js?v=5" defer></script>
+</body>
+</html>

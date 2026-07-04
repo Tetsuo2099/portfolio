@@ -1,1 +1,21 @@
 .DS_Store
+siti_Screen/
+_upload/
+demo-alt-1.html
+demo-hover.html
+demo-scroll-intro.html
+preview-ferrari-home.html
+preview.html
+Intro Animations _standalone_.html
+docs/
+CLAUDE.md
+hero-videos/
+# Video e PDF troppo grandi per GitHub (>100MB)
+projects/centro-ippico-punta-ala/header/Centro_Ippico_Punta_Ala.mp4
+projects/ipc-italia/header/ipc-highlight.mp4
+projects/ipc-italia/images/video-02.mp4
+projects/ipc-italia/images/video-03.mp4
+projects/ipc-italia/images/video-04.mp4
+projects/ipc-italia/images/video-05.mp4
+projects/brand-identity/bloom-valley/images/Presentazione_BloomValley.pdf
+projects/logo-identita/loghi-vari/images/Buddy_logotipo.pdf
