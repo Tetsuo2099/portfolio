@@ -26,6 +26,7 @@
     .hero-bleed{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;padding:0 80px 64px;}
     .hero-bg{position:absolute;inset:0;}
     .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+    .hero-bg video{width:100%;height:100%;object-fit:cover;}
     .hero-bleed::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.05) 0%,rgba(17,17,17,.1) 30%,rgba(17,17,17,.8) 68%,#111111 100%);pointer-events:none;}
     .hero-info{position:relative;z-index:2;}
     .hero-eyebrow{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
@@ -141,7 +142,7 @@
 
 <section class="hero-bleed">
   <div class="hero-bg">
-    <img src="../projects/web-design/ipc/desktop.png" alt="Italia Polo Challenge — hero">
+    <video autoplay loop muted playsinline><source src="../projects/ipc-italia/header/ipc-highlight.mp4" type="video/mp4"></video>
   </div>
   <div class="hero-info">
     <span class="hero-eyebrow">Web Design · Sport & Events</span>
