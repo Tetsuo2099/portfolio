@@ -212,6 +212,127 @@
     });
   }
 
+  /* ── MASONRY (galleria immagini senza crop e senza buchi) ── */
+  function initMasonry() {
+    document.querySelectorAll('.id, .it, .iq').forEach(function (group) {
+      var imgs = Array.prototype.slice.call(group.querySelectorAll('img'));
+      if (imgs.length < 2) return;
+
+      var cols = group.classList.contains('it') ? 3 : 2;
+      var colEls = [];
+      var colHeights = [];
+      for (var i = 0; i < cols; i++) {
+        var c = document.createElement('div');
+        c.className = 'jd-mcol';
+        colEls.push(c);
+        colHeights.push(0);
+      }
+
+      function place(img) {
+        var ratio = (img.naturalWidth && img.naturalHeight) ? (img.naturalHeight / img.naturalWidth) : 1;
+        var shortest = 0;
+        for (var i = 1; i < cols; i++) {
+          if (colHeights[i] < colHeights[shortest]) shortest = i;
+        }
+        colEls[shortest].appendChild(img);
+        colHeights[shortest] += ratio;
+      }
+
+      function finish() {
+        imgs.forEach(place);
+        group.innerHTML = '';
+        colEls.forEach(function (c) { group.appendChild(c); });
+      }
+
+      var pending = 0;
+      imgs.forEach(function (img) {
+        if (!(img.complete && img.naturalWidth)) {
+          pending++;
+          img.addEventListener('load', function () {
+            pending--;
+            if (pending === 0) finish();
+          }, { once: true });
+        }
+      });
+      if (pending === 0) finish();
+    });
+  }
+
+  /* ── LIGHTBOX ── */
+  function initLightbox() {
+    var imgs = Array.prototype.slice.call(
+      document.querySelectorAll('.if img, .id img, .it img, .iq img')
+    );
+    if (!imgs.length) return;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'jd-lightbox';
+
+    var imgEl = document.createElement('img');
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'jd-lightbox-close';
+    closeBtn.setAttribute('aria-label', 'Chiudi');
+    closeBtn.textContent = 'Chiudi ✕';
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'jd-lightbox-prev';
+    prevBtn.setAttribute('aria-label', 'Immagine precedente');
+    prevBtn.innerHTML = '←';
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'jd-lightbox-next';
+    nextBtn.setAttribute('aria-label', 'Immagine successiva');
+    nextBtn.innerHTML = '→';
+    var counter = document.createElement('div');
+    counter.className = 'jd-lightbox-counter';
+
+    overlay.appendChild(imgEl);
+    overlay.appendChild(closeBtn);
+    overlay.appendChild(prevBtn);
+    overlay.appendChild(nextBtn);
+    overlay.appendChild(counter);
+    document.body.appendChild(overlay);
+
+    var current = 0;
+
+    function show(i) {
+      current = (i + imgs.length) % imgs.length;
+      imgEl.src = imgs[current].currentSrc || imgs[current].src;
+      imgEl.alt = imgs[current].alt || '';
+      counter.textContent = (current + 1) + ' / ' + imgs.length;
+      var multi = imgs.length > 1;
+      prevBtn.style.display = multi ? '' : 'none';
+      nextBtn.style.display = multi ? '' : 'none';
+      counter.style.display = multi ? '' : 'none';
+    }
+
+    function open(i) {
+      show(i);
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    imgs.forEach(function (img, i) {
+      img.addEventListener('click', function () { open(i); });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('active')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  }
+
   /* ── INIT ── */
   function init() {
     document.querySelectorAll('[data-anim]').forEach(function (el) {
@@ -221,6 +342,8 @@
     initMobileNav();
     initTransitions();
     initVideos();
+    initMasonry();
+    initLightbox();
   }
 
   if (document.readyState === 'loading') {

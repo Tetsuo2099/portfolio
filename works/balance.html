@@ -64,12 +64,9 @@
     .ch-r{flex:1;height:1px;background:var(--hairline);}
     .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
 
-    /* Image layout helpers */
+    /* Image layout helpers — .id/.it/.iq: masonry reale via initMasonry() in anim.js (colonne .jd-mcol) */
     .if img{display:block;width:100%;height:auto;}
     .ig{height:1px;background:var(--hairline);}
-    .id{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
-    .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
-    .iq{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
 
     /* Logo surface */
     .logo-surface{background:var(--surface);padding:80px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--hairline);}
@@ -113,8 +110,6 @@
       .next,footer{padding-left:24px;padding-right:24px;}
       .ch-hd{padding:20px 24px;}
       .ch-text{padding:36px 24px 28px;}
-      .id,.iq{grid-template-columns:1fr 1fr;}
-      .it{grid-template-columns:1fr 1fr;}
       .logo-surface{padding:48px 36px;}
       .swatch-row{grid-template-columns:1fr 1fr;}
       .type-specimen{grid-template-columns:1fr;}
@@ -124,7 +119,6 @@
       .hero-bleed{padding:0 24px 36px;}
       .ch-hd{padding:16px 20px;}
       .ch-text{padding:28px 20px 20px;}
-      .id,.iq,.it{grid-template-columns:1fr;}
       .logo-surface{padding:40px 24px;}
       .logo-surface img{max-width:200px;}
       .next,footer{padding-left:20px;padding-right:20px;}
@@ -172,8 +166,9 @@
       <a href="#ch02"><div class="dot"></div><span class="nl">Brand Identity</span></a>
       <a href="#ch03"><div class="dot"></div><span class="nl">Packaging</span></a>
       <a href="#ch04"><div class="dot"></div><span class="nl">Sito</span></a>
-      <a href="#ch05"><div class="dot"></div><span class="nl">Social</span></a>
-      <a href="#ch06"><div class="dot"></div><span class="nl">Marketplace</span></a>
+      <a href="#ch05"><div class="dot"></div><span class="nl">ADV Social</span></a>
+      <a href="#ch06"><div class="dot"></div><span class="nl">Instagram</span></a>
+      <a href="#ch07"><div class="dot"></div><span class="nl">Marketplace</span></a>
     </div>
   </aside>
 
@@ -258,16 +253,16 @@
       </div>
     </div>
 
-    <!-- 05 SOCIAL -->
+    <!-- 05 ADV SOCIAL -->
     <div id="ch05" class="ch">
-      <div class="ch-hd"><span class="ch-n">05</span><div class="ch-r"></div><span class="ch-t">Social</span></div>
+      <div class="ch-hd"><span class="ch-n">05</span><div class="ch-r"></div><span class="ch-t">ADV Social</span></div>
       <div class="ch-text">
-        <p>Creatività social pensate per la performance: campagne stagionali come il Black Friday, contenuti prodotto per Instagram e Facebook, comunicazione istituzionale su LinkedIn.</p>
+        <p>Creatività a pagamento pensate per la performance: campagne stagionali come il Black Friday, ADV prodotto per Facebook e Instagram, comunicazione istituzionale su LinkedIn.</p>
       </div>
       <div class="it" data-anim="img">
-        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_A1.jpg" alt="Balance — creatività social">
-        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_B1.jpg" alt="Balance — creatività social">
-        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_C1.jpg" alt="Balance — creatività social">
+        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_A1.jpg" alt="Balance — creatività ADV">
+        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_B1.jpg" alt="Balance — creatività ADV">
+        <img src="../projects/brand-identity/Balance/Social/Nicola/Collagene+AcidoIaluronico_Creatività_C1.jpg" alt="Balance — creatività ADV">
       </div>
       <div class="ig"></div>
       <div class="id" data-anim="img">
@@ -280,9 +275,20 @@
       </div>
     </div>
 
-    <!-- 06 MARKETPLACE -->
+    <!-- 06 INSTAGRAM -->
     <div id="ch06" class="ch">
-      <div class="ch-hd"><span class="ch-n">06</span><div class="ch-r"></div><span class="ch-t">Marketplace</span></div>
+      <div class="ch-hd"><span class="ch-n">06</span><div class="ch-r"></div><span class="ch-t">Instagram</span></div>
+      <div class="ch-text">
+        <p>Il feed organico: griglia curata tra prodotto, lifestyle, educational e social proof, per costruire community oltre la pubblicità a pagamento.</p>
+      </div>
+      <div class="if" data-anim="img">
+        <img src="../projects/brand-identity/Balance/Social/Instagram/Feed_totale.png" alt="Balance — griglia feed Instagram">
+      </div>
+    </div>
+
+    <!-- 07 MARKETPLACE -->
+    <div id="ch07" class="ch">
+      <div class="ch-hd"><span class="ch-n">07</span><div class="ch-r"></div><span class="ch-t">Marketplace</span></div>
       <div class="ch-text">
         <p>Balance vive anche sui marketplace: header e schede prodotto ottimizzati per Amazon Store ed eBay, con lo stesso sistema visivo del brand.</p>
       </div>
@@ -291,13 +297,26 @@
       </div>
       <div class="ig"></div>
       <div class="id" data-anim="img">
+        <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/Header_3000x600_.jpg" alt="Balance — header Amazon Store, variante">
+        <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/Header_3000x600_2.jpg" alt="Balance — header Amazon Store, variante">
+      </div>
+      <div class="ig"></div>
+      <div class="if" data-anim="img">
         <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/Seasonal_Products.jpg" alt="Balance — Amazon seasonal products">
+      </div>
+      <div class="ig"></div>
+      <div class="if" data-anim="img">
+        <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/Seasonal_Products_2.jpg" alt="Balance — Amazon seasonal products">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
         <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/New_Products.jpg" alt="Balance — Amazon new products">
+        <img src="../projects/brand-identity/Balance/Store_Amazon_Balance_New/New_Products_2.jpg" alt="Balance — Amazon new products">
       </div>
       <div class="ig"></div>
       <div class="id" data-anim="img">
         <img src="../projects/brand-identity/Balance/Store_Ebay/Header_ebay_01.jpg" alt="Balance — header eBay">
-        <img src="../projects/brand-identity/Balance/Store_Ebay/640x640_01.jpg" alt="Balance — scheda eBay">
+        <img src="../projects/brand-identity/Balance/Store_Ebay/Header_ebay_02.jpg" alt="Balance — header eBay">
       </div>
     </div>
 
@@ -318,11 +337,11 @@
 </footer>
 
 <script>
-  const ids=['ch01','ch02','ch03','ch04','ch05','ch06'],ls={};
+  const ids=['ch01','ch02','ch03','ch04','ch05','ch06','ch07'],ls={};
   ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
   const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
   ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
 </script>
-<script src="../anim.js?v=5" defer></script>
+<script src="../anim.js?v=7" defer></script>
 </body>
 </html>
