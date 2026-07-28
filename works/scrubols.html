@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrubols — Brand Identity Street Style | Juri Dabiankov Studio</title>
-  <meta name="description" content="Brand identity per Scrubols 2022: logo, visual system e comunicazione per un brand di street style contemporaneo. Dal concept alle brand guidelines complete.">
+  <title>Scrubols — Brand Identity & Comunicazione | Juri Dabiankov Studio</title>
+  <meta name="description" content="Brand identity e comunicazione per Scrubols: logo, visual system, packaging, fotografia di prodotto e social ADV per il brand di scrub corpo.">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="Scrubols — Brand Identity | Juri Dabiankov Studio">
-  <meta property="og:description" content="Brand identity per Scrubols: logo, visual system e comunicazione per un brand street style. Progetto completo di identità visiva.">
+  <meta property="og:description" content="Brand identity completa per Scrubols: logo, sistema visivo, packaging e fotografia di prodotto per il brand di scrub corpo made in Italy.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../images/og-cover.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
@@ -62,6 +62,20 @@
     .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
     .ial{display:grid;grid-template-columns:2fr 1fr;gap:1px;}
     .iar{display:grid;grid-template-columns:1fr 2fr;gap:1px;}
+    .ch-text{padding:48px 48px 0;}
+    .ch-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.42);max-width:640px;}
+
+    /* ── BRAND SYSTEM (pattern condiviso, vedi balance.html/cip.html) ── */
+    .brand-system{border-bottom:1px solid var(--hairline);margin-top:40px;}
+    .swatch-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--hairline);}
+    .swatch{aspect-ratio:1;display:flex;align-items:flex-end;padding:16px;}
+    .swatch span{font-size:9px;letter-spacing:.06em;font-weight:500;font-family:'Inter',sans-serif;}
+    .type-specimen{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);}
+    .type-block{background:var(--canvas);padding:40px;}
+    .type-block .tk{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .type-block .tf-display{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(32px,4vw,56px);line-height:1;color:var(--ink);}
+    .type-block .tf-body{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:15px;line-height:1.8;color:rgba(255,255,255,.55);}
+    @media(max-width:700px){.swatch-row{grid-template-columns:repeat(3,1fr);}.type-specimen{grid-template-columns:1fr;}}
     .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
     .next:hover{background:var(--hairline);}
     .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
@@ -99,21 +113,46 @@
       <div class="sb-rule"></div>
       <div class="sb-meta">
         <div><div class="k">Cliente</div><div class="v">Scrubols</div></div>
-        <div><div class="k">Categoria</div><div class="v">Brand Identity</div></div>
-        <div><div class="k">Anno</div><div class="v">2022</div></div>
-        <div><div class="k">Servizi</div><div class="v">Identity · Logo · Brand System</div></div>
+        <div><div class="k">Categoria</div><div class="v">Beauty · Body Care</div></div>
+        <div><div class="k">Anno</div><div class="v">2022 → in corso</div></div>
+        <div><div class="k">Servizi</div><div class="v">Brand Identity · Packaging · Fotografia · Social ADV</div></div>
       </div>
-      <p class="sb-brief">Brand identity e sistema visivo per Scrubols, linea di prodotti per la pulizia. Un'identità che porta <em>freschezza e precisione</em> anche nella comunicazione quotidiana.</p>
+      <p class="sb-brief">Brand identity completa per Scrubols — scrub corpo <em>made in Italy.</em> Dal logo al sistema visivo, dalla fotografia professionale alle campagne social: un'identità che traduce il piacere dello scrub in linguaggio visivo.</p>
       <div class="sb-nav">
         <div class="sb-nav-lbl">Capitoli</div>
         <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Brand System</span></a>
         <a href="#ch02"><div class="dot"></div><span class="nl">Visual Identity</span></a>
         <a href="#ch03"><div class="dot"></div><span class="nl">Applicazioni</span></a>
+        <a href="#ch04"><div class="dot"></div><span class="nl">Fotografia & ADV</span></a>
       </div>
     </aside>
     <div class="scroll-col">
       <div id="ch01" class="ch">
         <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Brand System</span></div>
+        <div class="ch-text">
+          <p>Logotipo bold e diretto — "SCRUBOLS" in un grottesco condensato, con la "O" reinterpretata come una sfera di scrub. Palette a sei nuance pastello, ciascuna legata a una fragranza della linea. Corpo testo in ZT Neue Ralewe, un serif elegante che bilancia il logotipo grafico.</p>
+        </div>
+        <div class="brand-system" data-anim="img">
+          <div class="swatch-row">
+            <div class="swatch" style="background:#eabbd7"><span style="color:#111">#EABBD7</span></div>
+            <div class="swatch" style="background:#ccdd88"><span style="color:#111">#CCDD88</span></div>
+            <div class="swatch" style="background:#feea85"><span style="color:#111">#FEEA85</span></div>
+            <div class="swatch" style="background:#a3d6d9"><span style="color:#111">#A3D6D9</span></div>
+            <div class="swatch" style="background:#ed9636"><span style="color:#111">#ED9636</span></div>
+            <div class="swatch" style="background:#dcbb9a;border-right:1px solid var(--hairline)"><span style="color:#111">#DCBB9A</span></div>
+          </div>
+          <div class="type-specimen">
+            <div class="type-block">
+              <div class="tk">Logotipo · Grottesco condensato</div>
+              <div class="tf-display">Scrubols</div>
+            </div>
+            <div class="type-block">
+              <div class="tk">Corpo · ZT Neue Ralewe</div>
+              <p class="tf-body">Organic Body Scrub — un piacere sensoriale in ogni fragranza della linea.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ig"></div>
         <div class="if" data-anim="img"><img src="../projects/brand-identity/scrubols/images/01.jpg" alt="" loading="lazy"></div>
         <div class="ig"></div>
         <div class="id" data-anim="img"><img src="../projects/brand-identity/scrubols/images/02.jpg" alt="" loading="lazy"><img src="../projects/brand-identity/scrubols/images/03.jpg" alt="" loading="lazy"></div>
@@ -138,13 +177,39 @@
         <div class="ig"></div>
         <div class="it" data-anim="img"><img src="../projects/brand-identity/scrubols/images/16.jpg" alt="" loading="lazy"><img src="../projects/brand-identity/scrubols/images/17.jpg" alt="" loading="lazy"><img src="../projects/brand-identity/scrubols/images/18.jpg" alt="" loading="lazy"></div>
       </div>
+      <div id="ch04" class="ch">
+        <div class="ch-hd"><span class="ch-n">04</span><div class="ch-r"></div><span class="ch-t">Fotografia & ADV</span></div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/scrubols/adv/lifestyle.jpg" alt="Scrubols — fotografia lifestyle" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="it" data-anim="img">
+          <img src="../projects/brand-identity/scrubols/foto/glow.jpg" alt="Amalfi's Glow — still life" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/foto/hug.jpg" alt="Sweet Hug — still life" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/foto/spring.jpg" alt="Sensual Spring — still life" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/scrubols/foto/glow-volante.jpg" alt="Amalfi's Glow — still life sospeso" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/foto/hug-volante.jpg" alt="Sweet Hug — still life sospeso" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/scrubols/adv/fede.jpg" alt="Scrubols — campagna modella" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/adv/augustina.jpg" alt="Scrubols — campagna modella" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="it" data-anim="img">
+          <img src="../projects/brand-identity/scrubols/adv/amalfi-vert.jpg" alt="Amalfi's Glow — ADV verticale" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/adv/tropical-vert.jpg" alt="Tropical Escape — ADV verticale" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/adv/spring-vert.jpg" alt="Sensual Spring — ADV verticale" loading="lazy">
+        </div>
+      </div>
     </div>
   </div>
 
   <a class="next" href="fullwall.html"><div><span class="next-lbl">Progetto successivo</span><div class="next-t">FULLWALL<br><em>BRAND IDENTITY</em></div></div><span class="arr">→</span></a>
   <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
   <script>
-    const ids=['ch01','ch02','ch03'],ls={};
+    const ids=['ch01','ch02','ch03','ch04'],ls={};
     ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
     const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
     ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
