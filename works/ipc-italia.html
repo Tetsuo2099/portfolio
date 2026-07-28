@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPC Italia Polo Challenge — Comunicazione Evento | Juri Dabiankov Studio</title>
-  <meta name="description" content="Identità visiva e comunicazione per IPC Italia Polo Challenge 2021: logo, materiali evento, video e social per il torneo di polo internazionale.">
+  <title>Italia Polo Challenge — Brand Identity, Sito & Comunicazione | Juri Dabiankov Studio</title>
+  <meta name="description" content="Identità visiva completa per Italia Polo Challenge: logo, palette, sito web, print, segnaletica e fotografia per il torneo di polo internazionale.">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="IPC Italia Polo Challenge — Juri Dabiankov Studio">
-  <meta property="og:description" content="Visual identity e comunicazione per IPC Italia Polo Challenge 2021: logo, materiali evento e social media.">
+  <meta property="og:title" content="Italia Polo Challenge — Juri Dabiankov Studio">
+  <meta property="og:description" content="Brand identity, sito web e comunicazione per Italia Polo Challenge: logo, palette, print, segnaletica e fotografia.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../images/og-cover.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
@@ -62,6 +62,38 @@
     .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
     .iq{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
     .ial{display:grid;grid-template-columns:2fr 1fr;gap:1px;}
+    .ch-text{padding:48px 48px 0;}
+    .ch-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.42);max-width:640px;}
+
+    /* ── BRAND SYSTEM (pattern condiviso) ── */
+    .brand-system{border-bottom:1px solid var(--hairline);margin-top:40px;}
+    .swatch-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);}
+    .swatch{aspect-ratio:1;display:flex;align-items:flex-end;padding:16px;}
+    .swatch span{font-size:10px;letter-spacing:.06em;font-weight:500;font-family:'Inter',sans-serif;}
+    .type-specimen{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);}
+    .type-block{background:var(--canvas);padding:40px;}
+    .type-block .tk{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .type-block .tf-display{font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1;color:var(--ink);}
+    .type-block .tf-body{font-family:'Inter',sans-serif;font-weight:300;font-size:14px;line-height:1.8;color:rgba(255,255,255,.55);}
+    @media(max-width:700px){.type-specimen{grid-template-columns:1fr;}}
+
+    /* Browser / phone mockup (capitolo Sito) */
+    .browser-scene{background:var(--surface);padding:64px 48px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .browser{width:100%;max-width:960px;border-radius:12px 12px 4px 4px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.85);}
+    .browser-bar{background:#2a2a2c;padding:14px 18px;display:flex;align-items:center;gap:14px;}
+    .browser-dots{display:flex;gap:7px;}
+    .browser-dots span{width:11px;height:11px;border-radius:50%;background:#3c3c3e;}
+    .browser-url{flex:1;background:#3a3a3c;border-radius:6px;padding:6px 14px;font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.22);}
+    .browser-screen img{display:block;width:100%;height:auto;}
+    .phone-scene{background:var(--surface);padding:64px 48px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .phone-large{width:260px;background:#1c1c1e;border-radius:54px;padding:18px 12px 14px;box-shadow:0 40px 120px rgba(0,0,0,.95),inset 0 0 0 1.5px rgba(255,255,255,.1);}
+    .pl-notch{height:26px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
+    .pl-island{width:82px;height:22px;background:#000;border-radius:12px;}
+    .pl-screen{overflow:hidden;border-radius:6px;}
+    .pl-screen img{width:100%;display:block;}
+    .pl-bar-wrap{height:26px;display:flex;align-items:center;justify-content:center;}
+    .pl-bar{width:80px;height:4px;background:rgba(255,255,255,.18);border-radius:4px;}
+
     .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
     .next:hover{background:var(--hairline);}
     .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
@@ -98,22 +130,44 @@
       <h2 class="sb-title">IPC ITALIA<br><em>POLO CHALLENGE</em></h2>
       <div class="sb-rule"></div>
       <div class="sb-meta">
-        <div><div class="k">Cliente</div><div class="v">IPC Italia</div></div>
-        <div><div class="k">Categoria</div><div class="v">Eventi</div></div>
-        <div><div class="k">Anno</div><div class="v">2021</div></div>
-        <div><div class="k">Servizi</div><div class="v">Identity · Print · Segnaletica</div></div>
+        <div><div class="k">Cliente</div><div class="v">Italia Polo Challenge</div></div>
+        <div><div class="k">Categoria</div><div class="v">Eventi · Sport</div></div>
+        <div><div class="k">Anno</div><div class="v">2021 → in corso</div></div>
+        <div><div class="k">Servizi</div><div class="v">Brand Identity · Sito Web · Print · Segnaletica · Fotografia</div></div>
       </div>
-      <p class="sb-brief">Comunicazione visiva per il campionato italiano di polo. Un'identità elegante che porta <em>tradizione e dinamismo</em> in ogni materiale.</p>
+      <p class="sb-brief">Comunicazione visiva per il campionato italiano di polo. Un'identità elegante che porta <em>tradizione e dinamismo</em> in ogni materiale — dal logo al sito, dalla segnaletica alla fotografia d'evento.</p>
       <div class="sb-nav">
         <div class="sb-nav-lbl">Capitoli</div>
-        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Identità</span></a>
+        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Brand Identity</span></a>
         <a href="#ch02"><div class="dot"></div><span class="nl">Print & Segnaletica</span></a>
-        <a href="#ch03"><div class="dot"></div><span class="nl">Fotografia</span></a>
+        <a href="#ch03"><div class="dot"></div><span class="nl">Sito Web</span></a>
+        <a href="#ch04"><div class="dot"></div><span class="nl">Fotografia</span></a>
       </div>
     </aside>
     <div class="scroll-col">
       <div id="ch01" class="ch">
-        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Identità</span></div>
+        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Brand Identity</span></div>
+        <div class="ch-text">
+          <p>Il cavaliere in silhouette e la tipografia serif classica portano in digitale e in stampa il prestigio e la tradizione del polo. Palette a due toni — navy e antracite — pensata per restare riconoscibile su ogni supporto, dal sito alla segnaletica in campo.</p>
+        </div>
+        <div class="brand-system" data-anim="img">
+          <div class="swatch-row">
+            <div class="swatch" style="background:#272652"><span style="color:#fff">#272652</span></div>
+            <div class="swatch" style="background:#373736"><span style="color:#fff">#373736</span></div>
+            <div class="swatch" style="background:#FFFFFF;border-right:1px solid var(--hairline)"><span style="color:#111">#FFFFFF</span></div>
+          </div>
+          <div class="type-specimen">
+            <div class="type-block">
+              <div class="tk">Titoli · Serif classico</div>
+              <div class="tf-display">Polo</div>
+            </div>
+            <div class="type-block">
+              <div class="tk">Corpo · Inter 300</div>
+              <p class="tf-body">Italia Polo Challenge — il campionato che porta il polo internazionale in Italia.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ig"></div>
         <div class="if" data-anim="img"><img src="../projects/ipc-italia/images/01.jpg" alt="" loading="lazy"></div>
         <div class="ig"></div>
         <div class="id" data-anim="img">
@@ -146,7 +200,32 @@
         <div class="if" data-anim="img"><img src="../projects/ipc-italia/images/14.png" alt="" loading="lazy"></div>
       </div>
       <div id="ch03" class="ch">
-        <div class="ch-hd"><span class="ch-n">03</span><div class="ch-r"></div><span class="ch-t">Fotografia</span></div>
+        <div class="ch-hd"><span class="ch-n">03</span><div class="ch-r"></div><span class="ch-t">Sito Web</span></div>
+        <div class="ch-text">
+          <p>Il sito ufficiale traduce in digitale la stessa energia dei materiali d'evento: tipografia monumentale, identità cromatica forte, fotografia protagonista.</p>
+        </div>
+        <div class="browser-scene" data-anim="img">
+          <div class="browser">
+            <div class="browser-bar">
+              <div class="browser-dots"><span></span><span></span><span></span></div>
+              <div class="browser-url">italiapolochallenge.it</div>
+            </div>
+            <div class="browser-screen">
+              <img src="../projects/web-design/ipc/desktop.png" alt="Italia Polo Challenge — sito web">
+            </div>
+          </div>
+        </div>
+        <div class="ig"></div>
+        <div class="phone-scene" data-anim="img">
+          <div class="phone-large">
+            <div class="pl-notch"><div class="pl-island"></div></div>
+            <div class="pl-screen"><img src="../projects/web-design/ipc/mobile.png" alt="mobile"></div>
+            <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
+          </div>
+        </div>
+      </div>
+      <div id="ch04" class="ch">
+        <div class="ch-hd"><span class="ch-n">04</span><div class="ch-r"></div><span class="ch-t">Fotografia</span></div>
         <div class="if" data-anim="img"><img src="../projects/ipc-italia/images/16.png" alt="" loading="lazy"></div>
         <div class="ig"></div>
         <div class="id" data-anim="img">
@@ -168,11 +247,11 @@
   <a class="next" href="polo-club.html"><div><span class="next-lbl">Progetto successivo</span><div class="next-t">CENTRO IPPICO<br><em>PUNTA ALA</em></div></div><span class="arr">→</span></a>
   <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
   <script>
-    const ids=['ch01','ch02','ch03'],ls={};
+    const ids=['ch01','ch02','ch03','ch04'],ls={};
     ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
     const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
     ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
   </script>
-  <script src="../anim.js?v=5" defer></script>
+  <script src="../anim.js?v=7" defer></script>
 </body>
 </html>
