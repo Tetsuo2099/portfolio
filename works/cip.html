@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Centro Ippico Punta Ala — Sito Web | Juri Dabiankov Studio</title>
-  <meta name="description" content="Sito web per Centro Ippico Punta Ala, maneggio storico toscano fondato nel 1970. Narrazione visiva tra tradizione e paesaggio.">
+  <title>Centro Ippico Punta Ala — Brand Identity, Web & Comunicazione | Juri Dabiankov Studio</title>
+  <meta name="description" content="Identità visiva, sito web e comunicazione per Centro Ippico Punta Ala — polo club e maneggio storico della Maremma Toscana.">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Centro Ippico Punta Ala Website — Juri Dabiankov Studio">
+  <meta property="og:title" content="Centro Ippico Punta Ala — Juri Dabiankov Studio">
+  <meta property="og:description" content="Brand identity, sito web e social per il polo club toscano fondato nel 1970.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../images/og-cover.jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;}
+    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;--sidebar:300px;}
     body{background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
     img{display:block;width:100%;height:auto;}
     header{position:fixed;inset:0 0 auto;z-index:200;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,17,17,.88);backdrop-filter:blur(16px);}
@@ -22,72 +23,90 @@
     nav a:hover{color:var(--ink);}
     .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
     .back::before{content:'←';font-size:12px;}
+
     /* ── HERO ── */
-    .hero-bleed{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;padding:0 80px 64px;}
-    .hero-bg{position:absolute;inset:0;}
-    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-    .hero-bleed::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.05) 0%,rgba(17,17,17,.1) 30%,rgba(17,17,17,.8) 68%,#111111 100%);pointer-events:none;}
-    .hero-info{position:relative;z-index:2;}
-    .hero-eyebrow{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
-    .hero-h{font-size:clamp(60px,10vw,140px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
+    .hero{height:100vh;position:relative;overflow:hidden;}
+    .hero video{width:100%;height:100%;object-fit:cover;}
+    .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,1) 0%,rgba(17,17,17,.55) 45%,transparent 72%);}
+    .hero-text{position:absolute;inset:auto 48px 64px;}
+    .hero-eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+    .hero-h{font-size:clamp(60px,10vw,160px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
     .hero-h em{font-style:normal;color:var(--accent);}
-    /* ── META STRIP ── */
-    .meta-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--hairline);}
-    .meta-item{padding:28px 40px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;gap:8px;}
-    .meta-item:last-child{border-right:none;}
-    .mk{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
-    .mv{font-size:12px;font-weight:500;line-height:1.5;}
-    a.meta-item{text-decoration:none;color:var(--ink);transition:background .2s;cursor:pointer;}
-    a.meta-item:hover{background:rgba(196,180,156,.06);}
-    a.meta-item .mv{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
-    .meta-arr{font-size:16px;color:var(--accent);margin-top:auto;}
-    /* ── CASE SECTIONS ── */
-    .case-intro{padding:80px;border-bottom:1px solid var(--hairline);}
-    .case-intro p{font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.65;color:rgba(255,255,255,.5);max-width:860px;}
-    .case-img{border-bottom:1px solid var(--hairline);}
-    .case-img img{display:block;width:100%;height:auto;}
-    .case-split{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--hairline);}
-    .case-split-text{padding:80px;display:flex;flex-direction:column;justify-content:center;gap:20px;border-right:1px solid var(--hairline);}
-    .case-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
-    .case-split-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.45);}
-    .case-split-text p+p{margin-top:12px;}
-    .case-split-img{overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--surface);padding:60px 80px;}
-    .case-split-img img{width:auto;max-width:240px;height:auto;display:block;box-shadow:0 24px 80px rgba(0,0,0,.7);}
-    /* ── BROWSER MOCKUP ── */
-    .browser-scene{background:var(--surface);padding:80px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
-    .browser{width:100%;max-width:1040px;border-radius:12px 12px 4px 4px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.85);}
+
+    /* ── MAGAZINE ── */
+    .magazine{display:grid;grid-template-columns:var(--sidebar) 1fr;border-top:1px solid var(--hairline);}
+    .sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;scrollbar-width:none;padding:48px 36px 48px 48px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;}
+    .sidebar::-webkit-scrollbar{display:none;}
+    .sb-tag{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .sb-title{font-size:20px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.88;}
+    .sb-title em{font-style:normal;color:var(--accent);}
+    .sb-rule{height:1px;background:var(--hairline);margin:24px 0;}
+    .sb-meta{display:flex;flex-direction:column;gap:14px;}
+    .sb-meta .k{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+    .sb-meta .v{font-size:12px;font-weight:500;line-height:1.6;}
+    .sb-meta a.v{color:var(--accent);text-decoration:none;}
+    .sb-meta a.v:hover{text-decoration:underline;}
+    .sb-brief{margin-top:20px;font-size:12px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.42);}
+    .sb-brief em{font-style:normal;color:rgba(255,255,255,.72);}
+    .sb-nav{margin-top:auto;padding-top:20px;}
+    .sb-nav-lbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+    .sb-nav a{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--hairline);text-decoration:none;color:rgba(255,255,255,.28);transition:color .25s;}
+    .sb-nav a:hover{color:rgba(255,255,255,.65);}
+    .sb-nav a.active{color:var(--ink);}
+    .dot{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex-shrink:0;transition:background .25s;}
+    .sb-nav a.active .dot{background:var(--accent);border-color:var(--accent);}
+    .nl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+
+    /* ── SCROLL COLUMN ── */
+    .scroll-col{min-height:100vh;}
+    .ch+.ch{border-top:1px solid var(--hairline);}
+    .ch-hd{padding:24px 48px;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--hairline);}
+    .ch-n{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+    .ch-r{flex:1;height:1px;background:var(--hairline);}
+    .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+
+    /* Image layout helpers — .id/.it/.iq: masonry reale via initMasonry() in anim.js (colonne .jd-mcol) */
+    .if img{display:block;width:100%;height:auto;}
+    .ig{height:1px;background:var(--hairline);}
+
+    /* Logo surface */
+    .logo-surface{background:var(--surface);padding:80px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .logo-surface img{width:auto;max-width:320px;height:auto;display:block;}
+
+    /* ── BRAND SYSTEM (pattern condiviso, vedi balance.html) ── */
+    .brand-system{border-bottom:1px solid var(--hairline);}
+    .swatch-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hairline);}
+    .swatch{aspect-ratio:1;display:flex;align-items:flex-end;padding:16px;}
+    .swatch span{font-size:10px;letter-spacing:.08em;font-weight:500;font-family:'Inter',sans-serif;}
+    .type-specimen{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);}
+    .type-block{background:var(--canvas);padding:40px;}
+    .type-block .tk{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .type-block .tf-display{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(32px,4vw,56px);line-height:1;color:var(--ink);}
+    .type-block .tf-body{font-family:'Inter',sans-serif;font-weight:300;font-size:14px;line-height:1.8;color:rgba(255,255,255,.55);}
+
+    /* Browser mockup */
+    .browser-scene{background:var(--surface);padding:64px 48px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .browser{width:100%;max-width:960px;border-radius:12px 12px 4px 4px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.85);}
     .browser-bar{background:#2a2a2c;padding:14px 18px;display:flex;align-items:center;gap:14px;}
     .browser-dots{display:flex;gap:7px;}
     .browser-dots span{width:11px;height:11px;border-radius:50%;background:#3c3c3e;}
-    .browser-url{flex:1;background:#3a3a3c;border-radius:6px;padding:6px 14px;font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.22);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .browser-url{flex:1;background:#3a3a3c;border-radius:6px;padding:6px 14px;font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.22);}
     .browser-screen img{display:block;width:100%;height:auto;}
-    /* ── DEVICE SCENE (MacBook + iPhone) ── */
-    .device-scene{background:var(--surface);padding:80px 80px 100px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
-    .device-stage{position:relative;width:100%;max-width:960px;}
-    .mac{position:relative;filter:drop-shadow(0 40px 100px rgba(0,0,0,.9));}
-    .mac-lid{background:#1c1c1e;border-radius:14px 14px 0 0;padding:18px 18px 0;position:relative;}
-    .mac-lid::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#3a3a3c;border-radius:50%;}
-    .mac-screen{background:#000;border-radius:8px 8px 0 0;overflow:hidden;aspect-ratio:1440/900;}
-    .mac-screen img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
-    .mac-hinge{height:10px;background:linear-gradient(180deg,#2c2c2e,#1a1a1c);}
-    .mac-base{height:14px;background:linear-gradient(180deg,#252527,#1c1c1e);border-radius:0 0 3px 3px;margin:0 -4%;}
-    .mac-foot{height:4px;background:#2a2a2c;border-radius:0 0 6px 6px;margin:0 6%;}
-    .iphone{position:absolute;bottom:-24px;right:-48px;width:180px;background:#1c1c1e;border-radius:44px;padding:12px 7px 9px;box-shadow:0 20px 80px rgba(0,0,0,.95),inset 0 0 0 1px rgba(255,255,255,.08);z-index:10;}
-    .ip-notch{height:20px;display:flex;align-items:center;justify-content:center;margin-bottom:3px;}
-    .ip-island{width:64px;height:17px;background:#000;border-radius:10px;}
-    .ip-screen{overflow:hidden;border-radius:3px;}
-    .ip-screen img{width:100%;display:block;}
-    .ip-bar-wrap{height:20px;display:flex;align-items:center;justify-content:center;}
-    .ip-bar{width:68px;height:4px;background:rgba(255,255,255,.18);border-radius:4px;}
-    /* ── PHONE SCENE (large, centered) ── */
-    .phone-scene{background:var(--surface);padding:80px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
-    .phone-large{width:280px;background:#1c1c1e;border-radius:54px;padding:18px 12px 14px;box-shadow:0 40px 120px rgba(0,0,0,.95),inset 0 0 0 1.5px rgba(255,255,255,.1);}
+
+    /* Phone mockup */
+    .phone-scene{background:var(--surface);padding:64px 48px;display:flex;justify-content:center;border-bottom:1px solid var(--hairline);}
+    .phone-large{width:260px;background:#1c1c1e;border-radius:54px;padding:18px 12px 14px;box-shadow:0 40px 120px rgba(0,0,0,.95),inset 0 0 0 1.5px rgba(255,255,255,.1);}
     .pl-notch{height:26px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
     .pl-island{width:82px;height:22px;background:#000;border-radius:12px;}
     .pl-screen{overflow:hidden;border-radius:6px;}
     .pl-screen img{width:100%;display:block;}
     .pl-bar-wrap{height:26px;display:flex;align-items:center;justify-content:center;}
     .pl-bar{width:80px;height:4px;background:rgba(255,255,255,.18);border-radius:4px;}
+
+    /* Text block inside chapter */
+    .ch-text{padding:48px 48px 40px;border-bottom:1px solid var(--hairline);}
+    .ch-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.42);max-width:640px;}
+
     /* ── NEXT ── */
     .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
     .next:hover{background:var(--hairline);}
@@ -96,33 +115,34 @@
     .next-t em{font-style:normal;color:var(--accent);}
     .arr{font-size:28px;color:var(--muted);transition:transform .3s,color .3s;}
     .next:hover .arr{transform:translateX(10px);color:var(--accent);}
+
     footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
     footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
     footer a:hover{color:var(--ink);}
     .fc{font-size:9px;color:var(--muted);}
+
+    /* ── RESPONSIVE ── */
     @media(max-width:900px){
-      .hero-bleed{padding:0 36px 48px;}
-      .meta-strip{grid-template-columns:1fr 1fr;}
-      .meta-item{padding:22px 28px;}
-      .case-intro{padding:60px 36px;}
-      .browser-scene,.device-scene,.phone-scene{padding:48px 36px;}
-      .device-scene{padding-bottom:72px;}
-      .case-split{grid-template-columns:1fr;}
-      .case-split-text{border-right:none;border-bottom:1px solid var(--hairline);padding:60px 36px;}
-      .case-split-img{padding:48px 36px;}
-      .iphone{width:140px;border-radius:34px;right:-20px;}
+      .magazine{grid-template-columns:1fr;}
+      .sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}
+      .sb-nav{margin-top:32px;}
+      .hero-text,.next,footer{padding-left:24px;padding-right:24px;}
+      .ch-hd{padding:20px 24px;}
+      .ch-text{padding:36px 24px 28px;}
+      .logo-surface{padding:48px 36px;}
+      .swatch-row{grid-template-columns:repeat(3,1fr);}
+      .type-specimen{grid-template-columns:1fr;}
+      .browser-scene,.phone-scene{padding:48px 24px;}
     }
     @media(max-width:600px){
       header{padding:0 24px;}
-      .hero-bleed{padding:0 24px 36px;}
-      .meta-strip{grid-template-columns:1fr 1fr;}
-      .meta-item{padding:18px 20px;}
-      .case-intro{padding:40px 24px;}
-      .browser-scene,.device-scene,.phone-scene{padding:36px 24px;}
-      .device-scene{padding-bottom:60px;}
-      .case-split-text{padding:40px 24px;}
-      .case-split-img{padding:40px 24px;}
-      .next,footer{padding-left:24px;padding-right:24px;}
+      .hero-text{padding:0 24px 40px;}
+      .ch-hd{padding:16px 20px;}
+      .ch-text{padding:28px 20px 20px;}
+      .logo-surface{padding:40px 24px;}
+      .logo-surface img{max-width:220px;}
+      .browser-scene,.phone-scene{padding:36px 20px;}
+      .next,footer{padding-left:20px;padding-right:20px;}
     }
   </style>
   <link rel="stylesheet" href="../anim.css">
@@ -132,92 +152,182 @@
 <header>
   <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
   <nav>
-    <a href="../works.html" class="back">Works</a>
-    <a href="../services.html">Services</a>
-    <a href="../about.html">About</a>
-    <a href="../contact.html">Contact</a>
+    <a class="back" href="../works.html">Works</a>
+    <a href="../services.html">Servizi</a>
+    <a href="../about.html">Studio</a>
+    <a href="../contact.html">Contatti</a>
   </nav>
 </header>
 
-<section class="hero-bleed">
-  <div class="hero-bg">
-    <img src="../projects/web-design/cip/header/hero.jpg" alt="Centro Ippico Punta Ala — hero">
-  </div>
-  <div class="hero-info">
-    <span class="hero-eyebrow">Web Design · Sport & Lifestyle</span>
-    <h1 class="hero-h">Centro Ippico<br><em>Punta Ala</em></h1>
+<section class="hero">
+  <video autoplay loop muted playsinline>
+    <source src="../projects/centro-ippico-punta-ala/header/Centro_Ippico_Punta_Ala.mp4" type="video/mp4">
+  </video>
+  <div class="hero-grad"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Brand · Web · Comunicazione · 2020→</p>
+    <h1 class="hero-h">CENTRO IPPICO<br><em>PUNTA ALA</em></h1>
   </div>
 </section>
 
-<div class="meta-strip">
-  <div class="meta-item">
-    <span class="mk">Anno</span>
-    <span class="mv">—</span>
-  </div>
-  <div class="meta-item">
-    <span class="mk">Cliente</span>
-    <span class="mv">Centro Ippico Punta Ala</span>
-  </div>
-  <div class="meta-item">
-    <span class="mk">Deliverable</span>
-    <span class="mv">Sito web ufficiale</span>
-  </div>
-  <a class="meta-item" href="https://www.centroippicopuntaala.it" target="_blank" rel="noopener">
-    <span class="mk">Sito live</span>
-    <span class="mv">centroippicopuntaala.it</span>
-    <span class="meta-arr">↗</span>
-  </a>
-</div>
+<div class="magazine">
+  <aside class="sidebar">
+    <span class="sb-tag">Progetto</span>
+    <h2 class="sb-title">CENTRO IPPICO<br><em>PUNTA ALA</em></h2>
+    <div class="sb-rule"></div>
+    <div class="sb-meta">
+      <div><div class="k">Cliente</div><div class="v">Centro Ippico Punta Ala</div></div>
+      <div><div class="k">Categoria</div><div class="v">Equestrian · Luxury Sport</div></div>
+      <div><div class="k">Anno</div><div class="v">2020 → in corso</div></div>
+      <div><div class="k">Servizi</div><div class="v">Brand Identity · Sito Web · Social · Stampa</div></div>
+      <div><div class="k">Sito</div><a class="v" href="https://www.centroippicopuntaala.it" target="_blank" rel="noopener">centroippicopuntaala.it ↗</a></div>
+    </div>
+    <p class="sb-brief">Un polo club e maneggio fondato nel 1970 nella Maremma toscana. <em>Tradizione equestre, paesaggio, comunità.</em> Il progetto copre l'intera identità: logo, sito, social e comunicazione eventi lungo più stagioni.</p>
+    <div class="sb-nav">
+      <div class="sb-nav-lbl">Capitoli</div>
+      <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Sito Web</span></a>
+      <a href="#ch02"><div class="dot"></div><span class="nl">Brand Identity</span></a>
+      <a href="#ch03"><div class="dot"></div><span class="nl">Comunicazione</span></a>
+      <a href="#ch04"><div class="dot"></div><span class="nl">Fotografia</span></a>
+    </div>
+  </aside>
 
-<div class="case-intro" data-anim>
-  <p>Un maneggio storico fondato nel 1970 in Toscana meritava un sito che raccontasse la tradizione, il territorio e la qualità dell'esperienza equestre. Non una brochure digitale: una narrazione visiva.</p>
-</div>
+  <div class="scroll-col">
 
-<div class="case-img" data-anim="img">
-  <img src="../projects/web-design/cip/images/desktop.png" alt="Centro Ippico — homepage">
-</div>
-
-<div class="device-scene" data-anim="img">
-  <div class="device-stage">
-    <div class="mac">
-      <div class="mac-lid">
-        <div class="mac-screen">
-          <img src="../projects/web-design/cip/images/desktop.png" alt="desktop">
+    <!-- 01 SITO WEB -->
+    <div id="ch01" class="ch">
+      <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Sito Web</span></div>
+      <div class="ch-text">
+        <p>Un maneggio storico meritava un sito che raccontasse la tradizione, il territorio e la qualità dell'esperienza equestre. Logo al centro del hero, tipografia istituzionale, fotografia protagonista: un layout che evoca il rigore e l'eleganza del mondo ippico.</p>
+      </div>
+      <div class="browser-scene" data-anim="img">
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">centroippicopuntaala.it</div>
+          </div>
+          <div class="browser-screen">
+            <img src="../projects/web-design/cip/images/desktop.png" alt="Centro Ippico Punta Ala — sito web">
+          </div>
         </div>
       </div>
-      <div class="mac-hinge"></div>
-      <div class="mac-base"></div>
-      <div class="mac-foot"></div>
+      <div class="ig"></div>
+      <div class="phone-scene" data-anim="img">
+        <div class="phone-large">
+          <div class="pl-notch"><div class="pl-island"></div></div>
+          <div class="pl-screen"><img src="../projects/web-design/cip/images/mobile.png" alt="mobile"></div>
+          <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
+        </div>
+      </div>
     </div>
-    <div class="iphone">
-      <div class="ip-notch"><div class="ip-island"></div></div>
-      <div class="ip-screen"><img src="../projects/web-design/cip/images/mobile.png" alt="mobile"></div>
-      <div class="ip-bar-wrap"><div class="ip-bar"></div></div>
+
+    <!-- 02 BRAND IDENTITY -->
+    <div id="ch02" class="ch">
+      <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Brand Identity</span></div>
+      <div class="ch-text">
+        <p>Il logo 2026 reinterpreta l'iconografia equestre in chiave contemporanea: silhouette del cavallo e uccello stilizzati, tipografia sans-serif pulita e tracciata. Palette Pantone dedicata, cinque colori pensati per essere versatili su tutti i supporti — digitale, stampa, segnaletica, abbigliamento.</p>
+      </div>
+      <div class="brand-system" data-anim="img">
+        <div class="swatch-row">
+          <div class="swatch" style="background:#173F40"><span style="color:#fff">#173F40</span></div>
+          <div class="swatch" style="background:#E2A233"><span style="color:#111">#E2A233</span></div>
+          <div class="swatch" style="background:#F6FADB"><span style="color:#111">#F6FADB</span></div>
+          <div class="swatch" style="background:#192A44"><span style="color:#fff">#192A44</span></div>
+          <div class="swatch" style="background:#C6C6AC;border-right:1px solid var(--hairline)"><span style="color:#111">#C6C6AC</span></div>
+        </div>
+        <div class="type-specimen">
+          <div class="type-block">
+            <div class="tk">Titoli · Inter 800</div>
+            <div class="tf-display">Ippico</div>
+          </div>
+          <div class="type-block">
+            <div class="tk">Corpo · Inter 300</div>
+            <p class="tf-body">Un maneggio storico nella Maremma toscana, tradizione equestre dal 1970.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ig"></div>
+      <div class="logo-surface" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/brand/logo_bianco.png" alt="Centro Ippico Punta Ala — logo 2026">
+      </div>
+      <div class="ig"></div>
+      <div class="if" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/brand/logo_stories.jpg" alt="Centro Ippico — logo in contesto">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/eventi/pensione_cavalli.jpg" alt="Pensione cavalli">
+        <img src="../projects/centro-ippico-punta-ala/eventi/equitazione.jpg" alt="Equitazione">
+      </div>
     </div>
-  </div>
-</div>
-<div class="case-split">
-  <div class="case-split-text" data-anim>
-    <span class="case-label">Il Progetto</span>
-    <p>Centro Ippico Punta Ala è un punto di riferimento dell'equitazione toscana da oltre cinquant'anni. Il sito è costruito attorno alla fotografia del posto — la scuderia, i cavalli, i pini marittimi — con una struttura editoriale che guida il visitatore tra i servizi.</p><p>Logo al centro del hero, tipografia istituzionale, navigazione hamburger: un layout che evoca il rigore e l'eleganza del mondo ippico.</p>
-  </div>
-  <div class="case-split-img" data-anim="img">
-    <img src="../projects/web-design/cip/images/mobile.png" alt="Centro Ippico — mobile">
-  </div>
-</div>
+
+    <!-- 03 COMUNICAZIONE -->
+    <div id="ch03" class="ch">
+      <div class="ch-hd"><span class="ch-n">03</span><div class="ch-r"></div><span class="ch-t">Comunicazione</span></div>
+      <div class="ch-text">
+        <p>Social, eventi, stampa: ogni touchpoint mantiene coerenza visiva e tono istituzionale. Campionati maremmani, campus estivi, cene sociali del club — la comunicazione accompagna la vita del centro lungo tutto l'anno.</p>
+      </div>
+      <div class="if" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/eventi/campus_ext.jpg" alt="Campus estivo CIP — esterno">
+      </div>
+      <div class="ig"></div>
+      <div class="iq" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/social/campionato_2025_A.jpg" alt="Campionato Maremmano 2025">
+        <img src="../projects/centro-ippico-punta-ala/social/campionato_2025_B.jpg" alt="Campionato Maremmano 2025">
+        <img src="../projects/centro-ippico-punta-ala/social/minicampus_2026.jpg" alt="MiniCampus 2026">
+        <img src="../projects/centro-ippico-punta-ala/social/asado_2026.jpg" alt="Asado Dinner 2026">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/eventi/campus_int.jpg" alt="Campus — interno">
+        <img src="../projects/centro-ippico-punta-ala/eventi/flyer_befana.jpg" alt="Flyer Befana — stampa">
+      </div>
+    </div>
+
+    <!-- 04 FOTOGRAFIA -->
+    <div id="ch04" class="ch">
+      <div class="ch-hd"><span class="ch-n">04</span><div class="ch-r"></div><span class="ch-t">Fotografia</span></div>
+      <div class="ch-text">
+        <p>Fotografia professionale prodotta in loco: tribuna, campo di gara, relazione tra cavaliere e cavallo. Il reportage alimenta sito, social e archivio visivo del club.</p>
+      </div>
+      <div class="if" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5449.jpg" alt="Centro Ippico — fotografia evento" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5122.jpg" alt="" loading="lazy">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5294.jpg" alt="" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="it" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5259.jpg" alt="" loading="lazy">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5215.jpg" alt="" loading="lazy">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5198.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+
+  </div><!-- /scroll-col -->
+</div><!-- /magazine -->
 
 <a class="next" href="scrubols-web.html">
   <div>
     <span class="next-lbl">Progetto successivo</span>
-    <p class="next-t">Scrubols<br><em>E-commerce</em></p>
+    <div class="next-t">Scrubols<br><em>E-commerce</em></div>
   </div>
   <span class="arr">→</span>
 </a>
 
 <footer>
-  <div><a href="../index.html">Home</a><a href="../works.html">Works</a><a href="../contact.html">Contact</a></div>
-  <p class="fc">© 2025 Juri Dabiankov Studio</p>
+  <div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div>
+  <span class="fc">© 2025 Juri Dabiankov Studio</span>
 </footer>
-<script src="../anim.js?v=5"></script>
+
+<script>
+  const ids=['ch01','ch02','ch03','ch04'],ls={};
+  ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+<script src="../anim.js?v=7" defer></script>
 </body>
 </html>
