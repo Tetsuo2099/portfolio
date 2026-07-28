@@ -124,6 +124,7 @@
         <a href="#ch02"><div class="dot"></div><span class="nl">Visual Identity</span></a>
         <a href="#ch03"><div class="dot"></div><span class="nl">Applicazioni</span></a>
         <a href="#ch04"><div class="dot"></div><span class="nl">Fotografia & ADV</span></a>
+        <a href="#ch05"><div class="dot"></div><span class="nl">Sito Web</span></a>
       </div>
     </aside>
     <div class="scroll-col">
@@ -203,13 +204,25 @@
           <img src="../projects/brand-identity/scrubols/adv/spring-vert.jpg" alt="Sensual Spring — ADV verticale" loading="lazy">
         </div>
       </div>
+      <div id="ch05" class="ch">
+        <div class="ch-hd"><span class="ch-n">05</span><div class="ch-r"></div><span class="ch-t">Sito Web</span></div>
+        <div class="ch-text">
+          <p>E-commerce sviluppato su Shopify con un design system custom che amplifica la brand personality di Scrubols: fotografia di prodotto in primo piano, copy diretto, palette cromatica distintiva. Il sito copre l'intero funnel — awareness, educazione sul prodotto, acquisto — con una UX orientata alla conversione. Sito live: <a href="https://www.scrubols.it" target="_blank" rel="noopener" style="color:var(--accent);">scrubols.it ↗</a></p>
+        </div>
+        <div class="if" data-anim="img"><img src="../projects/web-design/scrubols/header/hero.jpg" alt="Scrubols — homepage sito" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/web-design/scrubols/images/desktop.png" alt="Scrubols — homepage desktop" loading="lazy">
+          <img src="../projects/web-design/scrubols/images/mobile.png" alt="Scrubols — versione mobile" loading="lazy">
+        </div>
+      </div>
     </div>
   </div>
 
   <a class="next" href="fullwall.html"><div><span class="next-lbl">Progetto successivo</span><div class="next-t">FULLWALL<br><em>BRAND IDENTITY</em></div></div><span class="arr">→</span></a>
   <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
   <script>
-    const ids=['ch01','ch02','ch03','ch04'],ls={};
+    const ids=['ch01','ch02','ch03','ch04','ch05'],ls={};
     ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
     const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
     ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
