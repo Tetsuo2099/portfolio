@@ -146,6 +146,8 @@
     .img-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
     .img-asym-l { display: grid; grid-template-columns: 2fr 1fr; gap: 1px; }
     .img-asym-r { display: grid; grid-template-columns: 1fr 2fr; gap: 1px; }
+    .img-full-inset { display: flex; justify-content: center; background: var(--surface); padding: 40px 48px; }
+    .img-full-inset img { width: auto; max-width: 100%; height: auto; }
 
     /* Video */
     .video-block video { display: block; width: 100%; background: #000; }
@@ -359,8 +361,8 @@
         </div>
         <div class="img-gap"></div>
         <div class="img-asym-l" data-anim="img">
-          <img src="../projects/brand-identity/ADV/images/18_MiraLAX.jpg" alt="" loading="lazy">
           <img src="../projects/brand-identity/ADV/images/19_MiraLAX.jpg" alt="" loading="lazy">
+          <img src="../projects/brand-identity/ADV/images/18_MiraLAX.jpg" alt="" loading="lazy">
         </div>
       </div>
 
@@ -373,8 +375,11 @@
             <div class="ci-year">2023</div>
           </div>
         </div>
-        <div class="img-duo" data-anim="img">
+        <div class="img-full-inset" data-anim="img">
           <img src="../projects/brand-identity/ADV/images/20_Schweppes.png" alt="" loading="lazy">
+        </div>
+        <div class="img-gap"></div>
+        <div class="img-full" data-anim="img">
           <img src="../projects/brand-identity/ADV/images/21_Schweppes.png" alt="" loading="lazy">
         </div>
         <div class="img-gap"></div>
@@ -444,6 +449,6 @@
     }, { rootMargin: '-30% 0px -60% 0px' });
     sections.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
   </script>
-  <script src="../anim.js?v=5" defer></script>
+  <script src="../anim.js?v=8" defer></script>
 </body>
 </html>
