@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fullwall Architecture — Brand Identity | Juri Dabiankov Studio</title>
-  <meta name="description" content="Brand identity per Fullwall Architecture 2020: logo, visual system e materiali di comunicazione per uno studio di architettura contemporaneo.">
+  <title>Fullwall — Pattern Design & Wall Covering | Juri Dabiankov Studio</title>
+  <meta name="description" content="Progettazione di pattern per rivestimenti murali Fullwall: collezioni botaniche, art déco e folk, renderizzate in ambienti reali.">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Fullwall Architecture — Brand Identity | Juri Dabiankov Studio">
-  <meta property="og:description" content="Brand identity per Fullwall Architecture: logo, visual system e comunicazione per uno studio di architettura.">
+  <meta property="og:title" content="Fullwall — Pattern Design | Juri Dabiankov Studio">
+  <meta property="og:description" content="Collezioni di pattern per wall covering — motivi botanici, ginkgo art déco e ricami folk in più colorazioni, testati in ambienti reali.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../images/og-cover.jpg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;--sidebar:300px;}
@@ -23,13 +23,16 @@
     nav a:hover{color:var(--ink);}
     .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
     .back::before{content:'←';font-size:12px;}
-    .hero{height:100vh;position:relative;overflow:hidden;}
-    .hero img{width:100%;height:100%;object-fit:cover;}
-    .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,1) 0%,rgba(17,17,17,.55) 45%,transparent 72%);}
-    .hero-text{position:absolute;inset:auto 48px 64px;}
-    .hero-eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
-    .hero-h{font-size:clamp(72px,12vw,180px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
+
+    .hero-bleed{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;padding:0 80px 64px;}
+    .hero-bg{position:absolute;inset:0;}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+    .hero-bleed::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.05) 0%,rgba(17,17,17,.15) 30%,rgba(17,17,17,.85) 68%,#111111 100%);pointer-events:none;}
+    .hero-info{position:relative;z-index:2;}
+    .hero-eyebrow{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+    .hero-h{font-size:clamp(60px,10vw,150px);font-weight:800;line-height:.82;letter-spacing:-.05em;text-transform:uppercase;}
     .hero-h em{font-style:normal;color:var(--accent);}
+
     .magazine{display:grid;grid-template-columns:var(--sidebar) 1fr;border-top:1px solid var(--hairline);}
     .sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;scrollbar-width:none;padding:48px 36px 48px 48px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;}
     .sidebar::-webkit-scrollbar{display:none;}
@@ -50,17 +53,22 @@
     .dot{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex-shrink:0;transition:background .25s;}
     .sb-nav a.active .dot{background:var(--accent);border-color:var(--accent);}
     .nl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+
     .scroll-col{min-height:100vh;}
     .ch+.ch{border-top:1px solid var(--hairline);}
     .ch-hd{padding:24px 48px;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--hairline);}
     .ch-n{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
     .ch-r{flex:1;height:1px;background:var(--hairline);}
     .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+
+    .ch-text{padding:48px 48px 40px;border-bottom:1px solid var(--hairline);}
+    .ch-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.42);max-width:640px;}
+
+    .cl-lbl{padding:20px 48px 0;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+
     .if img{display:block;width:100%;height:auto;}
     .ig{height:1px;background:var(--hairline);}
-    .id{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
-    .it{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
-    .iq{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
+
     .next{display:flex;align-items:center;justify-content:space-between;padding:80px 48px;text-decoration:none;color:var(--ink);background:var(--surface);border-top:1px solid var(--hairline);transition:background .3s;}
     .next:hover{background:var(--hairline);}
     .next-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px;}
@@ -68,83 +76,171 @@
     .next-t em{font-style:normal;color:var(--accent);}
     .arr{font-size:28px;color:var(--muted);transition:transform .3s,color .3s;}
     .next:hover .arr{transform:translateX(10px);color:var(--accent);}
+
     footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
     footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
     footer a:hover{color:var(--ink);}
     .fc{font-size:9px;color:var(--muted);}
-    @media(max-width:700px){.magazine{grid-template-columns:1fr;}.sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}.sb-nav{margin-top:32px;}.hero-text,.next,footer{padding-left:24px;padding-right:24px;}.ch-hd{padding:20px 24px;}.id{grid-template-columns:1fr;}.it,.iq{grid-template-columns:1fr 1fr;}header{padding:0 24px;}}
+
+    @media(max-width:900px){
+      .hero-bleed{padding:0 36px 48px;}
+      .magazine{grid-template-columns:1fr;}
+      .sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}
+      .sb-nav{margin-top:32px;}
+      .next,footer{padding-left:24px;padding-right:24px;}
+      .ch-hd{padding:20px 24px;}
+      .ch-text{padding:36px 24px 28px;}
+      .cl-lbl{padding:16px 24px 0;}
+    }
+    @media(max-width:600px){
+      header{padding:0 24px;}
+      .hero-bleed{padding:0 24px 36px;}
+      .ch-hd{padding:16px 20px;}
+      .ch-text{padding:28px 20px 20px;}
+      .cl-lbl{padding:14px 20px 0;}
+      .next,footer{padding-left:20px;padding-right:20px;}
+    }
   </style>
   <link rel="stylesheet" href="../anim.css">
 </head>
 <body>
-  <header>
-    <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
-    <nav><a class="back" href="../works.html">Works</a><a href="../services.html">Servizi</a><a href="../about.html">Studio</a><a href="../contact.html">Contatti</a></nav>
-  </header>
 
-  <section class="hero">
-    <img src="../projects/fullwall/header/slide-01.jpg" alt="Fullwall">
-    <div class="hero-grad"></div>
-    <div class="hero-text">
-      <p class="hero-eyebrow">Brand Identity · Architecture · 2020</p>
-      <h1 class="hero-h">FULL&shy;WALL<br><em>ARCHITECTURE</em></h1>
-    </div>
-  </section>
+<header>
+  <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+  <nav>
+    <a class="back" href="../works.html">Works</a>
+    <a href="../services.html">Servizi</a>
+    <a href="../about.html">Studio</a>
+    <a href="../contact.html">Contatti</a>
+  </nav>
+</header>
 
-  <div class="magazine">
-    <aside class="sidebar">
-      <span class="sb-tag">Progetto</span>
-      <h2 class="sb-title">FULL&shy;WALL<br><em>ARCHITECTURE</em></h2>
-      <div class="sb-rule"></div>
-      <div class="sb-meta">
-        <div><div class="k">Cliente</div><div class="v">Fullwall</div></div>
-        <div><div class="k">Categoria</div><div class="v">Brand Identity</div></div>
-        <div><div class="k">Anno</div><div class="v">2020</div></div>
-        <div><div class="k">Servizi</div><div class="v">Identity · Logo · Web Design</div></div>
-      </div>
-      <p class="sb-brief">Brand identity per Fullwall, studio di architettura e interior design. Un sistema visivo che riflette <em>solidità, rigore e spazio.</em></p>
-      <div class="sb-nav">
-        <div class="sb-nav-lbl">Capitoli</div>
-        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Brand Identity</span></a>
-        <a href="#ch02"><div class="dot"></div><span class="nl">Digital</span></a>
-      </div>
-    </aside>
-    <div class="scroll-col">
-      <div id="ch01" class="ch">
-        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Brand Identity</span></div>
-        <div class="if" data-anim="img"><img src="../projects/brand-identity/fullwall/images/01.jpg" alt="" loading="lazy"></div>
-        <div class="ig"></div>
-        <div class="id" data-anim="img">
-          <img src="../projects/brand-identity/fullwall/images/02.jpg" alt="" loading="lazy">
-          <img src="../projects/brand-identity/fullwall/images/03.jpg" alt="" loading="lazy">
-        </div>
-        <div class="ig"></div>
-        <div class="if" data-anim="img"><img src="../projects/brand-identity/fullwall/images/04.jpg" alt="" loading="lazy"></div>
-        <div class="ig"></div>
-        <div class="iq" data-anim="img">
-          <img src="../projects/brand-identity/fullwall/images/05.png" alt="" loading="lazy">
-          <img src="../projects/brand-identity/fullwall/images/06.png" alt="" loading="lazy">
-          <img src="../projects/brand-identity/fullwall/images/07.png" alt="" loading="lazy">
-          <img src="../projects/brand-identity/fullwall/images/08.png" alt="" loading="lazy">
-        </div>
-      </div>
-      <div id="ch02" class="ch">
-        <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Digital</span></div>
-        <div class="if" data-anim="img"><img src="../projects/brand-identity/fullwall/images/09.png" alt="" loading="lazy"></div>
-        <div class="ig"></div>
-        <div class="if" data-anim="img"><img src="../projects/brand-identity/fullwall/images/10.jpg" alt="" loading="lazy"></div>
-      </div>
-    </div>
+<section class="hero-bleed">
+  <div class="hero-bg">
+    <img src="../projects/brand-identity/fullwall/header/slide-01.jpg" alt="Fullwall — pattern monstera renderizzato in ambiente">
   </div>
+  <div class="hero-info">
+    <span class="hero-eyebrow">Pattern Design · Wall Covering · Interni</span>
+    <h1 class="hero-h">FULL&shy;WALL<br><em>PATTERN DESIGN</em></h1>
+  </div>
+</section>
 
-  <a class="next" href="adv-c.html"><div><span class="next-lbl">Progetto successivo</span><div class="next-t">ADV<br><em>CAMPAGNE</em></div></div><span class="arr">→</span></a>
-  <footer><div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div><span class="fc">© 2025 Juri Dabiankov Studio</span></footer>
-  <script>
-    const ids=['ch01','ch02'],ls={};
-    ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
-    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
-    ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-  </script>
-  <script src="../anim.js?v=5" defer></script>
+<div class="magazine">
+  <aside class="sidebar">
+    <span class="sb-tag">Progetto</span>
+    <h2 class="sb-title">FULL&shy;WALL<br><em>PATTERN DESIGN</em></h2>
+    <div class="sb-rule"></div>
+    <div class="sb-meta">
+      <div><div class="k">Cliente</div><div class="v">Fullwall</div></div>
+      <div><div class="k">Categoria</div><div class="v">Pattern Design · Wall Covering</div></div>
+      <div><div class="k">Anno</div><div class="v">2020</div></div>
+      <div><div class="k">Servizi</div><div class="v">Progettazione pattern · Render ambientati</div></div>
+    </div>
+    <p class="sb-brief">Collezioni di pattern per rivestimenti murali su misura: motivi botanici, geometrie art déco e ricami folk, <em>sviluppati in più colorazioni</em> e testati in ambienti reali prima della produzione.</p>
+    <div class="sb-nav">
+      <div class="sb-nav-lbl">Capitoli</div>
+      <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Pattern Design</span></a>
+      <a href="#ch02"><div class="dot"></div><span class="nl">Applicazione</span></a>
+    </div>
+  </aside>
+
+  <div class="scroll-col">
+
+    <!-- 01 PATTERN DESIGN -->
+    <div id="ch01" class="ch">
+      <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Pattern Design</span></div>
+      <div class="ch-text">
+        <p>Una libreria di pattern pensata per il rivestimento murale: motivi botanici — foglie di monstera e di banano — reinterpretati in chiave grafica, geometrie ispirate al ginkgo art déco e ricami folk a punto croce. Ogni disegno viene sviluppato in più colorazioni per adattarsi a contesti residenziali e contract diversi.</p>
+      </div>
+
+      <div class="cl-lbl">Collezione Monstera</div>
+      <div class="it" data-anim="img">
+        <img src="../projects/fullwall/images/02.png" alt="Fullwall — pattern Monstera, colorazione grigio/argento" loading="lazy">
+        <img src="../projects/fullwall/images/03.png" alt="Fullwall — pattern Monstera, colorazione bruno/oliva" loading="lazy">
+        <img src="../projects/fullwall/images/04.png" alt="Fullwall — pattern Monstera, colorazione rosso/rosa" loading="lazy">
+      </div>
+      <div class="ig"></div>
+
+      <div class="cl-lbl">Collezione Ginkgo</div>
+      <div class="it" data-anim="img">
+        <img src="../projects/fullwall/images/06.png" alt="Fullwall — pattern Ginkgo, colorazione blu/arancio" loading="lazy">
+        <img src="../projects/fullwall/images/07.png" alt="Fullwall — pattern Ginkgo, colorazione turchese/rosa" loading="lazy">
+        <img src="../projects/fullwall/images/08.png" alt="Fullwall — pattern Ginkgo, colorazione neutra" loading="lazy">
+      </div>
+      <div class="ig"></div>
+
+      <div class="cl-lbl">Collezione Folk</div>
+      <div class="id" data-anim="img">
+        <img src="../projects/brand-identity/fullwall/images/05.png" alt="Fullwall — pattern folk a punto croce, colorazione turchese" loading="lazy">
+        <img src="../projects/brand-identity/fullwall/images/06.png" alt="Fullwall — pattern folk a punto croce, colorazione grigio/nero" loading="lazy">
+      </div>
+      <div class="ig"></div>
+
+      <div class="cl-lbl">Collezione Foglia di Banano</div>
+      <div class="it" data-anim="img">
+        <img src="../projects/fullwall/images/11.png" alt="Fullwall — pattern foglia di banano, colorazione viola/verde" loading="lazy">
+        <img src="../projects/fullwall/images/12.png" alt="Fullwall — pattern foglia di banano, colorazione blu/rame" loading="lazy">
+        <img src="../projects/fullwall/images/13.png" alt="Fullwall — pattern foglia di banano, colorazione oliva/celeste" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="if" data-anim="img">
+        <img src="../projects/brand-identity/fullwall/images/09.png" alt="Fullwall — pattern foglia di banano, colorazione viola/blu" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 02 APPLICAZIONE -->
+    <div id="ch02" class="ch">
+      <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Applicazione</span></div>
+      <div class="ch-text">
+        <p>Ogni pattern viene renderizzato in ambienti reali — living, camere da letto, spazi contract — per verificarne resa cromatica, scala e leggibilità prima della stampa su supporto.</p>
+      </div>
+      <div class="if" data-anim="img">
+        <img src="../projects/fullwall/images/01.jpg" alt="Fullwall — pattern Monstera applicato in un living" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/fullwall/images/05.jpg" alt="Fullwall — pattern Ginkgo applicato in un living" loading="lazy">
+        <img src="../projects/brand-identity/fullwall/images/02.jpg" alt="Fullwall — pattern Ginkgo applicato, variante ambiente" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/fullwall/images/09.jpg" alt="Fullwall — pattern a intreccio applicato in camera da letto" loading="lazy">
+        <img src="../projects/brand-identity/fullwall/images/01.jpg" alt="Fullwall — pattern a intreccio, variante camera da letto" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/fullwall/images/10.jpg" alt="Fullwall — pattern foglia di banano applicato in un living" loading="lazy">
+        <img src="../projects/brand-identity/fullwall/images/03.jpg" alt="Fullwall — pattern foglia di banano, variante ambiente" loading="lazy">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/brand-identity/fullwall/images/04.jpg" alt="Fullwall — pattern a cervi applicato in uno spazio contract" loading="lazy">
+        <img src="../projects/brand-identity/fullwall/images/10.jpg" alt="Fullwall — pattern geometrico vintage applicato in un living" loading="lazy">
+      </div>
+    </div>
+
+  </div><!-- /scroll-col -->
+</div><!-- /magazine -->
+
+<a class="next" href="adv-c.html">
+  <div>
+    <span class="next-lbl">Progetto successivo</span>
+    <div class="next-t">ADV<br><em>CAMPAGNE</em></div>
+  </div>
+  <span class="arr">→</span>
+</a>
+
+<footer>
+  <div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div>
+  <span class="fc">© 2025 Juri Dabiankov Studio</span>
+</footer>
+
+<script>
+  const ids=['ch01','ch02'],ls={};
+  ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+<script src="../anim.js?v=8" defer></script>
 </body>
 </html>
