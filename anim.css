@@ -242,14 +242,19 @@ body.nav-open .nav-mobile {
 }
 
 /* ── MASONRY ── */
-/* .id/.it/.iq diventano contenitori flex: initMasonry() (anim.js) li riempie con
-   colonne .jd-mcol, distribuendo le immagini per altezza reale — mai crop,
-   mai "buchi" tra immagini di proporzioni diverse. */
-.id, .it, .iq { display: flex; gap: 1px; align-items: flex-start; }
+/* .id/.it/.iq restano block (stack singola colonna, MAI buchi) finché initMasonry()
+   (anim.js) non ha finito di caricare tutte le immagini del gruppo: solo a quel punto
+   riceve .jd-ready e diventa un contenitore flex con colonne .jd-mcol, distribuite per
+   altezza reale. Senza questo gate, un caricamento lento mostrerebbe per qualche istante
+   le img nude in flex-row non wrappato — proprio la causa dei "buchi" neri tra immagini
+   di proporzioni diverse. */
+.id, .it, .iq { display: block; }
+.id.jd-ready, .it.jd-ready, .iq.jd-ready { display: flex; gap: 1px; align-items: flex-start; }
+.id img, .it img, .iq img { display: block; width: 100%; height: auto; }
 .jd-mcol { display: flex; flex-direction: column; gap: 1px; flex: 1 1 0; min-width: 0; }
 .jd-mcol img { display: block; width: 100%; height: auto; }
 @media (max-width: 600px) {
-  .id, .it, .iq { flex-wrap: wrap; }
+  .id.jd-ready, .it.jd-ready, .iq.jd-ready { flex-wrap: wrap; }
   .jd-mcol { flex: 1 1 100%; }
 }
 

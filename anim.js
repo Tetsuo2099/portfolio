@@ -242,6 +242,7 @@
         imgs.forEach(place);
         group.innerHTML = '';
         colEls.forEach(function (c) { group.appendChild(c); });
+        group.classList.add('jd-ready');
       }
 
       var pending = 0;
