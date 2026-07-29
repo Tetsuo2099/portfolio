@@ -342,6 +342,6 @@
   const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
   ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
 </script>
-<script src="../anim.js?v=7" defer></script>
+<script src="../anim.js?v=8" defer></script>
 </body>
 </html>
