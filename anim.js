@@ -262,7 +262,7 @@
   /* ── LIGHTBOX ── */
   function initLightbox() {
     var imgs = Array.prototype.slice.call(
-      document.querySelectorAll('.if img, .id img, .it img, .iq img')
+      document.querySelectorAll('.if img, .id img, .it img, .iq img, .ial img, .iar img, .img-duo img, .img-quad img, .img-asym-l img, .img-asym-r img, .img-full img, .img-full-inset img')
     );
     if (!imgs.length) return;
 
