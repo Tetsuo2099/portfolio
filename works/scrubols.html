@@ -120,7 +120,7 @@
       <p class="sb-brief">Brand identity completa per Scrubols — scrub corpo <em>made in Italy.</em> Dal logo al sistema visivo, dalla fotografia professionale alle campagne social: un'identità che traduce il piacere dello scrub in linguaggio visivo.</p>
       <div class="sb-nav">
         <div class="sb-nav-lbl">Capitoli</div>
-        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Brand System</span></a>
+        <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Brand Identity</span></a>
         <a href="#ch02"><div class="dot"></div><span class="nl">Visual Identity</span></a>
         <a href="#ch03"><div class="dot"></div><span class="nl">Applicazioni</span></a>
         <a href="#ch04"><div class="dot"></div><span class="nl">Fotografia & ADV</span></a>
@@ -129,10 +129,22 @@
     </aside>
     <div class="scroll-col">
       <div id="ch01" class="ch">
-        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Brand System</span></div>
+        <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Brand Identity</span></div>
         <div class="ch-text">
           <p>Logotipo bold e diretto — "SCRUBOLS" in un grottesco condensato, con la "O" reinterpretata come una sfera di scrub. Palette a sei nuance pastello, ciascuna legata a una fragranza della linea. Corpo testo in ZT Neue Ralewe, un serif elegante che bilancia il logotipo grafico.</p>
         </div>
+        <div class="ch-hd" style="border-top:1px solid var(--hairline);margin-top:40px;"><span class="ch-n">Studio</span><div class="ch-r"></div><span class="ch-t">Studio del Logo</span></div>
+        <div class="ch-text">
+          <p>Sviluppo del logotipo: verifica di positivo/negativo e scala di leggibilità del wordmark, studio della simbol "S" a parte, declinazione cromatica social su Pantone dedicato e specimen tipografico con i font candidati.</p>
+        </div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/scrubols/studio-logo/typography.jpg" alt="Scrubols — studio tipografico e simbolo" loading="lazy"></div>
+        <div class="ig"></div>
+        <div class="id" data-anim="img">
+          <img src="../projects/brand-identity/scrubols/studio-logo/positivo-negativo.jpg" alt="Scrubols — logotipo positivo e negativo" loading="lazy">
+          <img src="../projects/brand-identity/scrubols/studio-logo/leggibilita.jpg" alt="Scrubols — scala di leggibilità del logotipo" loading="lazy">
+        </div>
+        <div class="ig"></div>
+        <div class="if" data-anim="img"><img src="../projects/brand-identity/scrubols/studio-logo/colore-social.jpg" alt="Scrubols — declinazione colore social del logotipo" loading="lazy"></div>
         <div class="brand-system" data-anim="img">
           <div class="swatch-row">
             <div class="swatch" style="background:#eabbd7"><span style="color:#111">#EABBD7</span></div>
@@ -227,6 +239,6 @@
     const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
     ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
   </script>
-  <script src="../anim.js?v=8" defer></script>
+  <script src="../anim.js?v=9" defer></script>
 </body>
 </html>
