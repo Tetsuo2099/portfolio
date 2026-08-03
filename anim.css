@@ -319,6 +319,16 @@ body.nav-open .nav-mobile {
               transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Logo container reveal — per loghi/vettoriali (SVG, futuro Lottie via data-lottie).
+   Più deliberato del fade+scale generico: leggero indugio, scala più marcata,
+   nessuna traslazione verticale (il logo "appare", non "sale"). */
+[data-anim="logo"] {
+  transform: scale(0.92);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-anim="logo"].in { transform: scale(1); }
+
 /* Line reveal on scroll */
 [data-anim="line"] {
   opacity: 1;
