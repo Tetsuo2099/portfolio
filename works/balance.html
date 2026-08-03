@@ -188,6 +188,29 @@
       <div class="ch-text">
         <p>Palette essenziale, tipografia pulita: Questrial per i titoli, Montserrat per il corpo testo. Il triangolo capovolto del monogramma diventa l'elemento riconoscibile su ogni supporto, dal barattolo al banner digitale.</p>
       </div>
+      <div class="logo-surface" data-anim="img">
+        <img src="../projects/brand-identity/Balance/Sito/Logo_balance.png" alt="Balance Nutrition — logo">
+      </div>
+      <div class="ig"></div>
+      <div class="brand-system" data-anim="img">
+        <div class="swatch-row">
+          <div class="swatch" style="background:#3C3C3B"><span style="color:#fff">#3C3C3B</span></div>
+          <div class="swatch" style="background:#FFFFFF;border-right:1px solid var(--hairline)"><span style="color:#111">#FFFFFF</span></div>
+          <div class="swatch" style="background:#008EAC"><span style="color:#fff">#008EAC</span></div>
+          <div class="swatch" style="background:#1CB5C9"><span style="color:#111">#1CB5C9</span></div>
+        </div>
+        <div class="type-specimen">
+          <div class="type-block">
+            <div class="tk">Display · Questrial</div>
+            <div class="tf-display">Balance</div>
+          </div>
+          <div class="type-block">
+            <div class="tk">Corpo · Montserrat</div>
+            <p class="tf-body">Un approccio più efficace e strategico alla comunicazione, per un marchio riconoscibile in un mercato competitivo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ig"></div>
 
       <!-- STUDIO DEL LOGO -->
       <div class="ch-text" style="padding-top:0;">
@@ -214,30 +237,6 @@
       <div class="id" data-anim="img">
         <img src="../projects/brand-identity/Balance/Studio_Logo/studio-logo-10-mockup-finale-gold-a.jpg" alt="Balance — studio logo, mockup finale box e barattolo">
         <img src="../projects/brand-identity/Balance/Studio_Logo/studio-logo-11-mockup-finale-gold-b.jpg" alt="Balance — studio logo, mockup finale variante">
-      </div>
-      <div class="ig"></div>
-
-      <div class="brand-system" data-anim="img">
-        <div class="swatch-row">
-          <div class="swatch" style="background:#3C3C3B"><span style="color:#fff">#3C3C3B</span></div>
-          <div class="swatch" style="background:#FFFFFF;border-right:1px solid var(--hairline)"><span style="color:#111">#FFFFFF</span></div>
-          <div class="swatch" style="background:#008EAC"><span style="color:#fff">#008EAC</span></div>
-          <div class="swatch" style="background:#1CB5C9"><span style="color:#111">#1CB5C9</span></div>
-        </div>
-        <div class="type-specimen">
-          <div class="type-block">
-            <div class="tk">Display · Questrial</div>
-            <div class="tf-display">Balance</div>
-          </div>
-          <div class="type-block">
-            <div class="tk">Corpo · Montserrat</div>
-            <p class="tf-body">Un approccio più efficace e strategico alla comunicazione, per un marchio riconoscibile in un mercato competitivo.</p>
-          </div>
-        </div>
-      </div>
-      <div class="ig"></div>
-      <div class="logo-surface" data-anim="img">
-        <img src="../projects/brand-identity/Balance/Sito/Logo_balance.png" alt="Balance Nutrition — logo">
       </div>
     </div>
 
@@ -371,6 +370,6 @@
   const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
   ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
 </script>
-<script src="../anim.js?v=9" defer></script>
+<script src="../anim.js?v=11" defer></script>
 </body>
 </html>
