@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Study Demo — Template Layout | Juri Dabiankov Studio</title>
+  <meta name="description" content="Pagina template — layout case study a capitoli con guida laterale, galleria mista e dettagli espandibili.">
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--canvas:#111111;--surface:#1b1b1b;--hairline:#2a2a2a;--ink:#fff;--muted:#78786e;--accent:#c4b49c;--sidebar:300px;}
+    body{background:var(--canvas);color:var(--ink);font-family:'Inter',-apple-system,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;width:100%;height:auto;}
+
+    /* ── HEADER (da sistemare a parte, copiato 1:1) ── */
+    header{position:fixed;inset:0 0 auto;z-index:200;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,17,17,.88);backdrop-filter:blur(16px);}
+    .logo-link img{height:32px;filter:invert(1);}
+    nav{display:flex;align-items:center;gap:32px;}
+    nav a{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.38);transition:color .2s;}
+    nav a:hover{color:var(--ink);}
+    .back{color:rgba(255,255,255,.5)!important;display:flex;align-items:center;gap:7px;}
+    .back::before{content:'←';font-size:12px;}
+
+    /* ── MAGAZINE (capitoli + guida laterale — 1:1 da works/cip.html) ── */
+    .magazine{display:grid;grid-template-columns:var(--sidebar) 1fr;padding-top:64px;}
+    .sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;scrollbar-width:none;padding:48px 36px 48px 48px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;}
+    .sidebar::-webkit-scrollbar{display:none;}
+    .sb-tag{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .sb-title{font-size:20px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.88;}
+    .sb-title em{font-style:normal;color:var(--accent);}
+    .sb-rule{height:1px;background:var(--hairline);margin:24px 0;}
+    .sb-meta{display:flex;flex-direction:column;gap:14px;}
+    .sb-meta .k{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+    .sb-meta .v{font-size:12px;font-weight:500;line-height:1.6;}
+    .sb-meta a.v{color:var(--accent);text-decoration:none;}
+    .sb-meta a.v:hover{text-decoration:underline;}
+    .sb-brief{margin-top:20px;font-size:12px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.42);}
+    .sb-brief em{font-style:normal;color:rgba(255,255,255,.72);}
+    .sb-nav{margin-top:auto;padding-top:20px;}
+    .sb-nav-lbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+    .sb-nav a{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--hairline);text-decoration:none;color:rgba(255,255,255,.28);transition:color .25s;}
+    .sb-nav a:hover{color:rgba(255,255,255,.65);}
+    .sb-nav a.active{color:var(--ink);}
+    .dot{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex-shrink:0;transition:background .25s;}
+    .sb-nav a.active .dot{background:var(--accent);border-color:var(--accent);}
+    .nl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+
+    /* ── SCROLL COLUMN ── */
+    .scroll-col{min-height:100vh;}
+    .ch+.ch{border-top:1px solid var(--hairline);}
+    .ch-hd{padding:24px 48px;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--hairline);}
+    .ch-n{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+    .ch-r{flex:1;height:1px;background:var(--hairline);}
+    .ch-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+    .ch-text{padding:48px 48px 40px;}
+    .ch-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.42);max-width:640px;}
+
+    /* Image layout helpers — .id/.it/.iq: masonry reale via initMasonry() in anim.js */
+    .if img,.if video{display:block;width:100%;height:auto;}
+    .ig{height:1px;background:var(--hairline);}
+
+    /* ── CS-HERO — full-bleed dentro la colonna contenuti, non a tutta pagina ── */
+    .cs-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--hairline);}
+    .cs-hero img{display:block;width:100%;height:auto;max-height:640px;object-fit:cover;}
+    .cs-hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,.9) 0%,rgba(17,17,17,.15) 55%,transparent 80%);}
+    .cs-hero-overlay{position:absolute;inset:auto 48px 40px;}
+    .cs-hero-overlay h1{font-size:clamp(32px,4.2vw,64px);font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.92;}
+    .cs-hero-overlay h1 em{font-style:normal;color:var(--accent);}
+
+    /* ── INTRO ── */
+    .intro-block{padding:64px 48px 48px;}
+    .intro-eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+    .intro-title{font-size:clamp(36px,5vw,68px);font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.94;margin-bottom:24px;}
+    .intro-claim{font-size:16px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.55);max-width:560px;margin-bottom:28px;}
+    .intro-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;}
+    .intro-year{font-size:11px;color:var(--muted);}
+    .intro-tags{display:flex;flex-wrap:wrap;gap:8px;}
+    .intro-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);border:1px solid var(--hairline);padding:6px 12px;border-radius:100px;}
+
+    /* ── DETTAGLI — toggle More/Less Details ── */
+    .details-wrap{padding:0 48px 48px;}
+    .details-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--accent);font-family:inherit;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:0;}
+    .details-btn::after{content:'→';transition:transform .3s;}
+    .details-btn.open::after{transform:rotate(90deg);}
+    .details-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(0.16,1,0.3,1);}
+    .details-body.open{grid-template-rows:1fr;}
+    .details-body-inner{overflow:hidden;}
+    .details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);margin-top:32px;}
+    .details-block{background:var(--canvas);padding:32px;}
+    .details-block h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+    .details-block p{font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.5);}
+
+    /* ── GALLERIA VIDEO ── */
+    .cs-video video{display:block;width:100%;height:auto;background:#000;}
+
+    /* ── RELATED ── */
+    .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hairline);}
+    .related-item{background:var(--canvas);text-decoration:none;color:var(--ink);display:block;}
+    .related-item img{aspect-ratio:4/3;object-fit:cover;}
+    .related-meta{padding:20px 24px;}
+    .related-title{font-size:13px;font-weight:600;letter-spacing:-.01em;text-transform:uppercase;}
+    .related-cat{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+
+    footer{padding:32px 48px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;}
+    footer a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);margin-right:24px;}
+    footer a:hover{color:var(--ink);}
+    .fc{font-size:9px;color:var(--muted);}
+
+    /* ── RESPONSIVE (breakpoint già in uso nel sito) ── */
+    @media(max-width:900px){
+      .magazine{grid-template-columns:1fr;}
+      .sidebar{position:relative;top:0;height:auto;padding:36px 24px;border-right:none;border-bottom:1px solid var(--hairline);}
+      .sb-nav{margin-top:32px;}
+      .ch-hd{padding:20px 24px;}
+      .ch-text,.intro-block,.details-wrap{padding-left:24px;padding-right:24px;}
+      .details-grid{grid-template-columns:1fr;}
+      .related-grid{grid-template-columns:1fr;}
+    }
+    @media(max-width:600px){
+      header{padding:0 24px;}
+      .ch-hd{padding:16px 20px;}
+      .ch-text,.intro-block,.details-wrap{padding-left:20px;padding-right:20px;}
+      .cs-hero-overlay{inset:auto 20px 24px;}
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media(prefers-reduced-motion:reduce){
+      .details-body{transition:none;}
+      .details-btn::after{transition:none;}
+    }
+  </style>
+  <link rel="stylesheet" href="../anim.css">
+</head>
+<body>
+
+<header>
+  <a class="logo-link" href="../index.html"><img src="../images/logo.svg" alt="Juri Dabiankov Studio"></a>
+  <nav>
+    <a class="back" href="../works.html">Works</a>
+    <a href="../services.html">Servizi</a>
+    <a href="../about.html">Studio</a>
+    <a href="../contact.html">Contatti</a>
+  </nav>
+</header>
+
+<div class="magazine">
+  <aside class="sidebar">
+    <span class="sb-tag">Progetto</span>
+    <h2 class="sb-title">CASE STUDY<br><em>DEMO</em></h2>
+    <div class="sb-rule"></div>
+    <div class="sb-meta">
+      <div><div class="k">Cliente</div><div class="v">Progetto dimostrativo</div></div>
+      <div><div class="k">Categoria</div><div class="v">Brand Identity · Packaging</div></div>
+      <div><div class="k">Anno</div><div class="v">2026</div></div>
+      <div><div class="k">Servizi</div><div class="v">Identità · Packaging · Fotografia</div></div>
+    </div>
+    <p class="sb-brief">Pagina template — dimostra il layout capitoli + guida laterale con hero, dettagli espandibili, galleria mista e progetti correlati. <em>Contenuti placeholder</em>, nessun cliente reale.</p>
+    <div class="sb-nav">
+      <div class="sb-nav-lbl">Capitoli</div>
+      <a class="active" href="#ch01"><div class="dot"></div><span class="nl">Intro</span></a>
+      <a href="#ch02"><div class="dot"></div><span class="nl">Dettagli</span></a>
+      <a href="#ch03"><div class="dot"></div><span class="nl">Galleria</span></a>
+      <a href="#ch04"><div class="dot"></div><span class="nl">Correlati</span></a>
+    </div>
+  </aside>
+
+  <div class="scroll-col">
+
+    <!-- HERO (full-bleed, dentro la colonna contenuti) -->
+    <div class="cs-hero" data-anim="img">
+      <img src="../projects/centro-ippico-punta-ala/foto/J_5449.jpg" alt="Case study demo — immagine hero">
+      <div class="cs-hero-grad"></div>
+      <div class="cs-hero-overlay">
+        <h1>PROGETTO<br><em>DEMO</em></h1>
+      </div>
+    </div>
+
+    <!-- 01 INTRO -->
+    <div id="ch01" class="ch">
+      <div class="ch-hd"><span class="ch-n">01</span><div class="ch-r"></div><span class="ch-t">Intro</span></div>
+      <div class="intro-block" data-anim>
+        <p class="intro-eyebrow">Brand Identity · Packaging</p>
+        <h2 class="intro-title">Un titolo che <em style="font-style:normal;color:var(--accent);">racconta</em> il progetto</h2>
+        <p class="intro-claim">Claim o sottotitolo breve: la sintesi di cosa fa il progetto e perché esiste, in una o due frasi — lo spazio dove il posizionamento diventa leggibile a colpo d'occhio.</p>
+        <div class="intro-meta">
+          <span class="intro-year">(2026)</span>
+          <div class="intro-tags">
+            <span class="intro-tag">Identity</span>
+            <span class="intro-tag">Packaging</span>
+            <span class="intro-tag">Fotografia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 DETTAGLI -->
+    <div id="ch02" class="ch">
+      <div class="ch-hd"><span class="ch-n">02</span><div class="ch-r"></div><span class="ch-t">Dettagli</span></div>
+      <div class="details-wrap" data-anim>
+        <button class="details-btn" type="button" aria-expanded="false">More Details</button>
+        <div class="details-body">
+          <div class="details-body-inner">
+            <div class="details-grid">
+              <div class="details-block">
+                <h3>Client</h3>
+                <p>Chi è il cliente, in che settore opera, quale contesto competitivo attraversa. Due o tre frasi di inquadramento.</p>
+              </div>
+              <div class="details-block">
+                <h3>Assignment</h3>
+                <p>Il brief ricevuto: cosa doveva risolvere il progetto, quali vincoli e quali obiettivi erano sul tavolo.</p>
+              </div>
+              <div class="details-block">
+                <h3>Solution &amp; Process</h3>
+                <p>Come si è arrivati alla soluzione: le tappe principali del processo creativo e la logica dietro le scelte finali.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 GALLERIA -->
+    <div id="ch03" class="ch">
+      <div class="ch-hd"><span class="ch-n">03</span><div class="ch-r"></div><span class="ch-t">Galleria</span></div>
+      <div class="ch-text">
+        <p>Impaginazione ritmata: immagini full-width alternate a coppie affiancate, con spazio per un video prodotto in autoplay muto.</p>
+      </div>
+      <div class="if" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5122.jpg" alt="">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5294.jpg" alt="">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5259.jpg" alt="">
+      </div>
+      <div class="ig"></div>
+      <div class="if cs-video" data-anim="img">
+        <video autoplay muted loop playsinline>
+          <source src="../projects/centro-ippico-punta-ala/header/Centro_Ippico_Punta_Ala.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="ig"></div>
+      <div class="if" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5215.jpg" alt="">
+      </div>
+      <div class="ig"></div>
+      <div class="id" data-anim="img">
+        <img src="../projects/centro-ippico-punta-ala/foto/J_5198.jpg" alt="">
+        <img src="../projects/centro-ippico-punta-ala/social/foto_social/Senza-titolo-1.jpg" alt="">
+      </div>
+    </div>
+
+    <!-- 04 CORRELATI -->
+    <div id="ch04" class="ch">
+      <div class="ch-hd"><span class="ch-n">04</span><div class="ch-r"></div><span class="ch-t">Correlati</span></div>
+      <div class="related-grid" data-anim>
+        <a class="related-item" href="cip.html">
+          <img src="../projects/centro-ippico-punta-ala/social/campionato_2025_A.jpg" alt="Centro Ippico Punta Ala">
+          <div class="related-meta">
+            <div class="related-title">Centro Ippico Punta Ala</div>
+            <div class="related-cat">Brand Identity · Web</div>
+          </div>
+        </a>
+        <a class="related-item" href="balance.html">
+          <img src="../projects/brand-identity/Balance/Sito/Logo_balance.png" alt="Balance Nutrition">
+          <div class="related-meta">
+            <div class="related-title">Balance Nutrition</div>
+            <div class="related-cat">Brand Identity · Packaging</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /scroll-col -->
+</div><!-- /magazine -->
+
+<footer>
+  <div><a href="mailto:juri.dabiankov@gmail.com">Email</a><a href="https://www.behance.net/juridabiankov" target="_blank">Behance</a><a href="https://www.instagram.com/juridabiankov" target="_blank">Instagram</a></div>
+  <span class="fc">© 2026 Juri Dabiankov Studio</span>
+</footer>
+
+<script>
+  const ids=['ch01','ch02','ch03','ch04'],ls={};
+  ids.forEach(id=>ls[id]=document.querySelector(`a[href="#${id}"]`));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){ids.forEach(i=>ls[i]?.classList.remove('active'));ls[x.target.id]?.classList.add('active');}}),{rootMargin:'-30% 0px -60% 0px'});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+
+  /* Toggle More/Less Details — vanilla, nessuna libreria */
+  const detailsBtn = document.querySelector('.details-btn');
+  const detailsBody = document.querySelector('.details-body');
+  if (detailsBtn && detailsBody) {
+    detailsBtn.addEventListener('click', () => {
+      const open = detailsBody.classList.toggle('open');
+      detailsBtn.classList.toggle('open', open);
+      detailsBtn.textContent = open ? 'Less Details' : 'More Details';
+      detailsBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+</script>
+<script src="../anim.js?v=11" defer></script>
+</body>
+</html>
