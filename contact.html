@@ -231,15 +231,23 @@
       </div>
 
       <div class="direct-links">
-        <a class="direct-link" href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="1">
+        <a class="direct-link" href="mailto:info@juridabiankov.com" data-anim data-delay="1">
+          <div><p class="direct-link-label">Email</p><p class="direct-link-value">info@juridabiankov.com</p></div>
+          <span class="direct-link-arrow">↗</span>
+        </a>
+        <a class="direct-link" href="tel:+393392348611" data-anim data-delay="2">
+          <div><p class="direct-link-label">Telefono</p><p class="direct-link-value">+39 339 234 8611</p></div>
+          <span class="direct-link-arrow">↗</span>
+        </a>
+        <a class="direct-link" href="https://www.instagram.com/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="3">
           <div><p class="direct-link-label">Instagram</p><p class="direct-link-value">@juridabiankov</p></div>
           <span class="direct-link-arrow">↗</span>
         </a>
-        <a class="direct-link" href="https://www.linkedin.com/in/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="2">
+        <a class="direct-link" href="https://www.linkedin.com/in/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="4">
           <div><p class="direct-link-label">LinkedIn</p><p class="direct-link-value">Juri Dabiankov</p></div>
           <span class="direct-link-arrow">↗</span>
         </a>
-        <a class="direct-link" href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="3">
+        <a class="direct-link" href="https://www.behance.net/juridabiankov" target="_blank" rel="noopener" data-anim data-delay="5">
           <div><p class="direct-link-label">Behance</p><p class="direct-link-value">juridabiankov</p></div>
           <span class="direct-link-arrow">↗</span>
         </a>
@@ -250,6 +258,9 @@
       <p class="form-eyebrow" data-anim>Invia un messaggio</p>
 
       <form id="contactForm" novalidate>
+        <input type="hidden" name="access_key" value="af89e07a-d824-4ae3-a035-663186f90c8c">
+        <input type="hidden" name="subject" value="Nuovo messaggio dal sito — Juri Dabiankov Studio">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="field-row">
           <div class="field" data-anim data-delay="1">
             <label for="fname">Nome</label>
@@ -309,8 +320,9 @@
     });
     document.getElementById('contactForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      var form = this;
       var valid = true;
-      this.querySelectorAll('[required]').forEach(function (el) {
+      form.querySelectorAll('[required]').forEach(function (el) {
         if (!el.value.trim()) {
           el.style.borderBottomColor = 'rgba(200,80,80,0.5)';
           valid = false;
@@ -318,13 +330,29 @@
         }
       });
       if (!valid) return;
-      var btn = this.querySelector('.btn-submit');
-      btn.querySelector('span').textContent = 'Invio…';
+      var btn = form.querySelector('.btn-submit');
+      var btnLabel = btn.querySelector('span');
+      btnLabel.textContent = 'Invio…';
       btn.disabled = true;
-      setTimeout(function () {
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('formSuccess').classList.add('visible');
-      }, 700);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.success) {
+            form.style.display = 'none';
+            document.getElementById('formSuccess').classList.add('visible');
+          } else {
+            throw new Error(data.message || 'Invio non riuscito');
+          }
+        })
+        .catch(function () {
+          btnLabel.textContent = 'Errore, riprova';
+          btn.disabled = false;
+        });
     });
   </script>
   <script src="anim.js?v=11" defer></script>
