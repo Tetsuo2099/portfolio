@@ -124,6 +124,10 @@
     .services-list li:first-child { border-top: 1px solid var(--hairline); }
     .services-list li::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); flex-shrink: 0; }
 
+    .approach-text p { font-size: 16px; line-height: 1.7; color: var(--muted); margin-bottom: 20px; max-width: 560px; }
+    .approach-text a, .manifesto-body a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); transition: color .2s; }
+    .approach-text a:hover, .manifesto-body a:hover { color: var(--accent); }
+
     /* ── PROJECTS ── */
     .projects-section { background: var(--canvas); }
     .section-header {
@@ -281,6 +285,16 @@
       <li data-anim data-delay="5">Segnaletica e wayfinding</li>
       <li data-anim data-delay="6">Supervisione e coordinazione con i fornitori</li>
     </ul>
+  </section>
+  <section class="services-detail approach">
+    <div>
+      <p class="detail-label">Approccio</p>
+      <h2 class="detail-headline" data-anim="line"><span>OGNI EVENTO<br>È UN <em>BRAND.</em></span></h2>
+    </div>
+    <div class="approach-text">
+      <p data-anim data-delay="1">Un evento si ricorda per come appare: il logo sul backdrop, l'invito, la segnaletica in campo, i post che ne raccontano le giornate. Per questo progettiamo l'identità visiva di un evento come quella di un marchio, con un sistema coerente che va dal concept fino all'ultimo materiale stampato.</p>
+      <p data-anim data-delay="2">Lo abbiamo fatto per il torneo internazionale <a href="works/ipc-italia.html">Italia Polo Challenge</a> al Galoppatoio di Villa Borghese, per il <a href="works/polo-club.html">Punta Ala Polo Club</a> in Toscana e per la comunicazione di <a href="works/altaroma.html">Altaroma</a>, la settimana della moda di Roma. In ogni progetto seguiamo stampa, render degli allestimenti e contenuti social prima, durante e dopo l'evento, coordinando i fornitori fino all'apertura.</p>
+    </div>
   </section>
 
   <section class="projects-section">
