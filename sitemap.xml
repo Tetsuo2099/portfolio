@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Pagine principali -->
-  <url><loc>https://www.juridabiankov.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.juridabiankov.com/works.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.juridabiankov.com/services.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.juridabiankov.com/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- Pagine categoria -->
-  <url><loc>https://www.juridabiankov.com/eventi.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.juridabiankov.com/branding.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.juridabiankov.com/packaging.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <!-- Pagine principali e categorie -->
+  <url><loc>https://juridabiankov.com/</loc><lastmod>2026-10-15</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://juridabiankov.com/works.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://juridabiankov.com/services.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://juridabiankov.com/about.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/contact.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://juridabiankov.com/eventi.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://juridabiankov.com/branding.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://juridabiankov.com/packaging.html</loc><lastmod>2026-08-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
   <!-- Pagine progetto -->
-  <url><loc>https://www.juridabiankov.com/works/scrubols.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/ipc-italia.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/polo-club.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/altaroma.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/bloom-valley.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/ecimc.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/fullwall.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/packstyle.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/logotypes.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/book-print.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/posters.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/safari-arte.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.juridabiankov.com/works/adv-c.html</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/scrubols.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/ipc-italia.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/polo-club.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/altaroma.html</loc><lastmod>2026-07-04</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/bloom-valley.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/ecimc.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/fullwall.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/packstyle.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/logotypes.html</loc><lastmod>2026-07-04</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/book-print.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/posters.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/safari-arte.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/adv-c.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/cento-architetti.html</loc><lastmod>2026-10-15</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/balance.html</loc><lastmod>2026-09-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/cip.html</loc><lastmod>2026-09-08</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/azienda-vittori.html</loc><lastmod>2026-08-03</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/ecimc-web.html</loc><lastmod>2026-08-03</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://juridabiankov.com/works/karma-punk.html</loc><lastmod>2026-08-03</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
 
 </urlset>

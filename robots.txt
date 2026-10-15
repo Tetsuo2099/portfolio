@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /docs/
+Disallow: /preview.html
+Disallow: /intro.html
+Disallow: /works/case-study-demo.html
 
-Sitemap: https://www.juridabiankov.com/sitemap.xml
+Sitemap: https://juridabiankov.com/sitemap.xml
