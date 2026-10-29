@@ -319,6 +319,9 @@
       .footer-bottom { flex-direction: column; gap: 24px; align-items: flex-start; }
     }
     @media (max-width: 600px) {
+      .hero-headline { font-size: min(72px, 15vw); }
+      .service-main-item { grid-template-columns: 48px minmax(0, 1fr); }
+      .service-name { font-size: min(36px, 10vw); }
       .secondary-grid { grid-template-columns: 1fr; }
       .secondary-item { border-right: none; }
       .secondary-item:nth-child(3) { border-bottom: 1px solid var(--hairline); }
