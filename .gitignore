@@ -19,3 +19,8 @@ projects/ipc-italia/images/video-04.mp4
 projects/ipc-italia/images/video-05.mp4
 projects/brand-identity/bloom-valley/images/Presentazione_BloomValley.pdf
 projects/logo-identita/loghi-vari/images/Buddy_logotipo.pdf
+
+# File sorgente di lavoro (mai online)
+*.psd
+*.psb
+*.ai
